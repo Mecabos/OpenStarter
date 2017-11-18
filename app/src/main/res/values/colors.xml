@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <!--<color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>-->
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorPrimary">#594691</color>
+    <color name="colorPrimaryDark">#3e2d70</color>
+    <color name="bgBackSideColor">#f4f0ff</color>
+    <color name="bgTitleLeft">#1C6E8C</color>
+    <color name="bgTitleRight">#ffffff</color>
+    <color name="bgContentTop">#1C6E8C</color>
+    <color name="bgContent">#ffffff</color>
+    <color name="contentDividerLine">#e0e0e0</color>
+    <color name="contentBadgeTitle">#a9a9a9</color>
+    <color name="titleBadgeTitle">#adafb1</color>
+    <color name="titleBadgeText">#adafb1</color>
+    <color name="mainTextColor">#343d43</color>
+    <color name="btnRequest">#016FB9</color>
+
+    <color name="black_overlay">#66000000</color>
+
+
+
+
+<!--    login colors-->
+    <color name="color1">#343D46</color>
+    <color name="color2">#1C6E8C</color>
+    <color name="color3">#826C7F</color>
+    <color name="color4">#A88FAC</color>
+    <color name="color5">#6B7F82</color>
+    <color name="color6">#419D78</color>
+    <color name="color7">#44A1A0</color>
+    <color name="color8">#016FB9</color>
 </resources>
