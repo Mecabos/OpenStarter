@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "52856812020",
+    "firebase_url": "https://openstarter-bf3ba.firebaseio.com",
+    "project_id": "openstarter-bf3ba",
+    "storage_bucket": "openstarter-bf3ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52856812020:android:05616f5de3651dda",
+        "android_client_info": {
+          "package_name": "com.example.mohamed.openstarter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "52856812020-p1k4clejua0al4jpi12qehd29ls0mbuq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mohamed.openstarter",
+            "certificate_hash": "9c2143b574575945c321c062ab8b8e83500e2058"
+          }
+        },
+        {
+          "client_id": "52856812020-g3mban2pvane4vundspil4feul48j9ht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzzpB_FxU2ezlPwtYEoO4vLr3Jv3RLy4k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "52856812020-g3mban2pvane4vundspil4feul48j9ht.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
