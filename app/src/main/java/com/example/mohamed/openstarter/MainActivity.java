@@ -7,6 +7,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.mohamed.openstarter.Project.ProjectListAdapter;
+import com.example.mohamed.openstarter.Project.Project;
 import com.example.mohamed.openstarter.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
@@ -31,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
         ListView theListView = findViewById(R.id.mainListView);
 
         // prepare elements to display
-        final ArrayList<Item> items = Item.getTestingList();
+        final ArrayList<Project> projects = Project.getTestingList();
 
-        // add custom btn handler to first list item
-        items.get(0).setRequestBtnClickListener(new View.OnClickListener() {
+        // add custom btn handler to first list project
+        projects.get(0).setRequestBtnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "CUSTOM HANDLER FOR FIRST BUTTON", Toast.LENGTH_SHORT).show();
@@ -42,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // create custom adapter that holds elements and their state (we need hold a id's of unfolded elements for reusable elements)
-        final FoldingCellListAdapter adapter = new FoldingCellListAdapter(this, items);
+        final ProjectListAdapter adapter = new ProjectListAdapter(this, projects);
 
-        // add default btn handler for each request btn on each item if custom handler not found
+        // add default btn handler for each request btn on each project if custom handler not found
         adapter.setDefaultRequestBtnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

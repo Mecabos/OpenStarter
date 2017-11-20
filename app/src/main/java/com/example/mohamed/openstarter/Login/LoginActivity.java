@@ -1,6 +1,5 @@
 package com.example.mohamed.openstarter.Login;
 
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
