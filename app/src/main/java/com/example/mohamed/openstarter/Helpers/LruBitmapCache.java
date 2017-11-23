@@ -1,4 +1,4 @@
-package com.example.mohamed.openstarter.utils;
+package com.example.mohamed.openstarter.Helpers;
 
 import android.graphics.Bitmap;
 import android.util.LruCache;

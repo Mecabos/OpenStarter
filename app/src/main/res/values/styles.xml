@@ -23,7 +23,7 @@
         <item name="android:windowIsTranslucent">true</item>
 
     </style>
-    <style name="TextLabel" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="TextLabel" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
         <item name="colorControlActivated">#ffffff</item>
     </style>
@@ -55,7 +55,7 @@
 
     <style name="TitleBadgeText" parent="AppTheme">
         <item name="android:textColor">@color/titleBadgeText</item>
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">16dp</item>
     </style>
 
     <style name="TitleBadgeTitle" parent="AppTheme">

@@ -7,7 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.example.mohamed.openstarter.utils.LruBitmapCache;
+import com.example.mohamed.openstarter.Helpers.LruBitmapCache;
 
 /**
  * Created by Bacem on 11/20/2017.

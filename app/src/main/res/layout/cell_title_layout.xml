@@ -19,16 +19,32 @@
         android:paddingRight="10dp"
         android:paddingTop="20dp">
 
+
         <TextView
-            android:id="@+id/title_price"
+            android:id="@+id/title_remaining_budget_badge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:textColor="@android:color/white"
-            android:textSize="26sp" />
+            android:textSize="15sp"
+            android:text="@string/remaining_budget_badge"
+            />
 
         <TextView
-            android:id="@+id/title_time_label"
+            android:id="@+id/title_remaining_budget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/title_remaining_budget_badge"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:text="@string/remaining_budget_mock"
+            />
+
+
+
+        <TextView
+            android:id="@+id/title_end_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -37,13 +53,23 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/title_date_label"
+            android:id="@+id/title_end_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/title_time_label"
+            android:layout_above="@id/title_end_time"
             android:layout_alignParentStart="true"
             android:textColor="@android:color/white"
             android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:layout_above="@id/title_end_day"
+            android:text="@string/ends_date_badge"
+            />
 
 
     </RelativeLayout>
@@ -67,7 +93,7 @@
             android:src="@drawable/from_to_purple" />
 
         <TextView
-            android:id="@+id/title_from_address"
+            android:id="@+id/title_project_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/title_from_to_dots"
@@ -80,20 +106,20 @@
             android:textSize="16sp" />
 
         <ImageView
-            android:id="@+id/title_from_to_dots_divider"
+            android:id="@+id/title_name_description_divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/title_from_address"
+            android:layout_below="@id/title_project_name"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/title_from_to_dots"
             android:src="@color/contentDividerLine" />
 
         <TextView
-            android:id="@+id/title_to_address"
+            android:id="@+id/title_project_short_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/title_from_to_dots_divider"
+            android:layout_below="@id/title_name_description_divider"
             android:layout_toEndOf="@id/title_from_to_dots"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
@@ -103,7 +129,7 @@
 
 
         <TextView
-            android:id="@+id/title_requests_count"
+            android:id="@+id/title_contributors_count"
             style="@style/TitleBadgeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -114,12 +140,29 @@
             style="@style/TitleBadgeTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/title_requests_count"
-            android:layout_alignStart="@id/title_requests_count"
-            android:text="@string/requests_count_badge" />
+            android:layout_above="@id/title_contributors_count"
+            android:layout_alignStart="@id/title_contributors_count"
+            android:text="@string/contributors_count_badge" />
+
 
         <TextView
-            android:id="@+id/title_weight"
+            android:id="@+id/title_pledges_sum"
+            style="@style/TitleBadgeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            style="@style/TitleBadgeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/title_pledges_sum"
+            android:layout_alignStart="@id/title_pledges_sum"
+            android:text="@string/pledges_sum_badge" />
+
+        <TextView
+            android:id="@+id/title_goal_value"
             style="@style/TitleBadgeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,25 +174,9 @@
             style="@style/TitleBadgeTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/title_weight"
-            android:layout_alignStart="@id/title_weight"
-            android:text="@string/weight_badge" />
-
-        <TextView
-            android:id="@+id/title_pledge"
-            style="@style/TitleBadgeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            style="@style/TitleBadgeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/title_pledge"
-            android:layout_alignStart="@id/title_pledge"
-            android:text="@string/pledge_badge" />
+            android:layout_above="@id/title_goal_value"
+            android:layout_alignStart="@id/title_goal_value"
+            android:text="@string/goal_value_badge" />
 
     </RelativeLayout>
 </LinearLayout>

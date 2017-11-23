@@ -1,4 +1,4 @@
-package com.example.mohamed.openstarter.Project;
+package com.example.mohamed.openstarter.Models;
 
 import android.view.View;
 
@@ -7,13 +7,9 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Transient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Project {
@@ -90,9 +86,10 @@ public class Project {
         this.servicesList = servicesList;
     }
 
-    public Project(String name, Double budget) {
+    public Project(long id, String name, String description) {
+        this.id = id;
         this.name = name;
-        this.budget = budget;
+        this.description = description;
     }
 
     public long getId() {
@@ -250,32 +247,20 @@ public class Project {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Project)) return false;
 
         Project project = (Project) o;
 
-        if (requestsCount != project.requestsCount) return false;
-        if (price != null ? !price.equals(project.price) : project.price != null) return false;
-        if (pledgePrice != null ? !pledgePrice.equals(project.pledgePrice) : project.pledgePrice != null)
-            return false;
-        if (fromAddress != null ? !fromAddress.equals(project.fromAddress) : project.fromAddress != null)
-            return false;
-        if (toAddress != null ? !toAddress.equals(project.toAddress) : project.toAddress != null)
-            return false;
-        if (date != null ? !date.equals(project.date) : project.date != null) return false;
-        return !(time != null ? !time.equals(project.time) : project.time != null);
-
+        if (getId() != project.getId()) return false;
+        if (!getName().equals(project.getName())) return false;
+        return getCreationDate() != null ? getCreationDate().equals(project.getCreationDate()) : project.getCreationDate() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = price != null ? price.hashCode() : 0;
-        result = 31 * result + (pledgePrice != null ? pledgePrice.hashCode() : 0);
-        result = 31 * result + (fromAddress != null ? fromAddress.hashCode() : 0);
-        result = 31 * result + (toAddress != null ? toAddress.hashCode() : 0);
-        result = 31 * result + requestsCount;
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (time != null ? time.hashCode() : 0);
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + (getCreationDate() != null ? getCreationDate().hashCode() : 0);
         return result;
     }
 

@@ -1,4 +1,4 @@
-package com.example.mohamed.openstarter.Login;
+package com.example.mohamed.openstarter.Activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -22,7 +22,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mohamed.openstarter.MainActivity;
 import com.example.mohamed.openstarter.R;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
