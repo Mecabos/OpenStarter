@@ -37,7 +37,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@id/title_remaining_budget_badge"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:textSize="12sp"
             android:text="@string/remaining_budget_mock"
             />
 
