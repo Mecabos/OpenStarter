@@ -3,6 +3,7 @@ package com.example.mohamed.openstarter.Activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,6 +14,8 @@ import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectDs;
 import com.example.mohamed.openstarter.R;
 import com.example.mohamed.openstarter.foldingcell.FoldingCell;
+import com.special.ResideMenu.ResideMenu;
+import com.special.ResideMenu.ResideMenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     ProjectDs projectDs = new ProjectDs();
 
     ListView projectListView ;
+    ResideMenu resideMenu;
 
     @Override
     public void onBackPressed() {
@@ -34,10 +38,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return resideMenu.dispatchTouchEvent(ev);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Setting projectListView
+        // attach to current activity;
+        resideMenu = new ResideMenu(this);
+        resideMenu.setBackground(R.drawable.menu_background);
+        resideMenu.attachToActivity(this);
+
+        String titles[] = { "featured projects", "Profile", "Calendar", "Settings" };
+        int icon[] = { R.drawable.ic_launcher, R.drawable.com_facebook_profile_picture_blank_portrait, R.drawable.ic_launcher, R.drawable.ic_launcher };
+
+        for (int i = 0; i < titles.length; i++){
+            final ResideMenuItem item = new ResideMenuItem(this, icon[i], titles[i]);
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+            resideMenu.addMenuItem(item,  ResideMenu.DIRECTION_LEFT); // or  ResideMenu.DIRECTION_RIGHT
+
+        }
+
         projectListView = findViewById(R.id.mainProjectListView);
 
         projectDs.projectGetAll(new ProjectDs.Callback() {

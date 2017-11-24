@@ -25,9 +25,11 @@ import android.widget.Toast;
 
 import com.example.mohamed.openstarter.R;
 import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -63,6 +65,8 @@ public class RegisterActivity extends AppCompatActivity {
     SignInButton mGoogleBtn;
     CallbackManager mCallbackManager;
     LoginButton loginButton;
+    AccessTokenTracker accessTokenTracker;
+    AccessToken accessToken;
 
     private GoogleSignInClient mGoogleSignInClient;
     private static final String TAG = "GoogleActivity";
@@ -73,14 +77,32 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+       /* FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut();
+*/
+
         mCallbackManager = CallbackManager.Factory.create();
+
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(
+                    AccessToken oldAccessToken,
+                    AccessToken currentAccessToken) {
+                // Set the access token using
+                // currentAccessToken when it's loaded or set.
+            }
+        };
+        // If the access token is available already assign it.
+        accessToken = AccessToken.getCurrentAccessToken();
+
+
         loginButton = findViewById(R.id.button_facebook_login);
         loginButton.setReadPermissions("email", "public_profile");
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                handleFacebookAccessToken(loginResult.getAccessToken());
+                handleFacebookAccessToken(accessToken);
             }
 
             @Override
@@ -135,9 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
         mGoogleBtn = findViewById(R.id.bt_google_signup);
 
         ShowEnterAnimation();
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-        }*/
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -357,6 +377,13 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         animateRevealClose();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        accessTokenTracker.stopTracking();
+        LoginManager.getInstance().logOut();
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
