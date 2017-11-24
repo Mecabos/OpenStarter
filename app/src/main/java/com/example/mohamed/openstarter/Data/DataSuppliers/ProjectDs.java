@@ -22,7 +22,7 @@ public class ProjectDs {
 
 
     //**** URL STRINGS
-    private final String  URL_GET_ALL = "http://172.19.10.107/androidws/web/app_dev.php/project/getAll" ;
+    private final String  URL_GET_ALL = "https://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php/project/getAll" ;
 
     //**** TAG STRINGS
     private final String  TAG = "PROJECT-WS" ;
