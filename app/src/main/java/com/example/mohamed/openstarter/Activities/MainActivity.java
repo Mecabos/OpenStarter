@@ -1,5 +1,6 @@
 package com.example.mohamed.openstarter.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     ProjectDs projectDs = new ProjectDs();
 
-    ListView projectListView ;
+    ListView projectListView;
     ResideMenu resideMenu;
 
     @Override
@@ -52,21 +53,53 @@ public class MainActivity extends AppCompatActivity {
         resideMenu.setBackground(R.drawable.menu_background);
         resideMenu.attachToActivity(this);
 
-        String titles[] = { "featured projects", "Profile", "Calendar", "Settings" };
-        int icon[] = { R.drawable.ic_launcher, R.drawable.com_facebook_profile_picture_blank_portrait, R.drawable.ic_launcher, R.drawable.ic_launcher };
+        String titles[] = {"featured projects", "Profile", "Calendar", "Settings"};
+        int icon[] = {R.drawable.ic_launcher, R.drawable.com_facebook_profile_picture_blank_portrait, R.drawable.ic_launcher, R.drawable.ic_launcher};
 
-        for (int i = 0; i < titles.length; i++){
-            final ResideMenuItem item = new ResideMenuItem(this, icon[i], titles[i]);
-            item.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                }
-            });
+        final ResideMenuItem item0 = new ResideMenuItem(this, icon[0], titles[0]);
+        final ResideMenuItem item1 = new ResideMenuItem(this, icon[1], titles[1]);
+        final ResideMenuItem item2 = new ResideMenuItem(this, icon[2], titles[2]);
+        final ResideMenuItem item3 = new ResideMenuItem(this, icon[3], titles[3]);
 
-            resideMenu.addMenuItem(item,  ResideMenu.DIRECTION_LEFT); // or  ResideMenu.DIRECTION_RIGHT
+        item0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "item0 clicked", Toast.LENGTH_SHORT).show();
 
-        }
+            }
+        });
+
+        item1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i2 = new Intent(MainActivity.this, ProfilActivity.class);
+                startActivity(i2);
+
+            }
+        });
+
+        item2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "item2 clicked", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        item3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "item3 clicked", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        resideMenu.addMenuItem(item0, ResideMenu.DIRECTION_LEFT); // or  ResideMenu.DIRECTION_RIGHT
+        resideMenu.addMenuItem(item1, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(item2, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(item3, ResideMenu.DIRECTION_LEFT);
+
 
         projectListView = findViewById(R.id.mainProjectListView);
 
@@ -108,13 +141,6 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-
-
-
-
-
-
-
 
 
     }
