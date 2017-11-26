@@ -1,5 +1,6 @@
 package com.example.mohamed.openstarter.Activities;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,12 +50,10 @@ public class LoginActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
 
         View backgroundImage = findViewById(R.id.bg_view);
-
         final int[] drawables = new int[3];
         drawables[0] = R.drawable.gradient_1;
         drawables[1] = R.drawable.gradient_2;
         drawables[2] = R.drawable.gradient_3;
-
         gradientBackgroundPainter = new GradientBackgroundPainter(backgroundImage, drawables);
         gradientBackgroundPainter.start();
 
@@ -79,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(LoginActivity.this, "login successful", Toast.LENGTH_SHORT).show();
                                         ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
-                                        Intent i2 = new Intent(LoginActivity.this, MainActivity.class);
+                                        Intent i2 = new Intent(LoginActivity.this, CompleteRegisterActivity.class);
                                         startActivity(i2, oc2.toBundle());
                                         finish();
                                     } else {

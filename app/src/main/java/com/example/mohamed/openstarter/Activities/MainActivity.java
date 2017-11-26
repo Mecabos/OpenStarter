@@ -1,26 +1,26 @@
 package com.example.mohamed.openstarter.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.google.firebase.auth.FirebaseAuth;
 
 import com.example.mohamed.openstarter.Adapters.ProjectListAdapter;
-import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectDs;
+import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 import com.example.mohamed.openstarter.foldingcell.FoldingCell;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Example of using Folding Cell with ListView and ListAdapter
@@ -47,20 +47,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         //Setting projectListView
         // attach to current activity;
         resideMenu = new ResideMenu(this);
         resideMenu.setBackground(R.drawable.menu_background);
         resideMenu.attachToActivity(this);
 
-        String titles[] = {"featured projects", "Profile", "Calendar", "Settings"};
-        int icon[] = {R.drawable.ic_launcher, R.drawable.com_facebook_profile_picture_blank_portrait, R.drawable.ic_launcher, R.drawable.ic_launcher};
+        String titles[] = {"featured projects", "Profile", "Add new Project", "Settings", "Logout"};
+        int icon[] = {R.drawable.ic_launcher, R.drawable.com_facebook_profile_picture_blank_square, R.drawable.plus, R.drawable.ic_launcher, R.drawable.logout};
 
 
         final ResideMenuItem item0 = new ResideMenuItem(this, icon[0], titles[0]);
         final ResideMenuItem item1 = new ResideMenuItem(this, icon[1], titles[1]);
         final ResideMenuItem item2 = new ResideMenuItem(this, icon[2], titles[2]);
         final ResideMenuItem item3 = new ResideMenuItem(this, icon[3], titles[3]);
+        final ResideMenuItem item4 = new ResideMenuItem(this, icon[4], titles[4]);
 
         item0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,10 +98,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        item4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseAuth.signOut();
+                ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this);
+                Intent i2 = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(i2, oc2.toBundle());
+                finish();
+
+            }
+        });
+
         resideMenu.addMenuItem(item0, ResideMenu.DIRECTION_LEFT); // or  ResideMenu.DIRECTION_RIGHT
         resideMenu.addMenuItem(item1, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(item2, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(item3, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(item4, ResideMenu.DIRECTION_LEFT);
 
 
         projectListView = findViewById(R.id.mainProjectListView);

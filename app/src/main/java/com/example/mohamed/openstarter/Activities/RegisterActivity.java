@@ -140,7 +140,7 @@ public class RegisterActivity extends AppCompatActivity {
                     preferences.edit().putString("nom", firebaseAuth.getCurrentUser().getDisplayName()).apply();
                     preferences.edit().putString("photo", firebaseAuth.getCurrentUser().getPhotoUrl().toString()).apply();
                     ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(RegisterActivity.this);
-                    Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
+                    Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
                     startActivity(i2, oc2.toBundle());
                     finish();
 
@@ -207,7 +207,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                             Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                                             ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(RegisterActivity.this);
-                                            Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
+                                            Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
                                             startActivity(i2, oc2.toBundle());
                                             finish();
 
@@ -276,7 +276,7 @@ public class RegisterActivity extends AppCompatActivity {
                             showToast(user.getEmail());
 
                             ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(RegisterActivity.this);
-                            Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
+                            Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
                             startActivity(i2, oc2.toBundle());
                             finish();
                         } else {
@@ -401,7 +401,7 @@ public class RegisterActivity extends AppCompatActivity {
                             //updateUI(user);
 
                             ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(RegisterActivity.this);
-                            Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
+                            Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
                             startActivity(i2, oc2.toBundle());
                             finish();
                         } else {
