@@ -25,10 +25,10 @@ public class ProfilActivity extends AppCompatActivity {
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-        email = findViewById(R.id.email);
-        fullname = findViewById(R.id.fullname);
-        avatar = findViewById(R.id.avatar);
-        toolbar = findViewById(R.id.toolbar);
+        email = (TextView) findViewById(R.id.email);
+        fullname = (TextView) findViewById(R.id.fullname);
+        avatar = (CircleImageView) findViewById(R.id.avatar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         email.setText(firebaseAuth.getCurrentUser().getEmail());

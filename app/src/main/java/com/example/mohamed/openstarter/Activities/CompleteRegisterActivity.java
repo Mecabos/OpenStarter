@@ -38,11 +38,11 @@ public class CompleteRegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_complete_register);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        firstName = findViewById(R.id.et_first_name);
-        lastName = findViewById(R.id.et_last_name);
-        phoneNumber = findViewById(R.id.et_phone_number);
-        avatar = findViewById(R.id.avatar);
-        go = findViewById(R.id.bt_finish);
+        firstName = (EditText) findViewById(R.id.et_first_name);
+        lastName = (EditText) findViewById(R.id.et_last_name);
+        phoneNumber = (EditText) findViewById(R.id.et_phone_number);
+        avatar = (ImageButton) findViewById(R.id.avatar);
+        go = (Button) findViewById(R.id.bt_finish);
 
         //background set
         View backgroundImage = findViewById(R.id.bg_view);

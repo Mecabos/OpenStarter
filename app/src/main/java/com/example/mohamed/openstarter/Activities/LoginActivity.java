@@ -43,11 +43,11 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        etUsername = findViewById(R.id.et_username);
-        etPassword = findViewById(R.id.et_password);
-        btGo = findViewById(R.id.bt_go);
-        cv = findViewById(R.id.cv);
-        fab = findViewById(R.id.fab);
+        etUsername = (EditText) findViewById(R.id.et_username);
+        etPassword = (EditText) findViewById(R.id.et_password);
+        btGo = (Button) findViewById(R.id.bt_go);
+        cv = (CardView) findViewById(R.id.cv);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         View backgroundImage = findViewById(R.id.bg_view);
         final int[] drawables = new int[3];

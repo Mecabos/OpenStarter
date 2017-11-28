@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         resideMenu.addMenuItem(item4, ResideMenu.DIRECTION_LEFT);
 
 
-        projectListView = findViewById(R.id.mainProjectListView);
+        projectListView = (ListView) findViewById(R.id.mainProjectListView);
 
         projectDs.projectGetAll(new ProjectDs.Callback() {
             @Override

@@ -20,6 +20,10 @@ android {
     buildToolsVersion '27.0.1'
 }
 
+greendao {
+    schemaVersion 3
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
@@ -36,11 +40,14 @@ dependencies {
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.specyci:residemenu:1.6+'
+    compile 'com.lalongooo:rings:1.0.0'
     compile 'com.github.florent37:diagonallayout:1.0.7'
-
+    compile 'com.flaviofaria:kenburnsview:1.0.7'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.flaviofaria:kenburnsview:1.0.7'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.florent37:bubbletab:1.0.0'
+    compile project(':libs:ringprogresslibrary')
 
 }
 
@@ -49,7 +56,7 @@ configurations.all {
         def requested = details.requested
         if (requested.group == 'com.android.support') {
             if (!requested.name.startsWith("multidex")) {
-                details.useVersion '26.1.0'
+                details.useVersion '26.1.0' //26.1.0
             }
         }
     }
@@ -57,3 +64,4 @@ configurations.all {
 }
 
 apply plugin: 'com.google.gms.google-services'
+

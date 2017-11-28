@@ -47,4 +47,10 @@
     <string name="please_tell_us_more_about_you">please tell us more about you</string>
     <string name="welcome_to_open_starter">Welcome to open starter !</string>
     <string name="profil_picture">profil_picture</string>
+    <string name="title_activity_project">ProjectActivity</string>
+    <!--Project Activity Strings -->
+    <string name="project_name_mock" translatable="false">Project #1</string>
+    <string name="project_group_mock" translatable="false">Group #1</string>
+    <string name="project_made_by_badge" translatable="false">Made By :</string>
+    <string name="project_contributors_count_mock" translatable="false">256</string>
 </resources>

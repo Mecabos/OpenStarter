@@ -1,16 +1,22 @@
 package com.example.mohamed.openstarter.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.mohamed.openstarter.Activities.MainActivity;
+import com.example.mohamed.openstarter.Activities.ProjectActivity;
+import com.example.mohamed.openstarter.Helpers.NumbersHelper;
 import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 import com.example.mohamed.openstarter.foldingcell.FoldingCell;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
@@ -32,7 +38,7 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // get item for selected view
-        Project project = getItem(position);
+        final Project project = getItem(position);
         // if cell is exists - reuse it, if not - create the new one from resource
         FoldingCell cell = (FoldingCell) convertView;
         ViewHolder viewHolder;
@@ -78,8 +84,15 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
 
         //processing data
             //Calculating remaining budget
-        Double remainingBudget = project.getBudget() - project.getCurrentBudget() ;
-        Double reachedBudget = (project.getCurrentBudget()*100)/ project.getBudget() ;
+        float remainingBudget = project.getBudget() - project.getCurrentBudget() ;
+        remainingBudget = NumbersHelper.round(remainingBudget, 2);
+            //Calculating reached budget
+        float reachedBudget = (project.getCurrentBudget()*100)/ project.getBudget() ;
+        reachedBudget = NumbersHelper.round(reachedBudget, 2);
+            //Formatting Current Budget
+        Double currentBudget = BigDecimal.valueOf(project.getCurrentBudget()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+            //Formatting Budget
+        Double budget = BigDecimal.valueOf(project.getBudget()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
             //Getting time from finish date
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         String timefromDate1 = timeFormat.format(project.getStartDate());
@@ -90,21 +103,32 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
         String dayFromDate2 = dayFormat.format(project.getFinishDate());
             //Getting deadline
         Long secs = (project.getFinishDate().getTime() - project.getStartDate().getTime()) / 1000;
+        Long days = secs / 86400;
+        secs = secs % 86400;
         Long hours = secs / 3600;
         secs = secs % 3600;
         Long mins = secs / 60;
         secs = secs % 60;
+            // setting the btn request
+        project.setRequestBtnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(getContext(), ProjectActivity.class);
+                myIntent.putExtra("id", project.getId());
+                getContext().startActivity(myIntent);
+            }
+        });
 
         viewHolder.titleProjectName.setText(project.getName());
         viewHolder.contentProjectName.setText(project.getName());
-        viewHolder.titleRemainingBudget.setText("$"+remainingBudget.toString());
+        viewHolder.titleRemainingBudget.setText("$"+remainingBudget);
         viewHolder.contentReachedBudget.setText(reachedBudget+" %");
         viewHolder.titleContributorsCount.setText("241");
         viewHolder.contentContributorsCount.setText("241");
-        viewHolder.titlePledgesSum.setText("$"+project.getCurrentBudget().toString());
-        viewHolder.contentPledgesSum.setText("$"+project.getCurrentBudget().toString());
-        viewHolder.titleGoal.setText("$"+project.getBudget().toString());
-        viewHolder.contentGoal.setText("$"+project.getBudget().toString());
+        viewHolder.titlePledgesSum.setText("$"+ currentBudget);
+        viewHolder.contentPledgesSum.setText("$"+ currentBudget);
+        viewHolder.titleGoal.setText("$"+ budget);
+        viewHolder.contentGoal.setText("$"+ budget);
         viewHolder.titleEndTime.setText(timefromDate2);
         viewHolder.titleEndDay.setText(dayFromDate2);
         viewHolder.contentFromTime.setText(timefromDate1);
@@ -114,7 +138,9 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
         viewHolder.titleShortDescription.setText(project.getShortDescription());
         viewHolder.contentShortDescription.setText(project.getShortDescription());
         viewHolder.titleShortDescription.setText(project.getShortDescription());
-        viewHolder.contentDeadLine.setText(hours.toString()+" Hours "+ mins + "Minutes and " + secs + "seconds");
+        viewHolder.contentDeadLine.setText(days.toString()+ "Days "+ hours.toString()+" Hours "+ mins + "Minutes and " + secs + "seconds");
+
+
 
         // set custom btn handler for list project from that project
         if (project.getRequestBtnClickListener() != null) {

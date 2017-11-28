@@ -30,29 +30,14 @@ public class Project {
     @Property
     private String shortDescription;
     @Property
-    private Double budget;
+    private float budget;
     @Property
-    private Double currentBudget;
+    private float currentBudget;
     @Property
     private String equipmentsList;
     @Property
     private String servicesList;
 
-    //****Transient properties
-    @Transient
-    private String price;
-    @Transient
-    private String pledgePrice;
-    @Transient
-    private String fromAddress;
-    @Transient
-    private String toAddress;
-    @Transient
-    private int requestsCount;
-    @Transient
-    private String date;
-    @Transient
-    private String time;
 
     @Transient
     private View.OnClickListener requestBtnClickListener;
@@ -60,19 +45,9 @@ public class Project {
     public Project() {
     }
 
-    public Project(String price, String pledgePrice, String fromAddress, String toAddress, int requestsCount, String date, String time) {
-        this.price = price;
-        this.pledgePrice = pledgePrice;
-        this.fromAddress = fromAddress;
-        this.toAddress = toAddress;
-        this.requestsCount = requestsCount;
-        this.date = date;
-        this.time = time;
-    }
-
-    @Generated(hash = 206272926)
+    @Generated(hash = 863198504)
     public Project(long id, String name, Date creationDate, Date startDate, Date finishDate, String description, String shortDescription,
-                   Double budget, Double currentBudget, String equipmentsList, String servicesList) {
+            float budget, float currentBudget, String equipmentsList, String servicesList) {
         this.id = id;
         this.name = name;
         this.creationDate = creationDate;
@@ -120,11 +95,11 @@ public class Project {
         return shortDescription;
     }
 
-    public Double getBudget() {
+    public float getBudget() {
         return budget;
     }
 
-    public Double getCurrentBudget() {
+    public float getCurrentBudget() {
         return currentBudget;
     }
 
@@ -134,10 +109,6 @@ public class Project {
 
     public String getServicesList() {
         return servicesList;
-    }
-
-    public String getPrice() {
-        return price;
     }
 
     public void setId(long id) {
@@ -168,11 +139,11 @@ public class Project {
         this.shortDescription = shortDescription;
     }
 
-    public void setBudget(Double budget) {
+    public void setBudget(float budget) {
         this.budget = budget;
     }
 
-    public void setCurrentBudget(Double currentBudget) {
+    public void setCurrentBudget(float currentBudget) {
         this.currentBudget = currentBudget;
     }
 
@@ -184,57 +155,6 @@ public class Project {
         this.servicesList = servicesList;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getPledgePrice() {
-        return pledgePrice;
-    }
-
-    public void setPledgePrice(String pledgePrice) {
-        this.pledgePrice = pledgePrice;
-    }
-
-    public String getFromAddress() {
-        return fromAddress;
-    }
-
-    public void setFromAddress(String fromAddress) {
-        this.fromAddress = fromAddress;
-    }
-
-    public String getToAddress() {
-        return toAddress;
-    }
-
-    public void setToAddress(String toAddress) {
-        this.toAddress = toAddress;
-    }
-
-    public int getRequestsCount() {
-        return requestsCount;
-    }
-
-    public void setRequestsCount(int requestsCount) {
-        this.requestsCount = requestsCount;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
 
     public View.OnClickListener getRequestBtnClickListener() {
         return requestBtnClickListener;
@@ -263,42 +183,5 @@ public class Project {
         result = 31 * result + (getCreationDate() != null ? getCreationDate().hashCode() : 0);
         return result;
     }
-
-    /**
-     * @return List of elements prepared for tests
-     */
-    public static ArrayList<Project> getTestingList() {
-        ArrayList<Project> projects = new ArrayList<>();
-        projects.add(new Project("$14", "$270", "W 79th St, NY, 10024", "W 139th St, NY, 10030", 3, "TODAY", "05:10 PM"));
-        projects.add(new Project("$23", "$116", "W 36th St, NY, 10015", "W 114th St, NY, 10037", 10, "TODAY", "11:10 AM"));
-        projects.add(new Project("$63", "$350", "W 36th St, NY, 10029", "56th Ave, NY, 10041", 0, "TODAY", "07:11 PM"));
-        projects.add(new Project("$19", "$150", "12th Ave, NY, 10012", "W 57th St, NY, 10048", 8, "TODAY", "4:15 AM"));
-        projects.add(new Project("$5", "$300", "56th Ave, NY, 10041", "W 36th St, NY, 10029", 0, "TODAY", "06:15 PM"));
-        return projects;
-
-    }
-    /*
-    public List<Project> findAllItems() {
-        JSONObject serviceResult = ConnectionUtilTask.requestWebService(
-                "http://localhost/androidws/web/app_dev.php/project/getAll");
-
-        List<Project> foundItems = new ArrayList<Project>(20);
-
-        try {
-            JSONArray items = serviceResult.getJSONArray("items");
-
-            for (int i = 0; i < items.length(); i++) {
-                JSONObject obj = items.getJSONObject(i);
-                foundItems.add(
-                        new Project(obj.getString("name"),
-                                obj.getDouble("budget")));
-            }
-
-        } catch (JSONException e) {
-            // handle exception
-        }
-
-        return foundItems;
-    }*/
 
 }
