@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "52856812020-ev20o33ipvlp2l2b6c2ngdlaii8pd1gj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mohamed.openstarter",
+            "certificate_hash": "3de950fb5697886b51b71a31ffc80ed60e382c90"
+          }
+        },
+        {
           "client_id": "52856812020-24ep0an773tu4ft9vc5ug04e2jdcucsq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -1,6 +1,5 @@
 package com.example.mohamed.openstarter.Activities;
 
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.transition.Explode;
@@ -43,11 +41,11 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        etUsername = (EditText) findViewById(R.id.et_username);
-        etPassword = (EditText) findViewById(R.id.et_password);
-        btGo = (Button) findViewById(R.id.bt_go);
-        cv = (CardView) findViewById(R.id.cv);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        etUsername = findViewById(R.id.et_username);
+        etPassword = findViewById(R.id.et_password);
+        btGo = findViewById(R.id.bt_go);
+        cv = findViewById(R.id.cv);
+        fab = findViewById(R.id.fab);
 
         View backgroundImage = findViewById(R.id.bg_view);
         final int[] drawables = new int[3];
@@ -77,9 +75,9 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if (task.isSuccessful()) {
                                         Toast.makeText(LoginActivity.this, "login successful", Toast.LENGTH_SHORT).show();
-                                        ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
+                                        //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
                                         Intent i2 = new Intent(LoginActivity.this, CompleteRegisterActivity.class);
-                                        startActivity(i2, oc2.toBundle());
+                                        startActivity(i2);
                                         finish();
                                     } else {
                                         Log.e("Registration", task.getException().getMessage());

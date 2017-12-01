@@ -366,11 +366,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/btnRequest"
+            android:background="#1C6E8C"
             android:padding="10dp"
             android:text="@string/details_btn_text"
             android:textAlignment="center"
-            android:textColor="@color/mainTextColor"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
     </LinearLayout>

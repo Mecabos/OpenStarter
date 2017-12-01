@@ -2,7 +2,6 @@ package com.example.mohamed.openstarter.Activities;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
@@ -22,8 +21,8 @@ public class IntroductionActivity extends AhoyOnboarderActivity {
         super.onCreate(savedInstanceState);
 
         AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("City Guide", "Detailed guides to help you plan your trip.", R.drawable.avatar);
-        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Travel Blog", "Share your travel experiences with a vast network of fellow travellers.", R.drawable.avatar);
-        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Chat", "Connect with like minded people and exchange your travel stories.", R.drawable.avatar);
+        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Travel Blog", "Share your travel experiences with a vast network of fellow travellers.", R.drawable.com_facebook_button_login_logo);
+        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Chat", "Connect with like minded people and exchange your travel stories.", R.drawable.com_facebook_favicon_blue);
 
         ahoyOnboarderCard1.setBackgroundColor(R.color.black_transparent);
         ahoyOnboarderCard2.setBackgroundColor(R.color.black_transparent);
@@ -48,9 +47,7 @@ public class IntroductionActivity extends AhoyOnboarderActivity {
         setGradientBackground();
 
         //set the button style you created
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            setFinishButtonDrawableStyle(ContextCompat.getDrawable(this, R.drawable.rounded_button));
-        }
+        setFinishButtonDrawableStyle(ContextCompat.getDrawable(this, R.drawable.rounded_button));
 
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
         setFont(face);
