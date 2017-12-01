@@ -40,11 +40,8 @@ public class ProjectDs {
 
     public void projectGetAll(final Callback callback){
         // Tag used to cancel the request
-        String req_tag = REQUEST_TAG_GET_ALL;
 
-        String url = URL_GET_ALL ;
-
-        JsonArrayRequest req = new JsonArrayRequest(url,
+        JsonArrayRequest req = new JsonArrayRequest(URL_GET_ALL,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -60,7 +57,7 @@ public class ProjectDs {
         });
 
 
-        AppController.getInstance().addToRequestQueue(req, req_tag);
+        AppController.getInstance().addToRequestQueue(req, REQUEST_TAG_GET_ALL);
     }
 
 

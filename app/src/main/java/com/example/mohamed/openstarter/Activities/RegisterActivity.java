@@ -96,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
         accessToken = AccessToken.getCurrentAccessToken();
 
 
-        loginButton = (LoginButton) findViewById(R.id.button_facebook_login);
+        loginButton = findViewById(R.id.button_facebook_login);
         loginButton.setReadPermissions("email", "public_profile");
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -148,13 +148,13 @@ public class RegisterActivity extends AppCompatActivity {
             }
         };
 
-        next = (Button) findViewById(R.id.bt_next);
-        username = (EditText) findViewById(R.id.et_username_reg);
-        pass = (EditText) findViewById(R.id.et_password_reg);
-        repeatpass = (EditText) findViewById(R.id.et_repeatpassword_reg);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        cvAdd = (CardView) findViewById(R.id.cv_add);
-        mGoogleBtn = (SignInButton) findViewById(R.id.bt_google_signup);
+        next = findViewById(R.id.bt_next);
+        username = findViewById(R.id.et_username_reg);
+        pass = findViewById(R.id.et_password_reg);
+        repeatpass = findViewById(R.id.et_repeatpassword_reg);
+        fab = findViewById(R.id.fab);
+        cvAdd = findViewById(R.id.cv_add);
+        mGoogleBtn = findViewById(R.id.bt_google_signup);
 
         ShowEnterAnimation();
 

@@ -3,15 +3,14 @@ package com.example.mohamed.openstarter.Activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import com.example.mohamed.openstarter.Helpers.GradientBackgroundPainter;
 import com.example.mohamed.openstarter.R;
@@ -19,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.net.URI;
 
 public class CompleteRegisterActivity extends AppCompatActivity {
 
@@ -38,11 +36,11 @@ public class CompleteRegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_complete_register);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        firstName = (EditText) findViewById(R.id.et_first_name);
-        lastName = (EditText) findViewById(R.id.et_last_name);
-        phoneNumber = (EditText) findViewById(R.id.et_phone_number);
-        avatar = (ImageButton) findViewById(R.id.avatar);
-        go = (Button) findViewById(R.id.bt_finish);
+        firstName = findViewById(R.id.et_first_name);
+        lastName = findViewById(R.id.et_last_name);
+        phoneNumber = findViewById(R.id.et_phone_number);
+        avatar = findViewById(R.id.avatar);
+        go = findViewById(R.id.bt_finish);
 
         //background set
         View backgroundImage = findViewById(R.id.bg_view);
@@ -69,7 +67,7 @@ public class CompleteRegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(CompleteRegisterActivity.this);
-                Intent i2 = new Intent(CompleteRegisterActivity.this, MainActivity.class);
+                Intent i2 = new Intent(CompleteRegisterActivity.this, IntroductionActivity.class);
                 startActivity(i2, oc2.toBundle());
                 finish();
             }

@@ -74,6 +74,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/selector_bg_edit_2"
+                                android:defaultFocusHighlightEnabled="false"
                                 android:hint="Username"
                                 android:inputType="textPersonName"
                                 android:paddingBottom="2dp"

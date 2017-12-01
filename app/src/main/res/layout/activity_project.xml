@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/diagonallayout_background"
+            android:src="@drawable/zungle"
             />
 
         <TextView
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/project_name_mock"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:layout_gravity="top|left"
             android:fontFamily="sans-serif-light"
             android:layout_marginLeft="30dp"
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/project_made_by_badge"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:layout_gravity="top|left"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-condensed"
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/project_group_mock"
                 android:textStyle="bold"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:layout_gravity="top|left"
                 android:fontFamily="sans-serif-condensed"
                 android:layout_marginLeft="10dp"
@@ -168,7 +168,7 @@
             android:background="@android:color/white"
             android:elevation="10dp"
 
-            app:bubbleTab_circleColor="@color/colorAccent"
+            app:bubbleTab_circleColor="#016FB9"
             app:bubbleTab_circleRatio="1.25"
             app:bubbleTab_image0="@drawable/ic_local_play"
             app:bubbleTab_image1="@drawable/ic_person_pin"

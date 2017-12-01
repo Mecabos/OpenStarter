@@ -115,6 +115,7 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
             public void onClick(View v) {
                 Intent myIntent = new Intent(getContext(), ProjectActivity.class);
                 myIntent.putExtra("id", project.getId());
+                myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getContext().startActivity(myIntent);
             }
         });
