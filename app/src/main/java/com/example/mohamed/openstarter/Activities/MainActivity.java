@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.mohamed.openstarter.Data.DataSuppliers.CommentDs;
 import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
+import com.example.mohamed.openstarter.Models.Comment;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.example.mohamed.openstarter.Adapters.ProjectListAdapter;
@@ -118,31 +121,16 @@ public class MainActivity extends AppCompatActivity {
         resideMenu.addMenuItem(item3, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(item4, ResideMenu.DIRECTION_LEFT);
 
-
         projectListView = (ListView) findViewById(R.id.mainProjectListView);
 
         projectDs.projectGetAll(new ProjectDs.Callback() {
             @Override
             public void onSuccess(List<Project> projectList) {
 
-                // add custom btn handler to first list project
-                projectList.get(0).setRequestBtnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(), "CUSTOM HANDLER FOR FIRST BUTTON", Toast.LENGTH_SHORT).show();
-                    }
-                });
 
                 // create custom adapter that holds elements and their state (we need hold a id's of unfolded elements for reusable elements)
                 final ProjectListAdapter adapter = new ProjectListAdapter(getBaseContext(), projectList);
 
-                // add default btn handler for each request btn on each project if custom handler not found
-                adapter.setDefaultRequestBtnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(), "DEFAULT HANDLER FOR ALL BUTTONS", Toast.LENGTH_SHORT).show();
-                    }
-                });
 
                 // set elements to adapter
                 projectListView.setAdapter(adapter);

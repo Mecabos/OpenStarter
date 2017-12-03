@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/zungle"
+            android:src="@drawable/diagonallayout_background"
             />
 
         <TextView
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/project_name_mock"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:layout_gravity="top|left"
             android:fontFamily="sans-serif-light"
             android:layout_marginLeft="30dp"
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/project_made_by_badge"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:layout_gravity="top|left"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-condensed"
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/project_group_mock"
                 android:textStyle="bold"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:layout_gravity="top|left"
                 android:fontFamily="sans-serif-condensed"
                 android:layout_marginLeft="10dp"
@@ -78,25 +78,7 @@
 
     </com.github.florent37.diagonallayout.DiagonalLayout>
 
-    <com.ldoublem.ringPregressLibrary.RingProgress
-        android:id="@+id/ring_progress"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:bgColor="#707070"
-        app:bgShadowColor="#ffffff"
-        app:ringSweepAngle="90"
-        app:ringWidthScale="0.5"
-        app:rotate="270"
-        app:showBackground="true"
-        app:showBackgroundShadow="false"
-        app:showRingCorner="false"
-        android:elevation="5dp"
-        android:layout_alignBottom="@+id/diagonalLayout"
-        android:layout_marginBottom="-80dp"
-        android:layout_marginLeft="-100dp"
 
-        >
-    </com.ldoublem.ringPregressLibrary.RingProgress>
 
     <LinearLayout
         android:id="@+id/project_under_header_text"
@@ -125,14 +107,14 @@
             android:layout_weight="2"
             android:layout_marginRight="15dp"
             android:gravity="center"
-            android:background="@drawable/circle"
+            android:background="@drawable/square"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/contributors_count_badge"
-                android:textColor="#3E3E3E"
+                android:text="@string/project_category_badge"
+                android:textColor="#ffff"
                 android:fontFamily="sans-serif-condensed"
                 android:textSize="14sp"/>
 
@@ -140,9 +122,9 @@
                 android:id="@+id/project_contributors_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/project_contributors_count_mock"
+                android:text="@string/project_category_mock"
                 android:textStyle="bold"
-                android:textColor="#3E3E3E"
+                android:textColor="#ffff"
                 android:fontFamily="sans-serif-condensed"
                 android:textSize="14sp"/>
 
@@ -168,7 +150,7 @@
             android:background="@android:color/white"
             android:elevation="10dp"
 
-            app:bubbleTab_circleColor="#016FB9"
+            app:bubbleTab_circleColor="@color/colorPrimary"
             app:bubbleTab_circleRatio="1.25"
             app:bubbleTab_image0="@drawable/ic_local_play"
             app:bubbleTab_image1="@drawable/ic_person_pin"
@@ -183,6 +165,26 @@
 
 
     </LinearLayout>
+
+    <com.ldoublem.ringPregressLibrary.RingProgress
+        android:id="@+id/ring_progress"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:bgColor="#707070"
+        app:bgShadowColor="#ffffff"
+        app:ringSweepAngle="90"
+        app:ringWidthScale="0.5"
+        app:rotate="270"
+        app:showBackground="true"
+        app:showBackgroundShadow="false"
+        app:showRingCorner="false"
+        android:elevation="5dp"
+        android:layout_alignBottom="@+id/diagonalLayout"
+        android:layout_marginBottom="-80dp"
+        android:layout_marginLeft="-100dp"
+
+        >
+    </com.ldoublem.ringPregressLibrary.RingProgress>
 
 
     <android.support.v7.widget.Toolbar

@@ -68,8 +68,6 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
             viewHolder.contentDeadLine = cell.findViewById(R.id.content_deadline);
 
 
-
-
             viewHolder.contentRequestBtn = cell.findViewById(R.id.content_request_btn);
             cell.setTag(viewHolder);
         } else {
@@ -115,7 +113,7 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
             public void onClick(View v) {
                 Intent myIntent = new Intent(getContext(), ProjectActivity.class);
                 myIntent.putExtra("id", project.getId());
-                myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 getContext().startActivity(myIntent);
             }
         });

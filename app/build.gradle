@@ -50,6 +50,8 @@ dependencies {
     compile 'com.github.florent37:bubbletab:1.0.0'
     compile project(':libs:ringprogresslibrary')
     compile 'com.codemybrainsout.onboarding:onboarder:1.0.4'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
+
 
 
 }
