@@ -70,9 +70,15 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
     }
 
     private static class CommentHolder {
-
         TextView userName;
         TextView text;
         ImageView userImage;
+    }
+
+    public void add(Comment comment)
+    {
+        commentsList.add(comment);
+        notifyDataSetChanged();
+
     }
 }
