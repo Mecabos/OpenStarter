@@ -1,27 +1,21 @@
 package com.example.mohamed.openstarter.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.mohamed.openstarter.Data.DataSuppliers.CommentDs;
-import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
-import com.example.mohamed.openstarter.Models.Comment;
-import com.google.firebase.auth.FirebaseAuth;
-
 import com.example.mohamed.openstarter.Adapters.ProjectListAdapter;
 import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectDs;
 import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 import com.example.mohamed.openstarter.foldingcell.FoldingCell;
+import com.google.firebase.auth.FirebaseAuth;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
 
@@ -121,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         resideMenu.addMenuItem(item3, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(item4, ResideMenu.DIRECTION_LEFT);
 
-        projectListView = (ListView) findViewById(R.id.mainProjectListView);
+        projectListView = findViewById(R.id.mainProjectListView);
 
         projectDs.projectGetAll(new ProjectDs.Callback() {
             @Override

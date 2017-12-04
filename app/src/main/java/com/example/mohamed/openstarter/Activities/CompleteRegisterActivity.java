@@ -5,13 +5,13 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
 import com.example.mohamed.openstarter.Helpers.GradientBackgroundPainter;
 import com.example.mohamed.openstarter.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -66,9 +66,13 @@ public class CompleteRegisterActivity extends AppCompatActivity {
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(CompleteRegisterActivity.this);
+
+                UserDs.addUser(firebaseAuth.getCurrentUser().getEmail(),firstName.getText().toString(),lastName.getText().toString(),"date","bio");
+
+
+                //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(CompleteRegisterActivity.this);
                 Intent i2 = new Intent(CompleteRegisterActivity.this, IntroductionActivity.class);
-                startActivity(i2, oc2.toBundle());
+                startActivity(i2/*, oc2.toBundle()*/);
                 finish();
             }
         });

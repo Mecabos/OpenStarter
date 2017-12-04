@@ -16,12 +16,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
 import com.example.mohamed.openstarter.Helpers.GradientBackgroundPainter;
+import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -74,9 +78,27 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                                     if (task.isSuccessful()) {
+
+                                        UserDs.getUserByEmail(etUsername.getText().toString(),new UserDs.Callback() {
+                                            @Override
+                                            public void onSuccess(List<User> userList) {
+
+                                                if (userList.isEmpty()) {
+                                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                                        Log.d("userr",userList.stream().toString());
+                                                    }
+                                                    Log.d("userr","user missing");
+                                                    Intent i2 = new Intent(LoginActivity.this, CompleteRegisterActivity.class);
+                                                    startActivity(i2);
+                                                    finish();
+                                                }
+
+                                            }
+                                        });
+
                                         Toast.makeText(LoginActivity.this, "login successful", Toast.LENGTH_SHORT).show();
                                         //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
-                                        Intent i2 = new Intent(LoginActivity.this, CompleteRegisterActivity.class);
+                                        Intent i2 = new Intent(LoginActivity.this, IntroductionActivity.class);
                                         startActivity(i2);
                                         finish();
                                     } else {

@@ -1,9 +1,8 @@
 package com.example.mohamed.openstarter.Activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.example.mohamed.openstarter.R;
@@ -25,10 +24,10 @@ public class ProfilActivity extends AppCompatActivity {
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-        email = (TextView) findViewById(R.id.email);
-        fullname = (TextView) findViewById(R.id.fullname);
-        avatar = (CircleImageView) findViewById(R.id.avatar);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        email = findViewById(R.id.email);
+        fullname = findViewById(R.id.fullname);
+        avatar = findViewById(R.id.avatar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         email.setText(firebaseAuth.getCurrentUser().getEmail());
