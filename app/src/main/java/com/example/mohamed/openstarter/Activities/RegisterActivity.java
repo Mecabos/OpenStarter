@@ -69,6 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
     LoginButton fbloginButton;
     AccessTokenTracker accessTokenTracker;
     AccessToken accessToken;
+    public static String PREFERENCE_FIlENAME = "intro";
 
     private GoogleSignInClient mGoogleSignInClient;
     private static final String TAG = "GoogleActivity";
@@ -221,10 +222,18 @@ public class RegisterActivity extends AppCompatActivity {
                                                         finish();
                                                     } else {
                                                         Toast.makeText(RegisterActivity.this, "login successful", Toast.LENGTH_SHORT).show();
+
                                                         //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
-                                                        Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
-                                                        startActivity(i2);
-                                                        finish();
+                                                        if (getIntroSharedPref().equals("waiting")){
+                                                            Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
+                                                            startActivity(i2);
+                                                            finish();
+                                                        }
+                                                        else{
+                                                            Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
+                                                            startActivity(i2);
+                                                            finish();
+                                                        }
                                                     }
                                                 }
 
@@ -316,9 +325,17 @@ public class RegisterActivity extends AppCompatActivity {
                                     } else {
                                         Toast.makeText(RegisterActivity.this, "login successful", Toast.LENGTH_SHORT).show();
                                         //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
-                                        Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
-                                        startActivity(i2);
-                                        finish();
+
+                                        if (getIntroSharedPref().equals("waiting")){
+                                            Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
+                                            startActivity(i2);
+                                            finish();
+                                        }
+                                        else{
+                                            Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
+                                            startActivity(i2);
+                                            finish();
+                                        }
                                     }
                                 }
 
@@ -462,9 +479,16 @@ public class RegisterActivity extends AppCompatActivity {
                                     } else {
                                         Toast.makeText(RegisterActivity.this, "login successful", Toast.LENGTH_SHORT).show();
                                         //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
-                                        Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
-                                        startActivity(i2);
-                                        finish();
+                                        if (getIntroSharedPref().equals("waiting")){
+                                            Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
+                                            startActivity(i2);
+                                            finish();
+                                        }
+                                        else{
+                                            Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
+                                            startActivity(i2);
+                                            finish();
+                                        }
                                     }
                                 }
 
@@ -485,5 +509,10 @@ public class RegisterActivity extends AppCompatActivity {
                         // ...
                     }
                 });
+    }
+
+    public String getIntroSharedPref(){
+        SharedPreferences tutoPref = getSharedPreferences(PREFERENCE_FIlENAME, Context.MODE_PRIVATE);
+        return tutoPref.getString("intro", "waiting");
     }
 }

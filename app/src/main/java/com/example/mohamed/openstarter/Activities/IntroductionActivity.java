@@ -1,11 +1,12 @@
 package com.example.mohamed.openstarter.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
-import android.widget.Toast;
 
 import com.codemybrainsout.onboarder.AhoyOnboarderActivity;
 import com.codemybrainsout.onboarder.AhoyOnboarderCard;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IntroductionActivity extends AhoyOnboarderActivity {
+
+    public static String PREFERENCE_FIlENAME = "intro";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +58,19 @@ public class IntroductionActivity extends AhoyOnboarderActivity {
         setOnboardPages(pages);
     }
 
+    public void setIntroSharedPref(){
+        SharedPreferences tutoPref  = getSharedPreferences(PREFERENCE_FIlENAME, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = tutoPref.edit();
+        editor.putString("intro","done");
+        editor.apply();
+
+    }
+
     @Override
     public void onFinishButtonPressed() {
-        Toast.makeText(this, "Finish Pressed", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Finish Pressed", Toast.LENGTH_SHORT).show();
+        setIntroSharedPref();
         ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(IntroductionActivity.this);
         Intent i2 = new Intent(IntroductionActivity.this, MainActivity.class);
         startActivity(i2, oc2.toBundle());

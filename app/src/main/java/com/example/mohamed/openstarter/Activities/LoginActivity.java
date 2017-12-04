@@ -1,6 +1,7 @@
 package com.example.mohamed.openstarter.Activities;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -35,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     CardView cv;
     FloatingActionButton fab;
     private GradientBackgroundPainter gradientBackgroundPainter;
-    private SharedPreferences preferences;
+    public static String PREFERENCE_FIlENAME = "intro";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,10 +93,21 @@ public class LoginActivity extends AppCompatActivity {
                                                     finish();
                                                 } else {
                                                     Toast.makeText(LoginActivity.this, "login successful", Toast.LENGTH_SHORT).show();
+
+
                                                     //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
-                                                    Intent i2 = new Intent(LoginActivity.this, IntroductionActivity.class);
-                                                    startActivity(i2);
-                                                    finish();
+                                                    if (getIntroSharedPref().equals("waiting")){
+                                                        Intent i2 = new Intent(LoginActivity.this, IntroductionActivity.class);
+                                                        startActivity(i2);
+                                                        finish();
+                                                    }
+                                                    else{
+                                                        Intent i2 = new Intent(LoginActivity.this, MainActivity.class);
+                                                        startActivity(i2);
+                                                        finish();
+                                                    }
+
+
                                                 }
                                             }
 
@@ -133,6 +145,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
+
+    public String getIntroSharedPref(){
+        SharedPreferences tutoPref = getSharedPreferences(PREFERENCE_FIlENAME, Context.MODE_PRIVATE);
+        return tutoPref.getString("intro", "waiting");
+    }
 
     @Override
     protected void onDestroy() {
