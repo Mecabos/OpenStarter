@@ -124,6 +124,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
         String minutesString = ((startDateTime.second > 9) ?
                 String.valueOf(startDateTime.second) : ("0" + startDateTime.second));
         String time = hourString + ":" + minutesString;
+
         startDateTimeTextView.setText(time);
     }
 }
