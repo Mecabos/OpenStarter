@@ -24,8 +24,8 @@ public class ProjectDs {
 
 
     //**** URL STRINGS
-    private final String URL_SERVER = "http://192.168.1.5/androidws/web/app_dev.php";
-    //private final String URL_SERVER = "https://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
+    //private final String URL_SERVER = "http://192.168.1.60/androidws/web/app_dev.php";
+    private final String URL_SERVER = "https://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
     private final String  URL_GET_ALL = URL_SERVER + "/project/getAll" ;
 
     //**** TAG STRINGS
@@ -57,7 +57,7 @@ public class ProjectDs {
                 /*
                 String body ="";
                 //get status code here
-                String statusCode = String.valueOf(error.networkResponse.statusCode);
+                //String statusCode = String.valueOf(error.networkResponse.statusCode);
                 //get response body and parse with appropriate encoding
                 if(error.networkResponse.data!=null) {
                     try {

@@ -47,6 +47,18 @@ public class User {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", birthDate=" + birthDate +
+                ", bio='" + bio + '\'' +
+                '}';
+    }
+
     public long getId() {
         return id;
     }
