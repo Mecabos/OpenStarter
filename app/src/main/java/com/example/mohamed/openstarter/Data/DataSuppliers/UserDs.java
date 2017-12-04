@@ -64,14 +64,7 @@ pDialog.show();*/
                     Log.e(TAG,body);
                 */}
             }) {
-
-
-
-
             };
-
-// Adding request to request queue
-            Log.d("TAG", Arrays.toString(jsonObjReq.getBody()));
             AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
         }
 }

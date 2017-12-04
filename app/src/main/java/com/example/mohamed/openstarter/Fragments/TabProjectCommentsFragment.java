@@ -5,10 +5,14 @@ import android.app.ListFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.mohamed.openstarter.Adapters.CommentListAdapter;
 import com.example.mohamed.openstarter.Data.DataSuppliers.CommentDs;
@@ -21,10 +25,12 @@ import java.util.List;
  * Created by Bacem on 11/27/2017.
  */
 
-public class TabProjectCommentsFragment extends Fragment {
+public class TabProjectCommentsFragment extends Fragment implements View.OnTouchListener {
 
     CommentDs commentDs = new CommentDs();
+    CommentListAdapter adapter;
     ListView commentsListView;
+    EditText etComment;
 
 
     private static final String TAG = "TabProjectCommentsFragment";
@@ -33,27 +39,65 @@ public class TabProjectCommentsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_project_comments_fragment,container,false) ;
-
         perform(view);
-
-
-
         return  view ;
     }
 
     public void perform(View v) {
 
-        commentsListView = (ListView) v.findViewById(R.id.lv_comments);
+        commentsListView = v.findViewById(R.id.lv_comments);
+        etComment = v.findViewById(R.id.et_comment);
+
+        etComment.setOnTouchListener(this);
+
+
 
         commentDs.commentGetByProject("2",new CommentDs.Callback() {
             @Override
-            public void onSuccess(List< Comment> commentsList) {
-
-                final CommentListAdapter adapter = new CommentListAdapter(getActivity(),R.layout.item_comment, commentsList);
-
-                // set elements to adapter
+            public void onSuccessGet(List< Comment> commentsList) {
+                adapter = new CommentListAdapter(getActivity(),R.layout.item_comment, commentsList);
+                Log.d("aaaaaaaaaaa",adapter.getCount()+"");
                 commentsListView.setAdapter(adapter);
             }
+            @Override
+            public void onSuccessCreate(Comment createdComment) {}
+
         });
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        final int DRAWABLE_LEFT = 0;
+        final int DRAWABLE_TOP = 1;
+        final int DRAWABLE_RIGHT = 2;
+        final int DRAWABLE_BOTTOM = 3;
+
+        if(event.getAction() == MotionEvent.ACTION_UP) {
+            if(event.getRawX() >= (etComment.getRight() - etComment.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                EditText comment = (EditText) v ;
+                String commentText = comment.getText().toString() ;
+                String userId = "2";//TODO: dynamic
+                String projectId = "2";//TODO: dynamic
+                if (commentText.trim().length() == 0 )  Toast.makeText(getActivity(), "Write a comment before sending",Toast.LENGTH_LONG).show();
+                else {
+                    commentDs.commentCreate(commentText,userId,projectId,new CommentDs.Callback() {
+                        @Override
+                        public void onSuccessGet(List< Comment> commentsList) {}
+                        @Override
+                        public void onSuccessCreate(Comment createdComment) {
+                            //adapter.add(createdComment);
+
+                            Toast.makeText(getActivity(), "Comment posted",Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+
+                }
+
+
+                return true;
+            }
+        }
+        return false;
     }
 }
