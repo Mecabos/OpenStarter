@@ -14,8 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activities.SplashScreenActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <activity
             android:name=".Activities.RegisterActivity"
             android:theme="@style/Translucent" />
@@ -53,7 +52,8 @@
             android:name=".Activities.ProjectActivity"
             android:label="@string/title_activity_project"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.IntroductionActivity"></activity>
+        <activity android:name=".Activities.IntroductionActivity" />
+        <activity android:name=".Activities.CreateProjectActivity"></activity>
     </application>
 
 </manifest>

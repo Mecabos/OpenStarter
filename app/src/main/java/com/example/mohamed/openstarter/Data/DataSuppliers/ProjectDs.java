@@ -53,6 +53,8 @@ public class ProjectDs {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                //TODO: FIX IF NO CONNECTION
+                /*
                 String body ="";
                 //get status code here
                 String statusCode = String.valueOf(error.networkResponse.statusCode);
@@ -66,7 +68,7 @@ public class ProjectDs {
                 }
                 Log.e(TAG,body);
 
-            }
+            */}
         });
 
 

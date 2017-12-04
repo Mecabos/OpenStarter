@@ -54,7 +54,14 @@
     <string name="project_made_by_badge" translatable="false">Made By :</string>
     <string name="project_category_badge" translatable="false">CATEGORY</string>
     <string name="project_category_mock" translatable="false">ART</string>
-    <!-- -->
+    <!--New Project Activity Strings -->
+    <string-array name="create_project_steps_titles">
+        <item>Name</item>
+        <item>Description</item>
+        <item>Start Date</item>
+        <item>Budget</item>
+    </string-array>
+
     <string name="logo">logo</string>
     <string name="email">Email</string>
     <string name="confirm_password">Confirm password</string>

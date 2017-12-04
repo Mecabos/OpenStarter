@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
         //******************************
         UserDs ds = new UserDs();
-        ds.getUserByEmail("mohamed@gmail.com", new UserDs.Callback() {
+        ds.getUserByEmail("@gmail.com", new UserDs.Callback() {
                     @Override
                     public void onSuccess(User createdUser) {
 

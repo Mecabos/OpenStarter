@@ -51,7 +51,7 @@ dependencies {
     compile project(':libs:ringprogresslibrary')
     compile 'com.codemybrainsout.onboarding:onboarder:1.0.4'
     compile 'de.hdodenhof:circleimageview:2.2.0'
-
+    compile 'com.ernestoyaquello.stepperform:vertical-stepper-form:0.9.9'
 
 
 }
