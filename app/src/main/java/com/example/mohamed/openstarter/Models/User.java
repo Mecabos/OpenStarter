@@ -19,6 +19,8 @@ public class User {
     @Property
     private String lastName;
     @Property
+    private String email;
+    @Property
     private Date birthDate;
     @Property
     private String bio;
@@ -34,8 +36,7 @@ public class User {
         User user = (User) o;
 
         if (id != user.id) return false;
-        if (!firstName.equals(user.firstName)) return false;
-        return lastName.equals(user.lastName);
+        return firstName.equals(user.firstName) && lastName.equals(user.lastName);
     }
 
     @Override
@@ -84,5 +85,13 @@ public class User {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

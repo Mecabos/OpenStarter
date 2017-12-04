@@ -25,8 +25,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.List;
-
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
@@ -79,15 +77,14 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if (task.isSuccessful()) {
 
-                                        UserDs.getUserByEmail(etUsername.getText().toString(),new UserDs.Callback() {
+                                        UserDs.getUserByEmail(etUsername.getText().toString(), new UserDs.Callback() {
                                             @Override
-                                            public void onSuccess(List<User> userList) {
+                                            public void onSuccess(User createdUser) {
 
-                                                if (userList.isEmpty()) {
-                                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                                        Log.d("userr",userList.stream().toString());
-                                                    }
-                                                    Log.d("userr","user missing");
+                                                if (createdUser.getEmail().isEmpty()) {
+
+                                                    Log.d("userr", createdUser.toString());
+                                                    Log.d("userr", "user missing");
                                                     Intent i2 = new Intent(LoginActivity.this, CompleteRegisterActivity.class);
                                                     startActivity(i2);
                                                     finish();

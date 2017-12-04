@@ -16,7 +16,6 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,8 +51,10 @@ public class UserDs {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        List<User> userList = Arrays.asList(mGson.fromJson(response.toString(), User[].class));
-                        callback.onSuccess(userList);
+                        User createdUser = mGson.fromJson(response.toString(), User.class);
+                        callback.onSuccess(createdUser);
+
+
                     }
 
                 }, new Response.ErrorListener() {
@@ -68,7 +69,7 @@ public class UserDs {
     }
 
     public interface Callback{
-        void onSuccess(List<User> result);
+        void onSuccess(User result);
     }
 
 
