@@ -5,11 +5,11 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.transition.Explode;
 import android.transition.Transition;
@@ -17,12 +17,14 @@ import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.Window;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
+import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.R;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -64,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button next;
     SignInButton mGoogleBtn;
     CallbackManager mCallbackManager;
-    LoginButton loginButton;
+    LoginButton fbloginButton;
     AccessTokenTracker accessTokenTracker;
     AccessToken accessToken;
 
@@ -77,6 +79,15 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        next = findViewById(R.id.bt_next);
+        username = findViewById(R.id.et_username_reg);
+        pass = findViewById(R.id.et_password_reg);
+        repeatpass = findViewById(R.id.et_repeatpassword_reg);
+        fab = findViewById(R.id.fab);
+        cvAdd = findViewById(R.id.cv_add);
+        mGoogleBtn = findViewById(R.id.bt_google_signup);
+
+        ShowEnterAnimation();
        /* FirebaseAuth.getInstance().signOut();
         LoginManager.getInstance().logOut();
 */
@@ -96,9 +107,9 @@ public class RegisterActivity extends AppCompatActivity {
         accessToken = AccessToken.getCurrentAccessToken();
 
 
-        loginButton = findViewById(R.id.button_facebook_login);
-        loginButton.setReadPermissions("email", "public_profile");
-        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+        fbloginButton = findViewById(R.id.button_facebook_login);
+        fbloginButton.setReadPermissions("email", "public_profile");
+        fbloginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
@@ -148,15 +159,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         };
 
-        next = findViewById(R.id.bt_next);
-        username = findViewById(R.id.et_username_reg);
-        pass = findViewById(R.id.et_password_reg);
-        repeatpass = findViewById(R.id.et_repeatpassword_reg);
-        fab = findViewById(R.id.fab);
-        cvAdd = findViewById(R.id.cv_add);
-        mGoogleBtn = findViewById(R.id.bt_google_signup);
-
-        ShowEnterAnimation();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,11 +207,33 @@ public class RegisterActivity extends AppCompatActivity {
 
                                         if (task.isSuccessful()) {
 
-                                            Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                                            ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(RegisterActivity.this);
-                                            Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
-                                            startActivity(i2, oc2.toBundle());
-                                            finish();
+                                            UserDs ds = new UserDs();
+                                            ds.getUserByEmail(username.getText().toString(), new UserDs.Callback() {
+                                                @Override
+                                                public void onSuccess(User createdUser) {
+
+                                                    if (createdUser.getEmail() == null) {
+
+                                                        Log.d("userr", createdUser.toString());
+                                                        Log.d("userr", "user missing");
+                                                        Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
+                                                        startActivity(i2);
+                                                        finish();
+                                                    } else {
+                                                        Toast.makeText(RegisterActivity.this, "login successful", Toast.LENGTH_SHORT).show();
+                                                        //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
+                                                        Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
+                                                        startActivity(i2);
+                                                        finish();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onError(VolleyError error) {
+                                                    Toast.makeText(RegisterActivity.this, "couldn't reach the server", Toast.LENGTH_LONG).show();
+                                                }
+                                            });
+
 
                                         } else {
                                             Log.e("Registration", task.getException().getMessage());
@@ -273,16 +297,40 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            showToast(user.getEmail());
+                            //showToast(user.getEmail());
 
-                            ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(RegisterActivity.this);
-                            Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
-                            startActivity(i2, oc2.toBundle());
-                            finish();
+
+                            UserDs ds = new UserDs();
+                            assert user != null;
+                            ds.getUserByEmail(user.getEmail(), new UserDs.Callback() {
+                                @Override
+                                public void onSuccess(User createdUser) {
+
+                                    if (createdUser.getEmail() == null) {
+
+                                        Log.d("userr", createdUser.toString());
+                                        Log.d("userr", "user missing");
+                                        Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
+                                        startActivity(i2);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(RegisterActivity.this, "login successful", Toast.LENGTH_SHORT).show();
+                                        //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
+                                        Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
+                                        startActivity(i2);
+                                        finish();
+                                    }
+                                }
+
+                                @Override
+                                public void onError(VolleyError error) {
+                                    Toast.makeText(RegisterActivity.this, "couldn't reach the server", Toast.LENGTH_LONG).show();
+                                }
+                            });
                         } else {
                             // If sign in fails, display a message to the user.
                             showToast("Failed");
-                            showToast(task.getException()+"");
+                            showToast(task.getException() + "");
                         }
 
                         // ...
@@ -295,8 +343,6 @@ public class RegisterActivity extends AppCompatActivity {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
-
-
 
 
     private void ShowEnterAnimation() {
@@ -398,12 +444,36 @@ public class RegisterActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            //updateUI(user);
 
-                            ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(RegisterActivity.this);
-                            Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
-                            startActivity(i2, oc2.toBundle());
-                            finish();
+
+                            UserDs ds = new UserDs();
+                            assert user != null;
+                            ds.getUserByEmail(user.getEmail(), new UserDs.Callback() {
+                                @Override
+                                public void onSuccess(User createdUser) {
+
+                                    if (createdUser.getEmail() == null) {
+
+                                        Log.d("userr", createdUser.toString());
+                                        Log.d("userr", "user missing");
+                                        Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
+                                        startActivity(i2);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(RegisterActivity.this, "login successful", Toast.LENGTH_SHORT).show();
+                                        //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
+                                        Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
+                                        startActivity(i2);
+                                        finish();
+                                    }
+                                }
+
+                                @Override
+                                public void onError(VolleyError error) {
+                                    Toast.makeText(RegisterActivity.this, "couldn't reach the server", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

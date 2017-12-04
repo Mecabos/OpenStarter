@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
 import com.example.mohamed.openstarter.Helpers.GradientBackgroundPainter;
 import com.example.mohamed.openstarter.Models.User;
@@ -30,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     EditText etUsername;
     EditText etPassword;
-    Button btGo;
+    Button btLogin;
     CardView cv;
     FloatingActionButton fab;
     private GradientBackgroundPainter gradientBackgroundPainter;
@@ -45,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
         etUsername = findViewById(R.id.et_username);
         etPassword = findViewById(R.id.et_password);
-        btGo = findViewById(R.id.bt_go);
+        btLogin = findViewById(R.id.bt_go);
         cv = findViewById(R.id.cv);
         fab = findViewById(R.id.fab);
 
@@ -57,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         gradientBackgroundPainter = new GradientBackgroundPainter(backgroundImage, drawables);
         gradientBackgroundPainter.start();
 
-        btGo.setOnClickListener(new View.OnClickListener() {
+        btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Explode explode = new Explode();
@@ -82,23 +83,29 @@ public class LoginActivity extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(User createdUser) {
 
-                                                if (createdUser.getEmail().isEmpty()) {
+                                                if (createdUser.getEmail() == null) {
 
                                                     Log.d("userr", createdUser.toString());
                                                     Log.d("userr", "user missing");
                                                     Intent i2 = new Intent(LoginActivity.this, CompleteRegisterActivity.class);
                                                     startActivity(i2);
                                                     finish();
+                                                } else {
+                                                    Toast.makeText(LoginActivity.this, "login successful", Toast.LENGTH_SHORT).show();
+                                                    //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
+                                                    Intent i2 = new Intent(LoginActivity.this, IntroductionActivity.class);
+                                                    startActivity(i2);
+                                                    finish();
                                                 }
+                                            }
 
+                                            @Override
+                                            public void onError(VolleyError error) {
+                                                Toast.makeText(LoginActivity.this, "couldn't reach the server", Toast.LENGTH_LONG).show();
                                             }
                                         });
 
-                                        Toast.makeText(LoginActivity.this, "login successful", Toast.LENGTH_SHORT).show();
-                                        //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
-                                        Intent i2 = new Intent(LoginActivity.this, IntroductionActivity.class);
-                                        startActivity(i2);
-                                        finish();
+
                                     } else {
                                         Log.e("Registration", task.getException().getMessage());
                                         Toast.makeText(LoginActivity.this, "wrong email or password", Toast.LENGTH_SHORT).show();
@@ -126,22 +133,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        /*if (firebaseAuth.getCurrentUser() != null) {
-            preferences.edit().putString("email", firebaseAuth.getCurrentUser().getEmail()).apply();
-            preferences.edit().putString("providerId", firebaseAuth.getCurrentUser().getProviderId()).apply();
-            preferences.edit().putString("nom", firebaseAuth.getCurrentUser().getDisplayName()).apply();
-            preferences.edit().putString("photo", firebaseAuth.getCurrentUser().getPhotoUrl().toString()).apply();
-            ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
-            Intent i2 = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(i2, oc2.toBundle());
-            finish();
-
-        }*/
-
-    }
 
     @Override
     protected void onDestroy() {

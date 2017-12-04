@@ -28,8 +28,8 @@ public class UserDs {
     // Tag used to cancel the request
     String tag_json_obj = "json_obj_req";
 
-    private final String URL_SERVER = "http://192.168.1.5/androidws/web/app_dev.php";
-    //private final String URL_SERVER = "https://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
+    //private final String URL_SERVER = "http://192.168.1.60/androidws/web/app_dev.php";
+    private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
 
     private final String URL_GET_BY_EMAIL = URL_SERVER + "/user/getByEmail";
     private final String URL_CREATE = URL_SERVER + "/user/new";
@@ -54,6 +54,7 @@ public class UserDs {
                     @Override
                     public void onResponse(JSONObject response) {
                         User createdUser = mGson.fromJson(response.toString(), User.class);
+                        Log.d("userr",createdUser.toString());
                         callback.onSuccess(createdUser);
                     }
 
@@ -61,6 +62,7 @@ public class UserDs {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
+                callback.onError(error);
 
             }
         });
@@ -92,7 +94,7 @@ public class UserDs {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
             }
         }) {
 
@@ -106,6 +108,7 @@ public class UserDs {
 
     public interface Callback{
         void onSuccess(User result);
+        void onError(VolleyError error);
     }
 
 }
