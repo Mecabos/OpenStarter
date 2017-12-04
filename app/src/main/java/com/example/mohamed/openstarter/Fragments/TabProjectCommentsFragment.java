@@ -19,6 +19,7 @@ import com.example.mohamed.openstarter.Data.DataSuppliers.CommentDs;
 import com.example.mohamed.openstarter.Models.Comment;
 import com.example.mohamed.openstarter.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,9 +55,8 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
 
         commentDs.commentGetByProject("2",new CommentDs.Callback() {
             @Override
-            public void onSuccessGet(List< Comment> commentsList) {
+            public void onSuccessGet(ArrayList< Comment> commentsList) {
                 adapter = new CommentListAdapter(getActivity(),R.layout.item_comment, commentsList);
-                Log.d("aaaaaaaaaaa",adapter.getCount()+"");
                 commentsListView.setAdapter(adapter);
             }
             @Override
@@ -82,10 +82,11 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
                 else {
                     commentDs.commentCreate(commentText,userId,projectId,new CommentDs.Callback() {
                         @Override
-                        public void onSuccessGet(List< Comment> commentsList) {}
+                        public void onSuccessGet(ArrayList< Comment> commentsList) {}
                         @Override
                         public void onSuccessCreate(Comment createdComment) {
-                            //adapter.add(createdComment);
+
+                            adapter.add(createdComment);
 
                             Toast.makeText(getActivity(), "Comment posted",Toast.LENGTH_LONG).show();
 

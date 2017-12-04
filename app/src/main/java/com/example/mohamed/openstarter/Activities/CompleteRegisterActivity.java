@@ -67,7 +67,8 @@ public class CompleteRegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                UserDs.addUser(firebaseAuth.getCurrentUser().getEmail(),firstName.getText().toString(),lastName.getText().toString(),"date","bio");
+                UserDs ds = new UserDs();
+                ds.addUser(firebaseAuth.getCurrentUser().getEmail(),firstName.getText().toString(),lastName.getText().toString(),"date","bio");
 
 
                 //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(CompleteRegisterActivity.this);

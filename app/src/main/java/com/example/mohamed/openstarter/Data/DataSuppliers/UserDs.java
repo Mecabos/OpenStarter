@@ -24,15 +24,17 @@ import java.util.Map;
 
 public class UserDs {
 
-    static final String TAG = "adduserrr";
+    final String TAG = "adduserrr";
     // Tag used to cancel the request
-    static String tag_json_obj = "json_obj_req";
+    String tag_json_obj = "json_obj_req";
 
-    static String url = "http://192.168.1.60/AndroidWS/web/app_dev.php/user/new";
-    static String urlGetUser = "http://192.168.1.60/AndroidWS/web/app_dev.php/user/getByEmail";
+    private final String URL_SERVER = "http://192.168.1.5/androidws/web/app_dev.php";
+    //private final String URL_SERVER = "https://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
 
+    private final String URL_GET_BY_EMAIL = URL_SERVER + "/user/getByEmail";
+    private final String URL_CREATE = URL_SERVER + "/user/new";
 
-    private static Gson mGson;
+    private Gson mGson;
 
     public UserDs(){
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -40,21 +42,19 @@ public class UserDs {
         mGson = gsonBuilder.create();
     }
 
-    public static void getUserByEmail(String email,final Callback callback){
+    public void getUserByEmail(String email,final Callback callback){
         // Tag used to cancel the request
 
         Map<String, String> params = new HashMap<>();
         params.put("email", email);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                urlGetUser, new JSONObject(params),
+                URL_GET_BY_EMAIL, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         User createdUser = mGson.fromJson(response.toString(), User.class);
                         callback.onSuccess(createdUser);
-
-
                     }
 
                 }, new Response.ErrorListener() {
@@ -68,13 +68,11 @@ public class UserDs {
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
 
-    public interface Callback{
-        void onSuccess(User result);
-    }
 
 
 
-    public static void addUser(final String email, final String firstname, final String lastname, String birthdate, String bio) {
+
+    public void addUser(final String email, final String firstname, final String lastname, String birthdate, String bio) {
 
         Map<String, String> params = new HashMap<>();
         params.put("email", email);
@@ -84,13 +82,11 @@ public class UserDs {
         params.put("bio", bio);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                url, new JSONObject(params),
+                URL_CREATE, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d(TAG, response.toString());
-
                     }
                 }, new Response.ErrorListener() {
 
@@ -108,5 +104,8 @@ public class UserDs {
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
 
+    public interface Callback{
+        void onSuccess(User result);
+    }
 
 }

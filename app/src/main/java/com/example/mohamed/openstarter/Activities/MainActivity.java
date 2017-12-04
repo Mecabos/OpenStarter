@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import com.example.mohamed.openstarter.Adapters.ProjectListAdapter;
 import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
 import com.example.mohamed.openstarter.Models.Project;
+import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.R;
 import com.example.mohamed.openstarter.foldingcell.FoldingCell;
 import com.google.firebase.auth.FirebaseAuth;
@@ -114,6 +116,17 @@ public class MainActivity extends AppCompatActivity {
         resideMenu.addMenuItem(item2, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(item3, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(item4, ResideMenu.DIRECTION_LEFT);
+
+        //******************************
+        UserDs ds = new UserDs();
+        ds.getUserByEmail("mohamed@gmail.com", new UserDs.Callback() {
+                    @Override
+                    public void onSuccess(User createdUser) {
+
+
+                    }
+                });
+        //******************************
 
         projectListView = findViewById(R.id.mainProjectListView);
 

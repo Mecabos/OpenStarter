@@ -18,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +57,8 @@ public class CommentDs {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        List<Comment> commentsList = Arrays.asList(mGson.fromJson(response.toString(), Comment[].class));
+                        ArrayList<Comment> commentsList = new ArrayList<>() ;
+                        commentsList.addAll(Arrays.asList(mGson.fromJson(response.toString(), Comment[].class)));
                         callback.onSuccessGet(commentsList);
                     }
                 }, new Response.ErrorListener() {
@@ -116,7 +118,7 @@ public class CommentDs {
 
 
     public interface Callback {
-        void onSuccessGet(List<Comment> result);
+        void onSuccessGet(ArrayList<Comment> result);
 
         void onSuccessCreate(Comment createdComment);
     }

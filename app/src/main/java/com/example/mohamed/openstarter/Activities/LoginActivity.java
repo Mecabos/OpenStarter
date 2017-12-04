@@ -77,7 +77,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if (task.isSuccessful()) {
 
-                                        UserDs.getUserByEmail(etUsername.getText().toString(), new UserDs.Callback() {
+                                        UserDs ds = new UserDs();
+                                        ds.getUserByEmail(etUsername.getText().toString(), new UserDs.Callback() {
                                             @Override
                                             public void onSuccess(User createdUser) {
 
