@@ -10,19 +10,24 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.mohamed.openstarter.Adapters.CategoriesSpinnerAdapter;
 import com.example.mohamed.openstarter.R;
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -38,23 +43,35 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     // Information about the steps/fields of the form
     private static final int NAME_STEP_NUM = 0;
-    private static final int SHORT_DESCRIPTION_STEP_NUM = 1;
-    private static final int START_DATE_STEP_NUM = 2;
-    private static final int FINISH_DATE_STEP_NUM = 3;
-    private static final int BUDGET_STEP_NUM = 4;
+    private static final int CATEGORY_STEP_NUM = 1;
+    private static final int SHORT_DESCRIPTION_STEP_NUM = 2;
+    private static final int DESCRIPTION_STEP_NUM = 3;
+    private static final int START_DATE_STEP_NUM = 4;
+    private static final int FINISH_DATE_STEP_NUM = 5;
+    private static final int BUDGET_STEP_NUM = 6;
 
     // Name step
     private EditText nameEditText;
     private static final int MIN_CHARACTERS_NAME = 3;
     private static final int MAX_CHARACTERS_NAME = 50;
-    public static final String STATE_NAME = "nom";
+    public static final String STATE_NAME = "name";
+
+    // Category step
+    private Spinner categorySpinner;
+    public static final String STATE_CATEGORY = "category";
 
     // Short Description step
     private EditText shortDescriptionEditText;
     private static final int MIN_CHARACTERS_SHORT_DESCRIPTION = 20;
     private static final int MAX_CHARACTERS_SHORT_DESCRIPTION = 150;
-    public static final String STATE_DESCRIPTION = "short_description";
+    public static final String STATE_SHORT_DESCRIPTION = "short_description";
 
+    // Description step
+    private EditText DescriptionEditText;
+    private static final int MIN_CHARACTERS_DESCRIPTION = 100;
+    private static final int MAX_CHARACTERS_DESCRIPTION = 600;
+    public static final String STATE_DESCRIPTION = "description";
+    
     // Start Date step
     private TextView startDateDayTextView;
     private DatePickerDialog startDateDayPicker;
@@ -131,8 +148,14 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
             case NAME_STEP_NUM:
                 view = createProjectNameStep();
                 break;
+            case CATEGORY_STEP_NUM:
+                view = createProjectCategoryStep();
+                break;
             case SHORT_DESCRIPTION_STEP_NUM:
                 view = createProjectShortDescriptionStep();
+                break;
+            case DESCRIPTION_STEP_NUM:
+                view = createProjectDescriptionStep();
                 break;
             case START_DATE_STEP_NUM:
                 view = createProjectStartDateStep();
@@ -151,25 +174,25 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     public void onStepOpening(int stepNumber) {
         switch (stepNumber) {
             case NAME_STEP_NUM:
-                // When this step is open, we check that the title is correct
                 checkNameStep(nameEditText.getText().toString());
+                break;
+            case CATEGORY_STEP_NUM:
+                verticalStepperForm.setStepAsCompleted(stepNumber);
                 break;
             case SHORT_DESCRIPTION_STEP_NUM:
                 checkShortDescriptionStep(shortDescriptionEditText.getText().toString());
                 break;
+            case DESCRIPTION_STEP_NUM:
+                checkDescriptionStep(DescriptionEditText.getText().toString());
+                break;
             case START_DATE_STEP_NUM:
-                // As soon as they are open, these two steps are marked as completed because they
-                // have default values
                 checkStartDateStep(startDateDayTextView.getText().toString());
-                // In this case, the instruction above is equivalent to:
-                // verticalStepperForm.setActiveStepAsCompleted();
                 break;
             case FINISH_DATE_STEP_NUM:
                 checkFinishDateStep(finishDateDayTextView.getText().toString());
                 break;
             case BUDGET_STEP_NUM:
-                // When this step is open, we check the days to verify that at least one is selected
-                //checkDays();
+                checkBudgetStep(budgetEditText.getText().toString());
                 break;
         }
     }
@@ -271,6 +294,22 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     }
 
     //******************************************
+    //************************  CATEGORY
+
+    private View createProjectCategoryStep() {
+        categorySpinner = new Spinner(this);
+        final String[] data = {"Category 3amtek", "Okhtek"};
+        final ArrayAdapter<String> spinnerAdapter = new CategoriesSpinnerAdapter(
+                this, android.R.layout.simple_spinner_item,
+                data);
+        categorySpinner.setAdapter(spinnerAdapter);
+
+
+
+        return categorySpinner;
+    }
+
+    //******************************************
     //************************ SHORT DESCRIPTION
 
     private View createProjectShortDescriptionStep() {
@@ -328,6 +367,63 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     }
 
     //******************************************
+    //************************  DESCRIPTION
+
+    private View createProjectDescriptionStep() {
+        DescriptionEditText = new EditText(this);
+        DescriptionEditText.setHint(R.string.create_project_form_hint_description);
+        DescriptionEditText.setSingleLine(false);
+        DescriptionEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkDescriptionStep(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        DescriptionEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                verticalStepperForm.goToNextStep();
+                return false;
+            }
+        });
+        return DescriptionEditText;
+    }
+
+
+    private boolean checkDescriptionStep(String Description) {
+        boolean DescriptionIsCorrect = false;
+
+        if (Description.length() >= MIN_CHARACTERS_DESCRIPTION && Description.length() <= MAX_CHARACTERS_DESCRIPTION) {
+            DescriptionIsCorrect = true;
+
+            verticalStepperForm.setActiveStepAsCompleted();
+
+        } else if (Description.length() < MIN_CHARACTERS_DESCRIPTION) {
+            String DescriptionErrorString = getResources().getString(R.string.error_name_min_characters);
+            String DescriptionError = String.format(DescriptionErrorString, MIN_CHARACTERS_DESCRIPTION);
+
+            verticalStepperForm.setActiveStepAsUncompleted(DescriptionError);
+            // Equivalent to: verticalStepperForm.setStepAsUncompleted(TITLE_STEP_NUM, titleError);
+
+        } else {
+            String DescriptionErrorString = getResources().getString(R.string.error_name_max_characters);
+            String DescriptionError = String.format(DescriptionErrorString, MAX_CHARACTERS_DESCRIPTION);
+
+            verticalStepperForm.setActiveStepAsUncompleted(DescriptionError);
+        }
+
+        return DescriptionIsCorrect;
+    }
+    
+    //******************************************
     //************************ START DATE
 
     private View createProjectStartDateStep() {
@@ -353,15 +449,17 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
         });
         startDateDayTextView.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start,int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start,int before, int count) {
-                if(checkStartDateStep(s.toString())) {
-                   // verticalStepperForm.goToNextStep();
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (checkStartDateStep(s.toString())) {
+                    // verticalStepperForm.goToNextStep();
                 }
             }
         });
@@ -451,15 +549,17 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
         finishDateDayTextView.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start,int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start,int before, int count) {
-                if(checkFinishDateStep(s.toString())) {
-                    verticalStepperForm.goToNextStep();
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (checkFinishDateStep(s.toString())) {
+                    // verticalStepperForm.goToNextStep();
                 }
             }
         });
@@ -468,24 +568,19 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     private boolean checkFinishDateStep(String finishDayString) {
         boolean finishDateIsCorrect = false;
-        String startDayString = finishDateDayTextView.getText().toString() ;
+        String startDayString = startDateDayTextView.getText().toString();
         SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy/MM/dd");
         try {
             Date finishDay = dayFormat.parse(finishDayString);
             Date startDay = dayFormat.parse(startDayString);
             if (finishDayString.trim().length() > 0) {
-                finishDateIsCorrect = true;
-                verticalStepperForm.setActiveStepAsCompleted();
-
-            }else if (finishDay.after(startDay)){
-
-                finishDateIsCorrect = true;
-                verticalStepperForm.setActiveStepAsCompleted();
-            }
-            else {
-                String finishDateError = getResources().getString(R.string.error_finish_date);
-
-                verticalStepperForm.setActiveStepAsUncompleted(finishDateError);
+                if (finishDay.after(startDay)) {
+                    finishDateIsCorrect = true;
+                    verticalStepperForm.setActiveStepAsCompleted();
+                } else {
+                    String finishDateError = getResources().getString(R.string.error_finish_date);
+                    verticalStepperForm.setActiveStepAsUncompleted(finishDateError);
+                }
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -542,24 +637,18 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
         budgetEditText = new EditText(this);
         budgetEditText.setHint(R.string.create_project_form_hint_budget);
         budgetEditText.setSingleLine(true);
-        budgetEditText.addTextChangedListener(new TextWatcher() {
+        budgetEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        budgetEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //checkNameStep(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                verticalStepperForm.goToNextStep();
+                return false;
             }
         });
         budgetEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (true) {
+                if (checkBudgetStep(v.getText().toString())) {
                     verticalStepperForm.goToNextStep();
                 }
                 return false;
@@ -568,7 +657,21 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
         return budgetEditText;
     }
 
+    private boolean checkBudgetStep(String budgetString) {
+        boolean budgetIsCorrect = false;
+        long budget = Long.valueOf(budgetString);
+        if (budget > 0) {
+            budgetIsCorrect = true;
+            verticalStepperForm.setActiveStepAsCompleted();
+        } else {
+            String startDateError = getResources().getString(R.string.error_budget);
+            verticalStepperForm.setActiveStepAsUncompleted(startDateError);
+        }
+        return budgetIsCorrect;
+    }
+
     //******************************************
+
 }
 
 

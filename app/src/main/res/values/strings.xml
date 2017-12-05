@@ -57,6 +57,8 @@
     <!--New Project Activity Strings -->
     <string-array name="create_project_steps_titles">
         <item>Name</item>
+        <item>Category</item>
+        <item>Short Description</item>
         <item>Description</item>
         <item>Start Date</item>
         <item>Finish Date</item>
@@ -65,9 +67,11 @@
     <string name="create_project_form_hint_name">Project name (required)</string>
     <string name="error_name_min_characters">At least %1$d characters</string>
     <string name="error_name_max_characters">At most %1$d characters</string>
-    <string name="error_start_date">Please choose a start date</string>
-    <string name="error_finish_date">Please choose a valid finish date</string>
+    <string name="error_start_date">Choose a start date</string>
+    <string name="error_finish_date">Choose a valid finish date</string>
+    <string name="error_budget">Insert a valid budget</string>
     <string name="create_project_form_hint_short_description">Project short description (required)</string>
+    <string name="create_project_form_hint_description">Project description (required)</string>
     <string name="project_start_date_hint" translatable="false">Click to chose a Date</string>
     <string name="project_start_time_default" translatable="false">00:00</string>
     <string name="create_project_form_hint_budget">The budget needed to finish your project (required)</string>
