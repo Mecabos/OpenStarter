@@ -42,7 +42,7 @@
     <string name="login_with_facebook">Login with facebook</string>
     <string name="first_name">First name</string>
     <string name="last_name">last name</string>
-    <string name="phone_number_optional">phone number (optional)</string>
+    <string name="bio">bio (optional)</string>
     <string name="finish">finish</string>
     <string name="please_tell_us_more_about_you">please tell us more about you</string>
     <string name="welcome_to_open_starter">Welcome to open starter !</string>
@@ -75,5 +75,6 @@
     <string name="logo">logo</string>
     <string name="email">Email</string>
     <string name="confirm_password">Confirm password</string>
+    <string name="date">date</string>
 
 </resources>
