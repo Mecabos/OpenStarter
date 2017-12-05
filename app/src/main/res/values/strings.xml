@@ -61,7 +61,14 @@
         <item>Start Date</item>
         <item>Budget</item>
     </string-array>
-
+    <string name="create_project_form_hint_name">Project name (required)</string>
+    <string name="error_name_min_characters">At least %1$d characters</string>
+    <string name="error_name_max_characters">At most %1$d characters</string>
+    <string name="create_project_form_hint_short_description">Project short description (required)</string>
+    <string name="project_start_date_mock" translatable="false">05/12/2017</string>
+    <string name="project_start_time_mock" translatable="false">08:30</string>
+    <string name="create_project_form_hint_budget">The budget needed to finish your project (required)</string>
+    <!-- -->
     <string name="logo">logo</string>
     <string name="email">Email</string>
     <string name="confirm_password">Confirm password</string>
