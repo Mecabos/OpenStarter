@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:id="@+id/start_date_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/project_start_date_mock"
+        android:paddingRight="24dp"
+        android:paddingEnd="24dp"
+        android:textSize="42sp"
+        android:clickable="true"
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:id="@+id/start_date_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/project_start_time_mock"
+        android:paddingRight="24dp"
+        android:paddingEnd="24dp"
+        android:textSize="42sp"
+        android:clickable="true"
+        android:textColor="@color/black"
+        />
+
+</LinearLayout>
