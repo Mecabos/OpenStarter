@@ -52,6 +52,7 @@ dependencies {
     compile 'com.codemybrainsout.onboarding:onboarder:1.0.4'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.ernestoyaquello.stepperform:vertical-stepper-form:0.9.9'
+    compile 'com.vlstr:blurdialog:1.0.0'
 
 
 }

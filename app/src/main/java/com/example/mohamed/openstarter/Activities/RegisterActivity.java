@@ -51,6 +51,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.vlstr.blurdialog.BlurDialog;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -70,6 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
     AccessTokenTracker accessTokenTracker;
     AccessToken accessToken;
     public static String PREFERENCE_FIlENAME = "intro";
+    BlurDialog blurDialog;
 
     private GoogleSignInClient mGoogleSignInClient;
     private static final String TAG = "GoogleActivity";
@@ -79,6 +81,10 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        blurDialog = findViewById(R.id.blurLoader);
+        blurDialog.create(getWindow().getDecorView(), 6);
+        blurDialog.setTitle("Please wait");
 
         next = findViewById(R.id.bt_next);
         username = findViewById(R.id.et_username_reg);
@@ -113,6 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
         fbloginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                blurDialog.show();
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
                 handleFacebookAccessToken(accessToken);
             }
@@ -182,6 +189,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SignIn();
+                blurDialog.show();
             }
         });
 
@@ -193,6 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
                 explode.setDuration(500);
                 getWindow().setExitTransition(explode);
                 getWindow().setEnterTransition(explode);
+                blurDialog.show();
 
                 if (username.getText().toString().equals("")) {
                     Toast.makeText(RegisterActivity.this, "username can't be empty", Toast.LENGTH_SHORT).show();
@@ -217,6 +226,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                                         Log.d("userr", createdUser.toString());
                                                         Log.d("userr", "user missing");
+                                                        blurDialog.hide();
                                                         Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
                                                         startActivity(i2);
                                                         finish();
@@ -224,13 +234,15 @@ public class RegisterActivity extends AppCompatActivity {
                                                         Toast.makeText(RegisterActivity.this, "login successful", Toast.LENGTH_SHORT).show();
 
                                                         //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
-                                                        if (getIntroSharedPref().equals("waiting")){
-                                                            Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
+                                                        if (getIntroSharedPref().equals("done")){
+                                                            blurDialog.hide();
+                                                            Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
                                                             startActivity(i2);
                                                             finish();
                                                         }
                                                         else{
-                                                            Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
+                                                            blurDialog.hide();
+                                                            Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
                                                             startActivity(i2);
                                                             finish();
                                                         }
@@ -239,18 +251,21 @@ public class RegisterActivity extends AppCompatActivity {
 
                                                 @Override
                                                 public void onError(VolleyError error) {
+                                                    blurDialog.hide();
                                                     Toast.makeText(RegisterActivity.this, "couldn't reach the server", Toast.LENGTH_LONG).show();
                                                 }
                                             });
 
 
                                         } else {
+                                            blurDialog.hide();
                                             Log.e("Registration", task.getException().getMessage());
                                             Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
                     } else {
+                        blurDialog.hide();
                         Toast.makeText(RegisterActivity.this, "password doesen't match", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -275,7 +290,8 @@ public class RegisterActivity extends AppCompatActivity {
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                showToast("google failded");                // ...
+                blurDialog.hide();
+                showToast("google failed");                // ...
             }
         }
 
@@ -319,6 +335,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                         Log.d("userr", createdUser.toString());
                                         Log.d("userr", "user missing");
+                                        blurDialog.hide();
                                         Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
                                         startActivity(i2);
                                         finish();
@@ -326,13 +343,15 @@ public class RegisterActivity extends AppCompatActivity {
                                         Toast.makeText(RegisterActivity.this, "login successful", Toast.LENGTH_SHORT).show();
                                         //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
 
-                                        if (getIntroSharedPref().equals("waiting")){
-                                            Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
+                                        if (getIntroSharedPref().equals("done")){
+                                            blurDialog.hide();
+                                            Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
                                             startActivity(i2);
                                             finish();
                                         }
                                         else{
-                                            Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
+                                            blurDialog.hide();
+                                            Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
                                             startActivity(i2);
                                             finish();
                                         }
@@ -341,11 +360,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onError(VolleyError error) {
+                                    blurDialog.hide();
                                     Toast.makeText(RegisterActivity.this, "couldn't reach the server", Toast.LENGTH_LONG).show();
                                 }
                             });
                         } else {
                             // If sign in fails, display a message to the user.
+                            blurDialog.hide();
                             showToast("Failed");
                             showToast(task.getException() + "");
                         }
@@ -447,8 +468,17 @@ public class RegisterActivity extends AppCompatActivity {
         super.onDestroy();
         accessTokenTracker.stopTracking();
         LoginManager.getInstance().logOut();
+
+        /*try{
+            if(mHandleMessageReceiver!=null)
+                unregisterReceiver(mHandleMessageReceiver);
+        }catch(Exception ignored)
+        {
+
+        }*/
     }
 
+    //facebook login
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
 
@@ -473,19 +503,22 @@ public class RegisterActivity extends AppCompatActivity {
 
                                         Log.d("userr", createdUser.toString());
                                         Log.d("userr", "user missing");
+                                        blurDialog.hide();
                                         Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
                                         startActivity(i2);
                                         finish();
                                     } else {
                                         Toast.makeText(RegisterActivity.this, "login successful", Toast.LENGTH_SHORT).show();
                                         //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
-                                        if (getIntroSharedPref().equals("waiting")){
-                                            Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
+                                        if (getIntroSharedPref().equals("done")){
+                                            blurDialog.hide();
+                                            Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
                                             startActivity(i2);
                                             finish();
                                         }
                                         else{
-                                            Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
+                                            blurDialog.hide();
+                                            Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
                                             startActivity(i2);
                                             finish();
                                         }
@@ -494,12 +527,14 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onError(VolleyError error) {
+                                    blurDialog.hide();
                                     Toast.makeText(RegisterActivity.this, "couldn't reach the server", Toast.LENGTH_LONG).show();
                                 }
                             });
 
                         } else {
                             // If sign in fails, display a message to the user.
+                            blurDialog.hide();
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(RegisterActivity.this, "fb Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
@@ -515,4 +550,6 @@ public class RegisterActivity extends AppCompatActivity {
         SharedPreferences tutoPref = getSharedPreferences(PREFERENCE_FIlENAME, Context.MODE_PRIVATE);
         return tutoPref.getString("intro", "waiting");
     }
+
+
 }

@@ -18,6 +18,7 @@ import com.example.mohamed.openstarter.foldingcell.FoldingCell;
 import com.google.firebase.auth.FirebaseAuth;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
+import com.vlstr.blurdialog.BlurDialog;
 
 import java.util.List;
 
@@ -46,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final BlurDialog blurDialog = findViewById(R.id.blurLoader);
+        blurDialog.create(getWindow().getDecorView(), 6);
+        blurDialog.setTitle("Loading Projects");
+        blurDialog.show();
 
         final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         //Setting projectListView
@@ -125,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(List<Project> projectList) {
 
 
+                blurDialog.hide();
                 // create custom adapter that holds elements and their state (we need hold a id's of unfolded elements for reusable elements)
                 final ProjectListAdapter adapter = new ProjectListAdapter(getBaseContext(), projectList);
 
@@ -142,6 +149,12 @@ public class MainActivity extends AppCompatActivity {
                         adapter.registerToggle(pos);
                     }
                 });
+            }
+
+            @Override
+            public void onFail() {
+                blurDialog.hide();
+                Toast.makeText(MainActivity.this, "could not load projects", Toast.LENGTH_LONG).show();
             }
         });
 

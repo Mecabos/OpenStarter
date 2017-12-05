@@ -7,9 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.mohamed.openstarter.Helpers.SubContentDeserializer;
 import com.example.mohamed.openstarter.Models.Comment;
-import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.app.AppController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,7 +19,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,8 +28,8 @@ import java.util.Map;
 public class CommentDs {
 
     //**** URL STRINGS
-    private final String URL_SERVER = "http://192.168.1.5/androidws/web/app_dev.php";
-    //private final String URL_SERVER = "https://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
+    //private final String URL_SERVER = "http://192.168.1.5/androidws/web/app_dev.php";
+    private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
     private final String URL_GET_BY_PROJECT = URL_SERVER + "/comment/getByProject";
     private final String URL_CREATE_COMMENT = URL_SERVER + "/comment/create";
 

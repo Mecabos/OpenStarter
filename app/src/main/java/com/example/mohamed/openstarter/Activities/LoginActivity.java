@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.vlstr.blurdialog.BlurDialog;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -51,6 +52,11 @@ public class LoginActivity extends AppCompatActivity {
         cv = findViewById(R.id.cv);
         fab = findViewById(R.id.fab);
 
+        final BlurDialog blurDialog = findViewById(R.id.blurLoader);
+        blurDialog.create(getWindow().getDecorView(), 6);
+        blurDialog.setTitle("Please wait");
+
+
         View backgroundImage = findViewById(R.id.bg_view);
         final int[] drawables = new int[3];
         drawables[0] = R.drawable.gradient_1;
@@ -66,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                 explode.setDuration(500);
                 getWindow().setExitTransition(explode);
                 getWindow().setEnterTransition(explode);
+                blurDialog.show();
 
                 if (etUsername.getText().toString().equals("")) {
                     Toast.makeText(LoginActivity.this, "username can't be empty", Toast.LENGTH_SHORT).show();
@@ -88,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                                     Log.d("userr", createdUser.toString());
                                                     Log.d("userr", "user missing");
+                                                    blurDialog.hide();
                                                     Intent i2 = new Intent(LoginActivity.this, CompleteRegisterActivity.class);
                                                     startActivity(i2);
                                                     finish();
@@ -97,11 +105,13 @@ public class LoginActivity extends AppCompatActivity {
 
                                                     //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
                                                     if (getIntroSharedPref().equals("waiting")){
+                                                        blurDialog.hide();
                                                         Intent i2 = new Intent(LoginActivity.this, IntroductionActivity.class);
                                                         startActivity(i2);
                                                         finish();
                                                     }
                                                     else{
+                                                        blurDialog.hide();
                                                         Intent i2 = new Intent(LoginActivity.this, MainActivity.class);
                                                         startActivity(i2);
                                                         finish();
@@ -113,12 +123,14 @@ public class LoginActivity extends AppCompatActivity {
 
                                             @Override
                                             public void onError(VolleyError error) {
+                                                blurDialog.hide();
                                                 Toast.makeText(LoginActivity.this, "couldn't reach the server", Toast.LENGTH_LONG).show();
                                             }
                                         });
 
 
                                     } else {
+                                        blurDialog.hide();
                                         Log.e("Registration", task.getException().getMessage());
                                         Toast.makeText(LoginActivity.this, "wrong email or password", Toast.LENGTH_SHORT).show();
                                     }

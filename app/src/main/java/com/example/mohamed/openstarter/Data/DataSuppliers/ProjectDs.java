@@ -1,7 +1,5 @@
 package com.example.mohamed.openstarter.Data.DataSuppliers;
 
-import android.util.Log;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -12,7 +10,6 @@ import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -53,6 +50,7 @@ public class ProjectDs {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                callback.onFail();
                 //TODO: FIX IF NO CONNECTION
                 /*
                 String body ="";
@@ -78,5 +76,6 @@ public class ProjectDs {
 
     public interface Callback{
         void onSuccess(List<Project> result);
+        void onFail();
     }
 }
