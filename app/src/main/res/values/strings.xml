@@ -76,5 +76,9 @@
     <string name="email">Email</string>
     <string name="confirm_password">Confirm password</string>
     <string name="date">date</string>
+    <string name="edit_profil">edit profil</string>
+    <string name="profil_update">Profil update</string>
+    <string name="what_would_you_like_to_change">what would you like to change ?</string>
+    <string name="groups">Groups</string>
 
 </resources>

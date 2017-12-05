@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     FloatingActionButton fab;
     private GradientBackgroundPainter gradientBackgroundPainter;
     public static String PREFERENCE_FIlENAME = "intro";
+    //public static String LOGIN_PREFERENCE_FIlENAME = "login";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,12 @@ public class LoginActivity extends AppCompatActivity {
         btLogin = findViewById(R.id.bt_go);
         cv = findViewById(R.id.cv);
         fab = findViewById(R.id.fab);
+
+        /*if (getLoginSharedPref().equals("on")){
+            Intent i2 = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(i2);
+            finish();_
+        }*/
 
         final BlurDialog blurDialog = findViewById(R.id.blurLoader);
         blurDialog.create(getWindow().getDecorView(), 6);
@@ -163,6 +170,12 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences tutoPref = getSharedPreferences(PREFERENCE_FIlENAME, Context.MODE_PRIVATE);
         return tutoPref.getString("intro", "waiting");
     }
+
+    /*public String getLoginSharedPref(){
+        SharedPreferences tutoPref = getSharedPreferences(LOGIN_PREFERENCE_FIlENAME, Context.MODE_PRIVATE);
+        return tutoPref.getString("login", "off");
+    }*/
+
 
     @Override
     protected void onDestroy() {
