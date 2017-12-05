@@ -23,6 +23,7 @@ import android.widget.TimePicker;
 
 import com.example.mohamed.openstarter.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -39,7 +40,8 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     private static final int NAME_STEP_NUM = 0;
     private static final int SHORT_DESCRIPTION_STEP_NUM = 1;
     private static final int START_DATE_STEP_NUM = 2;
-    private static final int BUDGET_STEP_NUM = 3;
+    private static final int FINISH_DATE_STEP_NUM = 3;
+    private static final int BUDGET_STEP_NUM = 4;
 
     // Name step
     private EditText nameEditText;
@@ -61,11 +63,15 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     private Pair<Integer, Integer> startDateTime;
     public static final String STATE_START_DATE_TIME_HOUR = "start_date_time_hour";
     public static final String STATE_START_DATE_TIME_MINUTES = "start_date_time_minutes";
-    SimpleDateFormat dayFormat ;
-    SimpleDateFormat timeFormat ;
-    Calendar calendar;
-    String formattedDay ;
-    String formattedTime;
+
+    // Finish Date step
+    private TextView finishDateDayTextView;
+    private DatePickerDialog finishDateDayPicker;
+    private TextView finishDateTimeTextView;
+    private TimePickerDialog finishDateTimePicker;
+    private Pair<Integer, Integer> finishDateTime;
+    public static final String STATE_FINISH_DATE_TIME_HOUR = "finish_date_time_hour";
+    public static final String STATE_FINISH_DATE_TIME_MINUTES = "finish_date_time_minutes";
 
     // Budget step
     private EditText budgetEditText;
@@ -74,6 +80,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     private boolean confirmBack = true;
     private ProgressDialog progressDialog;
     private VerticalStepperFormLayout verticalStepperForm;
+    private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,17 +92,14 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     private void initializeActivity() {
 
-        SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy/MM/dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        Calendar calendar = Calendar.getInstance();
-        String formattedDay = dayFormat.format(calendar.getTime());
-        String formattedTime = timeFormat.format(calendar.getTime());
+        // Start date step vars
+        calendar = Calendar.getInstance();
+        setStartDateDayPicker(calendar);
+        setStartDateTimePicker(calendar);
 
-        startDateDayPicker = new DatePickerDialog(this, datePickerListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
-        // Time step vars
-        startDateTime = new Pair<>(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE));
-        setStartDateTimePicker(startDateTime.first, startDateTime.second);
+        // Finish date step vars
+        setFinishDateDayPicker(calendar);
+        setFinishDateTimePicker(calendar);
 
         // Vertical Stepper form vars
         int colorPrimary = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary);
@@ -133,6 +137,9 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
             case START_DATE_STEP_NUM:
                 view = createProjectStartDateStep();
                 break;
+            case FINISH_DATE_STEP_NUM:
+                view = createProjectFinishDateStep();
+                break;
             case BUDGET_STEP_NUM:
                 view = createProjectBudget();
                 break;
@@ -148,12 +155,17 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                 checkNameStep(nameEditText.getText().toString());
                 break;
             case SHORT_DESCRIPTION_STEP_NUM:
+                checkShortDescriptionStep(shortDescriptionEditText.getText().toString());
+                break;
             case START_DATE_STEP_NUM:
                 // As soon as they are open, these two steps are marked as completed because they
                 // have default values
-                verticalStepperForm.setStepAsCompleted(stepNumber);
+                checkStartDateStep(startDateDayTextView.getText().toString());
                 // In this case, the instruction above is equivalent to:
                 // verticalStepperForm.setActiveStepAsCompleted();
+                break;
+            case FINISH_DATE_STEP_NUM:
+                checkFinishDateStep(finishDateDayTextView.getText().toString());
                 break;
             case BUDGET_STEP_NUM:
                 // When this step is open, we check the days to verify that at least one is selected
@@ -197,45 +209,6 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                 }
             }
         }).start(); // You should delete this code and add yours*/
-    }
-
-    private void setStartDateTimePicker(int hour, int minutes) {
-        startDateTimePicker = new TimePickerDialog(this,
-                new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        setTime(hourOfDay, minute);
-                    }
-                }, hour, minutes, true);
-    }
-
-    /*private void setStartDateDayPicker() {
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
-            }
-        };
-    }*/
-
-    final DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-
-        }
-    };
-
-    private void setTime(int hour, int minutes) {
-        startDateTime = new Pair<>(hour, minutes);
-        String hourString = ((startDateTime.first > 9) ?
-                String.valueOf(startDateTime.first) : ("0" + startDateTime.first));
-        String minutesString = ((startDateTime.second > 9) ?
-                String.valueOf(startDateTime.second) : ("0" + startDateTime.second));
-        String time = hourString + ":" + minutesString;
-        startDateTimeTextView.setText(time);
     }
 
     //************************ NAME
@@ -364,13 +337,6 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                 (LinearLayout) inflater.inflate(R.layout.step_create_project_start_date, null, false);
         startDateDayTextView = startDateStepContent.findViewById(R.id.start_date_day);
         startDateTimeTextView = startDateStepContent.findViewById(R.id.start_date_time);
-        //*********
-        Calendar calendar = Calendar.getInstance();
-        //startDateDayTextView.setText(formattedDay);
-        //startDateTimeTextView.setText(formattedTime);
-        //*********jjeh
-        startDateDayPicker.getDatePicker().setMinDate(calendar.getTime().getTime());
-        //startDateDayPicker =  new DatePickerDialog(this, date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
 
         startDateDayTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -385,7 +351,188 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                 startDateTimePicker.show();
             }
         });
+        startDateDayTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,int before, int count) {
+                if(checkStartDateStep(s.toString())) {
+                   // verticalStepperForm.goToNextStep();
+                }
+            }
+        });
         return startDateStepContent;
+    }
+
+    private boolean checkStartDateStep(String startDate) {
+        boolean startDateIsCorrect = false;
+        if (startDate.trim().length() > 0) {
+            startDateIsCorrect = true;
+
+            verticalStepperForm.setActiveStepAsCompleted();
+
+        } else {
+            String startDateError = getResources().getString(R.string.error_start_date);
+
+            verticalStepperForm.setActiveStepAsUncompleted(startDateError);
+        }
+
+        return startDateIsCorrect;
+    }
+
+    private void setStartDateTimePicker(Calendar calendar) {
+        int hourOfDay = calendar.get((Calendar.HOUR_OF_DAY));
+        int minute = calendar.get((Calendar.MINUTE));
+        startDateTimePicker = new TimePickerDialog(this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        setStartTime(hourOfDay, minute);
+                    }
+                }, hourOfDay, minute, true);
+    }
+
+    private void setStartTime(int hour, int minutes) {
+        startDateTime = new Pair<>(hour, minutes);
+        String hourString = ((startDateTime.first > 9) ?
+                String.valueOf(startDateTime.first) : ("0" + startDateTime.first));
+        String minutesString = ((startDateTime.second > 9) ?
+                String.valueOf(startDateTime.second) : ("0" + startDateTime.second));
+        String time = hourString + ":" + minutesString;
+        startDateTimeTextView.setText(time);
+    }
+
+    private void setStartDateDayPicker(Calendar calendar) {
+        int year = calendar.get((Calendar.YEAR));
+        int monthOfYear = calendar.get((Calendar.MONTH));
+        int dayOfMonth = calendar.get((Calendar.DAY_OF_MONTH));
+        startDateDayPicker = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                        setStartDay(year, monthOfYear, dayOfMonth);
+                    }
+                }, year, monthOfYear, dayOfMonth);
+        startDateDayPicker.getDatePicker().setMinDate(calendar.getTime().getTime());
+    }
+
+    private void setStartDay(int year, int monthOfYear, int dayOfMonth) {
+        String day = year + "/" + monthOfYear + "/" + dayOfMonth;
+        startDateDayTextView.setText(day);
+    }
+
+    //******************************************
+    //************************ FINISH DATE
+
+    private View createProjectFinishDateStep() {
+        LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+        LinearLayout finishDateStepContent =
+                (LinearLayout) inflater.inflate(R.layout.step_create_project_finish_date, null, false);
+        finishDateDayTextView = finishDateStepContent.findViewById(R.id.finish_date_day);
+        finishDateTimeTextView = finishDateStepContent.findViewById(R.id.finish_date_time);
+
+        finishDateDayTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishDateDayPicker.show();
+            }
+        });
+
+        finishDateTimeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishDateTimePicker.show();
+            }
+        });
+
+        finishDateDayTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,int before, int count) {
+                if(checkFinishDateStep(s.toString())) {
+                    verticalStepperForm.goToNextStep();
+                }
+            }
+        });
+        return finishDateStepContent;
+    }
+
+    private boolean checkFinishDateStep(String finishDayString) {
+        boolean finishDateIsCorrect = false;
+        String startDayString = finishDateDayTextView.getText().toString() ;
+        SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy/MM/dd");
+        try {
+            Date finishDay = dayFormat.parse(finishDayString);
+            Date startDay = dayFormat.parse(startDayString);
+            if (finishDayString.trim().length() > 0) {
+                finishDateIsCorrect = true;
+                verticalStepperForm.setActiveStepAsCompleted();
+
+            }else if (finishDay.after(startDay)){
+
+                finishDateIsCorrect = true;
+                verticalStepperForm.setActiveStepAsCompleted();
+            }
+            else {
+                String finishDateError = getResources().getString(R.string.error_finish_date);
+
+                verticalStepperForm.setActiveStepAsUncompleted(finishDateError);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return finishDateIsCorrect;
+    }
+
+    private void setFinishDateTimePicker(Calendar calendar) {
+        int hourOfDay = calendar.get((Calendar.HOUR_OF_DAY));
+        int minute = calendar.get((Calendar.MINUTE));
+        finishDateTimePicker = new TimePickerDialog(this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        setFinishTime(hourOfDay, minute);
+                    }
+                }, hourOfDay, minute, true);
+    }
+
+    private void setFinishTime(int hour, int minutes) {
+        finishDateTime = new Pair<>(hour, minutes);
+        String hourString = ((finishDateTime.first > 9) ?
+                String.valueOf(finishDateTime.first) : ("0" + finishDateTime.first));
+        String minutesString = ((finishDateTime.second > 9) ?
+                String.valueOf(finishDateTime.second) : ("0" + finishDateTime.second));
+        String time = hourString + ":" + minutesString;
+        finishDateTimeTextView.setText(time);
+    }
+
+    private void setFinishDateDayPicker(Calendar calendar) {
+        int year = calendar.get((Calendar.YEAR));
+        int monthOfYear = calendar.get((Calendar.MONTH));
+        int dayOfMonth = calendar.get((Calendar.DAY_OF_MONTH));
+
+        finishDateDayPicker = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                        setFinishDay(year, monthOfYear, dayOfMonth);
+                    }
+                }, year, monthOfYear, dayOfMonth);
+        finishDateDayPicker.getDatePicker().setMinDate(calendar.getTime().getTime());
+    }
+
+    private void setFinishDay(int year, int monthOfYear, int dayOfMonth) {
+        String day = year + "/" + monthOfYear + "/" + dayOfMonth;
+        finishDateDayTextView.setText(day);
     }
 
     //******************************************
