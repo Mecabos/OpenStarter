@@ -30,7 +30,7 @@ public class CommentDs {
     //**** URL STRINGS
     //private final String URL_SERVER = "http://192.168.1.5/androidws/web/app_dev.php";
     private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
-    private final String URL_GET_BY_PROJECT = URL_SERVER + "/comment/getByProject";
+    private final String URL_GET_BY_PROJECT_COMMENT = URL_SERVER + "/comment/getByProject";
     private final String URL_CREATE_COMMENT = URL_SERVER + "/comment/create";
 
     //**** TAG STRINGS
@@ -49,7 +49,7 @@ public class CommentDs {
 
     public void commentGetByProject(final String projectId, final CommentDs.Callback callback) {
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.POST,
-                URL_GET_BY_PROJECT,
+                URL_GET_BY_PROJECT_COMMENT,
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override

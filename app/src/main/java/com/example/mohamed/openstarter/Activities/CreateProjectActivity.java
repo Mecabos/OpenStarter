@@ -1,9 +1,11 @@
 package com.example.mohamed.openstarter.Activities;
 
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
@@ -11,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,15 +24,20 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.mohamed.openstarter.Adapters.CategoriesSpinnerAdapter;
+import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectDs;
+import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
@@ -49,7 +57,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     // Name step
     private EditText nameEditText;
-    private static final int MIN_CHARACTERS_NAME = 3;
+    private static final int MIN_CHARACTERS_NAME = 2;
     private static final int MAX_CHARACTERS_NAME = 50;
     public static final String STATE_NAME = "name";
 
@@ -59,13 +67,13 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     // Short Description step
     private EditText shortDescriptionEditText;
-    private static final int MIN_CHARACTERS_SHORT_DESCRIPTION = 20;
+    private static final int MIN_CHARACTERS_SHORT_DESCRIPTION = 2;
     private static final int MAX_CHARACTERS_SHORT_DESCRIPTION = 150;
     public static final String STATE_SHORT_DESCRIPTION = "short_description";
 
     // Description step
     private EditText DescriptionEditText;
-    private static final int MIN_CHARACTERS_DESCRIPTION = 100;
+    private static final int MIN_CHARACTERS_DESCRIPTION = 2;
     private static final int MAX_CHARACTERS_DESCRIPTION = 600;
     public static final String STATE_DESCRIPTION = "description";
     
@@ -101,7 +109,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project);
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        //FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         //firebaseAuth.getCurrentUser().getEmail();
         initializeActivity();
     }
@@ -191,7 +199,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                 checkFinishDateStep(finishDateDayTextView.getText().toString());
                 break;
             case BUDGET_STEP_NUM:
-                checkBudgetStep(budgetEditText.getText().toString());
+                //checkBudgetStep(budgetEditText.getText().toString());
                 break;
         }
     }
@@ -201,36 +209,37 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(true);
         progressDialog.show();
-        progressDialog.setMessage(getString(R.string.vertical_form_stepper_form_sending_data_message));
+        progressDialog.setMessage(getString(R.string.create_project_sending_message));
         executeDataSending();
     }
 
     private void executeDataSending() {
 
-        /*// TODO Use here the data of the form as you wish
+        ProjectDs projectDs = new ProjectDs () ;
+        projectDs.projectCreate("Project test",
+                "2017/11/05 19:50:00",
+                "2017/12/05 20:00:00",
+                "azezeaze",
+                "ssss",
+                "2500",
+                "basemosen1@gmail.com",
+                "test",
+                new ProjectDs.Callback() {
+                    @Override
+                    public void onSuccessGet(List<Project> result) {}
 
-        // Fake data sending effect
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                    Intent intent = getIntent();
-                    setResult(RESULT_OK, intent);
-                    intent.putExtra(NEW_ALARM_ADDED, true);
-                    intent.putExtra(STATE_TITLE, titleEditText.getText().toString());
-                    intent.putExtra(STATE_DESCRIPTION, descriptionEditText.getText().toString());
-                    intent.putExtra(STATE_TIME_HOUR, time.first);
-                    intent.putExtra(STATE_TIME_MINUTES, time.second);
-                    intent.putExtra(STATE_WEEK_DAYS, weekDays);
-                    // You must set confirmBack to false before calling finish() to avoid the confirmation dialog
-                    confirmBack = false;
-                    finish();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start(); // You should delete this code and add yours*/
+                    @Override
+                    public void onSuccessCreate(Project createdProject) {
+                        Intent myIntent = new Intent(getBaseContext(), ProjectActivity.class);
+                        myIntent.putExtra("id", createdProject.getId());
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        getBaseContext().startActivity(myIntent);
+                    }
+                    @Override
+                    public void onFail() {
+                    }
+                });
+
     }
 
     //************************ NAME
@@ -297,7 +306,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     private View createProjectCategoryStep() {
         categorySpinner = new Spinner(this);
-        final String[] data = {"Category 3amtek", "Okhtek"};
+        final String[] data = {"Art", "Sport"};
         final ArrayAdapter<String> spinnerAdapter = new CategoriesSpinnerAdapter(
                 this, android.R.layout.simple_spinner_item,
                 data);

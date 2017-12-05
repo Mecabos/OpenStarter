@@ -75,6 +75,7 @@
     <string name="project_start_date_hint" translatable="false">Click to chose a Date</string>
     <string name="project_start_time_default" translatable="false">00:00</string>
     <string name="create_project_form_hint_budget">The budget needed to finish your project (required)</string>
+    <string name="create_project_sending_message">Creating your project … please wait</string>
     <!-- -->
     <string name="logo">logo</string>
     <string name="email">Email</string>

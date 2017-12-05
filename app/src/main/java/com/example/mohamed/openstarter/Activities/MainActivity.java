@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
         projectDs.projectGetAll(new ProjectDs.Callback() {
             @Override
-            public void onSuccess(List<Project> projectList) {
+            public void onSuccessGet(List<Project> projectList) {
 
 
                 blurDialog.hide();
@@ -151,6 +151,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
+
+            @Override
+            public void onSuccessCreate(Project createdProject) {}
 
             @Override
             public void onFail() {
