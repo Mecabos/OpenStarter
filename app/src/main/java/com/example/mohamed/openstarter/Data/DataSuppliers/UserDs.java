@@ -74,13 +74,13 @@ public class UserDs {
 
 
 
-    public void addUser(final String email, final String firstname, final String lastname, String birthdate, String bio) {
+    public void addUser(final String email, final String firstname, final String lastname, String birthdate, String bio,final CallbackGet callback) {
 
         Map<String, String> params = new HashMap<>();
         params.put("email", email);
         params.put("firstname", firstname);
         params.put("lastname", lastname);
-        params.put("birthdate", "2017/11/29 23:51:54");
+        params.put("birthdate", birthdate+" 00:00:00");
         params.put("bio", bio);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
@@ -89,12 +89,14 @@ public class UserDs {
 
                     @Override
                     public void onResponse(JSONObject response) {
+                        callback.onSuccess();
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
+                callback.onError();
             }
         }) {
 
@@ -109,6 +111,11 @@ public class UserDs {
     public interface Callback{
         void onSuccess(User result);
         void onError(VolleyError error);
+    }
+
+    public interface CallbackGet{
+        void onSuccess();
+        void onError();
     }
 
 }

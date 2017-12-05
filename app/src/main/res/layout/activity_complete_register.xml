@@ -8,6 +8,20 @@
     android:layout_height="match_parent"
     tools:context="com.example.mohamed.openstarter.Activities.CompleteRegisterActivity">
 
+    <com.vlstr.blurdialog.BlurDialog
+        android:id="@+id/blurLoader"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:elevation="34dp"
+        android:visibility="invisible"
+        app:blurDialogDuration="length_infinite"
+        app:blurDialogIcon="@mipmap/ic_launcher"
+        app:blurDialogTitle="Hello World!"
+        app:blurOverlayColor="@color/colorOverlay"/>
+
     <ImageButton
         android:id="@+id/avatar"
         android:layout_width="180dp"
@@ -105,6 +119,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/selector_bg_edit"
                             android:defaultFocusHighlightEnabled="false"
+                            android:inputType="text"
                             android:hint="@string/first_name"
                             android:paddingBottom="2dp"
                             android:textColor="#ffffff"
@@ -144,6 +159,34 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:orientation="horizontal"
+                    android:paddingEnd="30dp"
+                    android:paddingStart="50dp">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHint="#c5c5c5"
+                        android:theme="@style/TextLabel">
+
+                        <TextView
+                            android:id="@+id/et_birthdate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_bg_edit"
+                            android:hint="@string/date"
+                            android:paddingBottom="2dp"
+                            android:text="date"
+                            android:textColor="#c5c5c5"
+                            android:textColorLink="#ffffff"
+                            android:textCursorDrawable="@drawable/bg_input_cursor"
+                            android:textSize="13sp" />
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:orientation="horizontal"
                     android:paddingEnd="30dp"
@@ -156,12 +199,12 @@
                         android:theme="@style/TextLabel">
 
                         <EditText
-                            android:id="@+id/et_phone_number"
+                            android:id="@+id/et_bio"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/selector_bg_edit"
-                            android:hint="@string/phone_number_optional"
-                            android:inputType="phone"
+                            android:hint="@string/bio"
+                            android:inputType="textLongMessage"
                             android:paddingBottom="2dp"
                             android:textColor="#ffffff"
                             android:textColorLink="#ffffff"
