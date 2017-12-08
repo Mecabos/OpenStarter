@@ -15,7 +15,11 @@
         <activity
             android:name=".Activities.SplashScreenActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Activities.RegisterActivity"
@@ -51,11 +55,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.IntroductionActivity" />
         <activity android:name=".Activities.CreateProjectActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity android:name=".Activities.EditProfilActivity"
