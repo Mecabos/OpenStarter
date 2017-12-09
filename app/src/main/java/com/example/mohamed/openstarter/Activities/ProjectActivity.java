@@ -1,7 +1,7 @@
 package com.example.mohamed.openstarter.Activities;
 
 import android.graphics.Color;
-import android.support.design.widget.TabLayout;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
@@ -11,11 +11,8 @@ import com.example.mohamed.openstarter.Fragments.TabProjectCommentsFragment;
 import com.example.mohamed.openstarter.Fragments.TabProjectCommunityFragment;
 import com.example.mohamed.openstarter.R;
 import com.github.florent37.bubbletab.BubbleTab;
-import com.ldoublem.ringPregressLibrary.OnSelectRing;
 import com.ldoublem.ringPregressLibrary.Ring;
 import com.ldoublem.ringPregressLibrary.RingProgress;
-
-import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,12 +37,12 @@ public class ProjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project);
 
-        mRingProgress = (RingProgress) findViewById(R.id.ring_progress);
+        mRingProgress = findViewById(R.id.ring_progress);
         setData();
 
         mSectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
         //set up the viewpager with the sections adapter
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
         setupViewPager(mViewPager);
 
         BubbleTab tabLayout =  findViewById(R.id.tabs);

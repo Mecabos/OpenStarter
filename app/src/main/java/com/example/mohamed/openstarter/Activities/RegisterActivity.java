@@ -218,7 +218,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         if (task.isSuccessful()) {
 
                                             UserDs ds = new UserDs();
-                                            ds.getUserByEmail(username.getText().toString(), new UserDs.Callback() {
+                                            ds.getUserByEmail(username.getText().toString(), new UserDs.CallbackGet() {
                                                 @Override
                                                 public void onSuccess(User createdUser) {
 
@@ -327,7 +327,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             UserDs ds = new UserDs();
                             assert user != null;
-                            ds.getUserByEmail(user.getEmail(), new UserDs.Callback() {
+                            ds.getUserByEmail(user.getEmail(), new UserDs.CallbackGet() {
                                 @Override
                                 public void onSuccess(User createdUser) {
 
@@ -495,7 +495,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             UserDs ds = new UserDs();
                             assert user != null;
-                            ds.getUserByEmail(user.getEmail(), new UserDs.Callback() {
+                            ds.getUserByEmail(user.getEmail(), new UserDs.CallbackGet() {
                                 @Override
                                 public void onSuccess(User createdUser) {
 

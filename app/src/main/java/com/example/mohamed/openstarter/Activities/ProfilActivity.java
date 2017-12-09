@@ -48,7 +48,7 @@ public class ProfilActivity extends AppCompatActivity {
         });
 
         UserDs ds = new UserDs();
-        ds.getUserByEmail(firebaseAuth.getCurrentUser().getEmail(), new UserDs.Callback() {
+        ds.getUserByEmail(firebaseAuth.getCurrentUser().getEmail(), new UserDs.CallbackGet() {
             @Override
             public void onSuccess(User createdUser) {
                 String name = createdUser.getFirstName()+" "+createdUser.getLastName();
