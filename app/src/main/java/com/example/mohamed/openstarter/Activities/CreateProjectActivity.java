@@ -115,23 +115,25 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     //Activity vars
     private static String PROJECT_TAG = "project" ;
+    private static String COLLABORATION_GROUP_TAG = "collaboration group" ;
+    private static String CATEGORY_TAG = "category" ;
     private boolean confirmBack = true;
     private ProgressDialog progressDialog;
     private VerticalStepperFormLayout verticalStepperForm;
     private Calendar calendar;
     public static CreateProjectActivity instance = null;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project);
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        //Log.d("teeest", firebaseAuth.getCurrentUser().getEmail());
         initializeActivity();
     }
 
     private void initializeActivity() {
+        firebaseAuth = FirebaseAuth.getInstance();
         instance = this ;
         // Start date step vars
         calendar = Calendar.getInstance();
@@ -256,6 +258,8 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                         progressDialog.cancel();
                         Intent myIntent = new Intent(getBaseContext(), ProjectActivity.class);
                         myIntent.putExtra(PROJECT_TAG,createdProject);
+                        myIntent.putExtra(COLLABORATION_GROUP_TAG,createdProject.getCollaborationGroup());
+                        myIntent.putExtra(CATEGORY_TAG,createdProject.getCategory());
                         myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         getBaseContext().startActivity(myIntent);
                     }
@@ -762,8 +766,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     private View createProjectCollaborationGroupStep() {
         collaborationGroupSpinner = new Spinner(this);
         CollaborationGroupDs collaborationGroupDs = new CollaborationGroupDs();
-        //TODO: CHANGE USER TO DYNAMIC
-        collaborationGroupDs.collaborationGroupGetByAdminUser("basemosen1@gmail.com",new CollaborationGroupDs.Callback() {
+        collaborationGroupDs.collaborationGroupGetByAdminUser(firebaseAuth.getCurrentUser().getEmail(),new CollaborationGroupDs.Callback() {
             @Override
             public void onSuccessGet(List<CollaborationGroup> groupsList) {
                 if (groupsList.size() > 0){

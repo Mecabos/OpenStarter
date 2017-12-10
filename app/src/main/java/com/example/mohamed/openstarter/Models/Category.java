@@ -1,15 +1,25 @@
 package com.example.mohamed.openstarter.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.Property;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Transient;
 
 /**
  * Created by Bacem on 12/9/2017.
  */
 
-public class Category {
+@Entity
+public class Category implements Parcelable{
 
     //****Persistent properties
     @Id(autoincrement = true)
@@ -20,6 +30,13 @@ public class Category {
     private String color;
 
     public Category() {
+    }
+
+    @Generated(hash = 97192242)
+    public Category(long id, String label, String color) {
+        this.id = id;
+        this.label = label;
+        this.color = color;
     }
 
     @Override
@@ -63,4 +80,48 @@ public class Category {
     public void setColor(String color) {
         this.color = color;
     }
+
+    //*************Parcel part
+    @Keep
+    public Category(Parcel in) throws ParseException {
+        String[] data = new String[3];
+        in.readStringArray(data);
+
+        this.id = Long.parseLong(data[0]);
+        this.label = data[1];
+        this.color = data[2];
+    }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeStringArray(new String[]{String.valueOf(this.id),
+                this.label,
+                this.color
+        });
+    }
+
+    @Transient
+    public static final Parcelable.Creator<Category> CREATOR = new Parcelable.Creator<Category>() {
+
+        @Override
+        public Category createFromParcel(Parcel source) {
+            Category Category = new Category();
+            try {
+                Category = new Category(source);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return (Category);
+        }
+
+        @Override
+        public Category[] newArray(int size) {
+
+            return new Category[size];
+        }
+    };
 }

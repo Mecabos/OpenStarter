@@ -7,13 +7,17 @@ import android.view.View;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.Property;
+import org.greenrobot.greendao.annotation.ToOne;
 import org.greenrobot.greendao.annotation.Transient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import org.greenrobot.greendao.DaoException;
+import org.greenrobot.greendao.annotation.NotNull;
 
 @Entity
 public class Project implements Parcelable {
@@ -41,6 +45,12 @@ public class Project implements Parcelable {
     private String equipmentsList;
     @Property
     private String servicesList;
+    @Property
+    @ToOne(joinProperty = "id")
+    private CollaborationGroup collaborationGroup;
+    @Property
+    @ToOne(joinProperty = "id")
+    private Category category;
 
 
     @Transient
@@ -159,6 +169,7 @@ public class Project implements Parcelable {
         this.servicesList = servicesList;
     }
 
+    
 
     public View.OnClickListener getRequestBtnClickListener() {
         return requestBtnClickListener;
@@ -189,7 +200,7 @@ public class Project implements Parcelable {
     }
 
     //*************Parcel part
-
+    @Keep
     public Project(Parcel in) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         String[] data = new String[9];
@@ -226,6 +237,115 @@ public class Project implements Parcelable {
         });
     }
 
+    /** To-one relationship, resolved on first access. */
+    @Keep
+    public CollaborationGroup getCollaborationGroup() {
+        long __key = this.id;
+        if (collaborationGroup__resolvedKey == null || !collaborationGroup__resolvedKey.equals(__key)) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                if (this.collaborationGroup != null) return  this.collaborationGroup ;
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            CollaborationGroupDao targetDao = daoSession.getCollaborationGroupDao();
+            CollaborationGroup collaborationGroupNew = targetDao.load(__key);
+            synchronized (this) {
+                collaborationGroup = collaborationGroupNew;
+                collaborationGroup__resolvedKey = __key;
+            }
+        }
+        return collaborationGroup;
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 246631676)
+    public void setCollaborationGroup(@NotNull CollaborationGroup collaborationGroup) {
+        if (collaborationGroup == null) {
+            throw new DaoException("To-one property 'id' has not-null constraint; cannot set to-one to null");
+        }
+        synchronized (this) {
+            this.collaborationGroup = collaborationGroup;
+            id = collaborationGroup.getId();
+            collaborationGroup__resolvedKey = id;
+        }
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 128553479)
+    public void delete() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.delete(this);
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 1942392019)
+    public void refresh() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.refresh(this);
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 713229351)
+    public void update() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.update(this);
+    }
+
+    /** To-one relationship, resolved on first access. */
+    @Keep
+    public Category getCategory() {
+        long __key = this.id;
+        if (category__resolvedKey == null || !category__resolvedKey.equals(__key)) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                if (this.category != null) return  this.category ;
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            CategoryDao targetDao = daoSession.getCategoryDao();
+            Category categoryNew = targetDao.load(__key);
+            synchronized (this) {
+                category = categoryNew;
+                category__resolvedKey = __key;
+            }
+        }
+        return category;
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 288529823)
+    public void setCategory(@NotNull Category category) {
+        if (category == null) {
+            throw new DaoException("To-one property 'id' has not-null constraint; cannot set to-one to null");
+        }
+        synchronized (this) {
+            this.category = category;
+            id = category.getId();
+            category__resolvedKey = id;
+        }
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 2081800561)
+    public void __setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        myDao = daoSession != null ? daoSession.getProjectDao() : null;
+    }
+
     public static final Parcelable.Creator<Project> CREATOR = new Parcelable.Creator<Project>() {
 
         @Override
@@ -245,4 +365,14 @@ public class Project implements Parcelable {
             return new Project[size];
         }
     };
+    /** Used to resolve relations */
+    @Generated(hash = 2040040024)
+    private transient DaoSession daoSession;
+    /** Used for active entity operations. */
+    @Generated(hash = 1378029107)
+    private transient ProjectDao myDao;
+    @Generated(hash = 1095573163)
+    private transient Long collaborationGroup__resolvedKey;
+    @Generated(hash = 1372501278)
+    private transient Long category__resolvedKey;
 }

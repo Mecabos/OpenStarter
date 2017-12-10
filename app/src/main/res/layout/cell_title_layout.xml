@@ -8,6 +8,7 @@
 
     <!-- LEFT TITLE PART -->
     <RelativeLayout
+        android:id="@+id/title_side_bar"
         android:layout_width="match_parent"
         android:layout_height="155dp"
         android:layout_weight="3"

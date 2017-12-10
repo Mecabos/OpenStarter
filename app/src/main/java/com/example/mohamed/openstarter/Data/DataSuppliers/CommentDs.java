@@ -87,11 +87,11 @@ public class CommentDs {
         AppController.getInstance().addToRequestQueue(req, REQUEST_TAG_GET_BY_PROJECT);
     }
 
-    public void commentCreate(final String comment, final String userId, final String projectId, final CommentDs.Callback callback) {
+    public void commentCreate(final String comment, final String userEmail, final String projectId, final CommentDs.Callback callback) {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("text", comment);
-        params.put("id_user", userId);
+        params.put("email_user", userEmail);
         params.put("id_project", projectId);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,

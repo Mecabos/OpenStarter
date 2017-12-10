@@ -2,10 +2,12 @@ package com.example.mohamed.openstarter.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,9 @@ import java.util.List;
 public class ProjectListAdapter extends ArrayAdapter<Project> {
 
     private static String PROJECT_TAG = "project" ;
+    private static String COLLABORATION_GROUP_TAG = "collaboration group" ;
+    private static String CATEGORY_TAG = "category" ;
+
 
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
     private View.OnClickListener defaultRequestBtnClickListener;
@@ -115,6 +120,8 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
             public void onClick(View v) {
                 Intent myIntent = new Intent(getContext(), ProjectActivity.class);
                 myIntent.putExtra(PROJECT_TAG,project);
+                myIntent.putExtra(COLLABORATION_GROUP_TAG,project.getCollaborationGroup());
+                myIntent.putExtra(CATEGORY_TAG,project.getCategory());
                 myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 getContext().startActivity(myIntent);
             }
@@ -141,6 +148,8 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
         viewHolder.titleShortDescription.setText(project.getShortDescription());
         viewHolder.contentDeadLine.setText(days.toString()+ "Days "+ hours.toString()+" Hours "+ mins + "Minutes and " + secs + "seconds");
 
+        RelativeLayout sideBar = cell.findViewById(R.id.title_side_bar) ;
+        sideBar.setBackgroundColor(Color.parseColor(project.getCategory().getColor()));
 
 
         // set custom btn handler for list project from that project

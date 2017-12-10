@@ -1,14 +1,17 @@
 package com.example.mohamed.openstarter.Models;
 
+import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 
 import java.util.Date;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by Bacem on 12/3/2017.
  */
 
+@Entity
 public class User {
 
     //****Persistent properties
@@ -26,6 +29,17 @@ public class User {
     private String bio;
 
     public User() {
+    }
+
+    @Generated(hash = 498865411)
+    public User(long id, String firstName, String lastName, String email,
+            Date birthDate, String bio) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.birthDate = birthDate;
+        this.bio = bio;
     }
 
     @Override

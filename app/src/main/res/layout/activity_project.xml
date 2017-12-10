@@ -104,6 +104,7 @@
             android:layout_weight="1"/>
 
         <LinearLayout
+            android:id="@+id/project_category_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/diagonalLayout"
@@ -122,7 +123,7 @@
                 android:textSize="14sp"/>
 
             <TextView
-                android:id="@+id/project_contributors_count"
+                android:id="@+id/project_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/project_category_mock"
