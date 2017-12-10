@@ -27,6 +27,8 @@ import java.util.List;
  */
 public class ProjectListAdapter extends ArrayAdapter<Project> {
 
+    private static String PROJECT_TAG = "project" ;
+
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
     private View.OnClickListener defaultRequestBtnClickListener;
 
@@ -112,7 +114,7 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getContext(), ProjectActivity.class);
-                myIntent.putExtra("id", project.getId());
+                myIntent.putExtra(PROJECT_TAG,project);
                 myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 getContext().startActivity(myIntent);
             }

@@ -1,10 +1,12 @@
 package com.example.mohamed.openstarter.Activities;
 
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -17,6 +19,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -24,17 +28,20 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.example.mohamed.openstarter.Adapters.CategoriesSpinnerAdapter;
+import com.example.mohamed.openstarter.Adapters.CollaborationGroupSpinnerAdapter;
+import com.example.mohamed.openstarter.Data.DataSuppliers.CategoryDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.CollaborationGroupDs;
 import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectDs;
+import com.example.mohamed.openstarter.Models.Category;
+import com.example.mohamed.openstarter.Models.CollaborationGroup;
 import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -54,6 +61,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     private static final int START_DATE_STEP_NUM = 4;
     private static final int FINISH_DATE_STEP_NUM = 5;
     private static final int BUDGET_STEP_NUM = 6;
+    private static final int COLLABORATION_GROUP_STEP_NUM = 7;
 
     // Name step
     private EditText nameEditText;
@@ -63,6 +71,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     // Category step
     private Spinner categorySpinner;
+    private Long categorySelectedId;
     public static final String STATE_CATEGORY = "category";
 
     // Short Description step
@@ -72,7 +81,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     public static final String STATE_SHORT_DESCRIPTION = "short_description";
 
     // Description step
-    private EditText DescriptionEditText;
+    private EditText descriptionEditText;
     private static final int MIN_CHARACTERS_DESCRIPTION = 2;
     private static final int MAX_CHARACTERS_DESCRIPTION = 600;
     public static final String STATE_DESCRIPTION = "description";
@@ -99,23 +108,30 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     private EditText budgetEditText;
     public static final String STATE_BUDGET = "budget";
 
+    // Collaboration Group step
+    private Spinner collaborationGroupSpinner;
+    private Long collaborationGroupSelectedId;
+    public static final String STATE_COLLABORATION_GROUP= "collaborationGroup";
+
+    //Activity vars
     private boolean confirmBack = true;
     private ProgressDialog progressDialog;
     private VerticalStepperFormLayout verticalStepperForm;
     private Calendar calendar;
+    public static CreateProjectActivity instance = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project);
 
-        //FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        //firebaseAuth.getCurrentUser().getEmail();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        //Log.d("teeest", firebaseAuth.getCurrentUser().getEmail());
         initializeActivity();
     }
 
     private void initializeActivity() {
-
+        instance = this ;
         // Start date step vars
         calendar = Calendar.getInstance();
         setStartDateDayPicker(calendar);
@@ -171,7 +187,10 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                 view = createProjectFinishDateStep();
                 break;
             case BUDGET_STEP_NUM:
-                view = createProjectBudget();
+                view = createProjectBudgetStep();
+                break;
+            case COLLABORATION_GROUP_STEP_NUM:
+                view = createProjectCollaborationGroupStep();
                 break;
         }
         return view;
@@ -190,16 +209,19 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                 checkShortDescriptionStep(shortDescriptionEditText.getText().toString());
                 break;
             case DESCRIPTION_STEP_NUM:
-                checkDescriptionStep(DescriptionEditText.getText().toString());
+                checkDescriptionStep(descriptionEditText.getText().toString());
                 break;
             case START_DATE_STEP_NUM:
                 checkStartDateStep(startDateDayTextView.getText().toString());
                 break;
             case FINISH_DATE_STEP_NUM:
-                checkFinishDateStep(finishDateDayTextView.getText().toString());
+                checkFinishDateStep(finishDateDayTextView.getText().toString()+ " " + finishDateTimeTextView.getText().toString());
                 break;
             case BUDGET_STEP_NUM:
-                //checkBudgetStep(budgetEditText.getText().toString());
+                checkBudgetStep(budgetEditText.getText().toString());
+                break;
+            case COLLABORATION_GROUP_STEP_NUM:
+                verticalStepperForm.setStepAsCompleted(stepNumber);
                 break;
         }
     }
@@ -214,22 +236,23 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     }
 
     private void executeDataSending() {
-
+        //Toast.makeText(this, ,Toast.LENGTH_LONG).show();
         ProjectDs projectDs = new ProjectDs () ;
-        projectDs.projectCreate("Project test",
-                "2017/11/05 19:50:00",
-                "2017/12/05 20:00:00",
-                "azezeaze",
-                "ssss",
-                "2500",
-                "basemosen1@gmail.com",
-                "test",
+        projectDs.projectCreate(nameEditText.getText().toString(),
+                startDateDayTextView.getText().toString() + " " + startDateTimeTextView.getText().toString() +":00",
+                finishDateDayTextView.getText().toString() + " " + finishDateTimeTextView.getText().toString() +":00",
+                shortDescriptionEditText.getText().toString(),
+                descriptionEditText.getText().toString(),
+                budgetEditText.getText().toString(),
+                collaborationGroupSelectedId.toString(),
+                categorySelectedId.toString(),
                 new ProjectDs.Callback() {
                     @Override
                     public void onSuccessGet(List<Project> result) {}
 
                     @Override
                     public void onSuccessCreate(Project createdProject) {
+                        progressDialog.cancel();
                         Intent myIntent = new Intent(getBaseContext(), ProjectActivity.class);
                         myIntent.putExtra("id", createdProject.getId());
                         myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -306,14 +329,39 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     private View createProjectCategoryStep() {
         categorySpinner = new Spinner(this);
-        final String[] data = {"Art", "Sport"};
-        final ArrayAdapter<String> spinnerAdapter = new CategoriesSpinnerAdapter(
-                this, android.R.layout.simple_spinner_item,
-                data);
-        categorySpinner.setAdapter(spinnerAdapter);
+        CategoryDs categoryDs = new CategoryDs();
+        categoryDs.getAll(new CategoryDs.Callback() {
+            @Override
+            public void onSuccessGet(List<Category> categoriesList) {
+
+                Category[] dataArray = new Category[categoriesList.size()];
+                categorySelectedId=categoriesList.get(0).getId();
+               for (int i = 0; i < categoriesList.size(); i++  ){
+
+                   dataArray[i]=categoriesList.get(i);
+               }
+                final ArrayAdapter<Category> spinnerAdapter = new CategoriesSpinnerAdapter(
+                        instance, android.R.layout.simple_spinner_item,dataArray);
 
 
+                categorySpinner.setAdapter(spinnerAdapter);
+                categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> parent, View view,
+                                               int pos, long id) {
 
+                        Category selectedCategory = (Category) parent.getItemAtPosition(pos);
+                        categorySelectedId = selectedCategory.getId();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+            }
+            @Override
+            public void onFail() {}
+        });
         return categorySpinner;
     }
 
@@ -378,10 +426,10 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     //************************  DESCRIPTION
 
     private View createProjectDescriptionStep() {
-        DescriptionEditText = new EditText(this);
-        DescriptionEditText.setHint(R.string.create_project_form_hint_description);
-        DescriptionEditText.setSingleLine(false);
-        DescriptionEditText.addTextChangedListener(new TextWatcher() {
+        descriptionEditText = new EditText(this);
+        descriptionEditText.setHint(R.string.create_project_form_hint_description);
+        descriptionEditText.setSingleLine(false);
+        descriptionEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -395,14 +443,14 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
             public void afterTextChanged(Editable s) {
             }
         });
-        DescriptionEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        descriptionEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 verticalStepperForm.goToNextStep();
                 return false;
             }
         });
-        return DescriptionEditText;
+        return descriptionEditText;
     }
 
 
@@ -467,6 +515,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (checkStartDateStep(s.toString())) {
+                    checkFinishDateStep(finishDateDayTextView.getText().toString() + " " + finishDateTimeTextView.getText().toString());
                     // verticalStepperForm.goToNextStep();
                 }
             }
@@ -478,7 +527,6 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
         boolean startDateIsCorrect = false;
         if (startDate.trim().length() > 0) {
             startDateIsCorrect = true;
-
             verticalStepperForm.setActiveStepAsCompleted();
 
         } else {
@@ -498,6 +546,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         setStartTime(hourOfDay, minute);
+                        checkFinishDateStep(finishDateDayTextView.getText().toString() + " " + finishDateTimeTextView.getText().toString());
                     }
                 }, hourOfDay, minute, true);
     }
@@ -566,7 +615,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (checkFinishDateStep(s.toString())) {
+                if (checkFinishDateStep(s.toString() + " " + finishDateTimeTextView.getText().toString())) {
                     // verticalStepperForm.goToNextStep();
                 }
             }
@@ -574,21 +623,27 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
         return finishDateStepContent;
     }
 
-    private boolean checkFinishDateStep(String finishDayString) {
+    private boolean checkFinishDateStep(String finishDateString) {
         boolean finishDateIsCorrect = false;
-        String startDayString = startDateDayTextView.getText().toString();
-        SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy/MM/dd");
+        String startDateString = startDateDayTextView.getText().toString() + " " + startDateTimeTextView.getText().toString() ;
+        SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         try {
-            Date finishDay = dayFormat.parse(finishDayString);
-            Date startDay = dayFormat.parse(startDayString);
-            if (finishDayString.trim().length() > 0) {
-                if (finishDay.after(startDay)) {
+            Date finishDate = dayFormat.parse(finishDateString);
+            Date startDate = dayFormat.parse(startDateString);
+            if (finishDateString.trim().length() > 0) {
+                if (finishDate.after(startDate)) {
                     finishDateIsCorrect = true;
-                    verticalStepperForm.setActiveStepAsCompleted();
-                } else {
+                    verticalStepperForm.setStepAsCompleted(FINISH_DATE_STEP_NUM);
+                    //verticalStepperForm.setActiveStepAsCompleted();
+                } else{
                     String finishDateError = getResources().getString(R.string.error_finish_date);
-                    verticalStepperForm.setActiveStepAsUncompleted(finishDateError);
+                    verticalStepperForm.setStepAsUncompleted(FINISH_DATE_STEP_NUM,finishDateError);
+                    //verticalStepperForm.setActiveStepAsUncompleted(finishDateError);
                 }
+            }else {
+                String finishDateError = getResources().getString(R.string.error_finish_date);
+                verticalStepperForm.setStepAsUncompleted(FINISH_DATE_STEP_NUM,finishDateError);
+                //verticalStepperForm.setActiveStepAsUncompleted(finishDateError);
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -604,6 +659,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         setFinishTime(hourOfDay, minute);
+                        checkFinishDateStep(finishDateDayTextView.getText().toString() + " " + finishDateTimeTextView.getText().toString());
                     }
                 }, hourOfDay, minute, true);
     }
@@ -641,7 +697,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     //******************************************
     //************************ BUDGET
 
-    private View createProjectBudget() {
+    private View createProjectBudgetStep() {
         budgetEditText = new EditText(this);
         budgetEditText.setHint(R.string.create_project_form_hint_budget);
         budgetEditText.setSingleLine(true);
@@ -651,6 +707,22 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 verticalStepperForm.goToNextStep();
                 return false;
+            }
+        });
+        budgetEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (checkBudgetStep(s.toString())) {
+                    //verticalStepperForm.goToNextStep();
+                }
             }
         });
         budgetEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -667,18 +739,84 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     private boolean checkBudgetStep(String budgetString) {
         boolean budgetIsCorrect = false;
-        long budget = Long.valueOf(budgetString);
-        if (budget > 0) {
-            budgetIsCorrect = true;
-            verticalStepperForm.setActiveStepAsCompleted();
-        } else {
-            String startDateError = getResources().getString(R.string.error_budget);
-            verticalStepperForm.setActiveStepAsUncompleted(startDateError);
+        if (budgetString != null && !budgetString.equals("") ){
+            long budget = Long.valueOf(budgetString);
+            if (budget > 0) {
+                budgetIsCorrect = true;
+                verticalStepperForm.setActiveStepAsCompleted();
+            } else {
+                String budgetError = getResources().getString(R.string.error_budget);
+                verticalStepperForm.setActiveStepAsUncompleted(budgetError);
+            }
+        }else {
+            String budgetError = getResources().getString(R.string.error_budget);
+            verticalStepperForm.setActiveStepAsUncompleted(budgetError);
         }
         return budgetIsCorrect;
     }
 
     //******************************************
+    //************************  COLLABORATION GROUP
+
+    private View createProjectCollaborationGroupStep() {
+        collaborationGroupSpinner = new Spinner(this);
+        CollaborationGroupDs collaborationGroupDs = new CollaborationGroupDs();
+        //TODO: CHANGE USER TO DYNAMIC
+        collaborationGroupDs.collaborationGroupGetByAdminUser("basemosen1@gmail.com",new CollaborationGroupDs.Callback() {
+            @Override
+            public void onSuccessGet(List<CollaborationGroup> groupsList) {
+                if (groupsList.size() > 0){
+                    CollaborationGroup[] dataArray = new CollaborationGroup[groupsList.size()];
+                    collaborationGroupSelectedId=groupsList.get(0).getId();
+                    for (int i = 0; i < groupsList.size(); i++  ){
+
+                        dataArray[i]=groupsList.get(i);
+                    }
+                    final ArrayAdapter<CollaborationGroup> groupSpinnerAdapter = new CollaborationGroupSpinnerAdapter(
+                            instance, android.R.layout.simple_spinner_item,dataArray);
+
+
+                    collaborationGroupSpinner.setAdapter(groupSpinnerAdapter);
+                    collaborationGroupSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        public void onItemSelected(AdapterView<?> parent, View view,
+                                                   int pos, long id) {
+
+                            CollaborationGroup selectedCollaborationGroup = (CollaborationGroup) parent.getItemAtPosition(pos);
+                            collaborationGroupSelectedId = selectedCollaborationGroup.getId();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                }else {
+                    AlertDialog noAdminGroupAlert = new AlertDialog.Builder(instance).create();
+                    noAdminGroupAlert.setTitle("Alert");
+                    noAdminGroupAlert.setMessage("You have no groups you're administrating, please create a group or get into a group with admin rights");
+                    noAdminGroupAlert.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    Intent myIntent = new Intent(getBaseContext(), MainActivity.class);
+                                    myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    getBaseContext().startActivity(myIntent);
+                                }
+                            });
+                    noAdminGroupAlert.show();
+
+                }
+
+            }
+
+            @Override
+            public void onSuccessCreate(CollaborationGroup createdGroup) {}
+
+            @Override
+            public void onFail() {}
+        });
+        return collaborationGroupSpinner;
+    }
 
 }
 

@@ -29,7 +29,7 @@ public class ProjectDs {
 
 
     //**** URL STRINGS
-    private final String URL_SERVER = "http://192.168.1.5/androidws/web/app_dev.php";
+    private final String URL_SERVER = "http://192.168.1.3/androidws/web/app_dev.php";
     //private final String URL_SERVER = "https://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
     private final String  URL_GET_ALL_PROJECT = URL_SERVER + "/project/getAll" ;
     private final String  URL_CREATE_PROJECT = URL_SERVER + "/project/create" ;
@@ -78,12 +78,9 @@ public class ProjectDs {
 
             */}
         });
-
-
         AppController.getInstance().addToRequestQueue(req, REQUEST_TAG_GET_ALL);
     }
 //TODO: make name of category unique
-    //TODO: group dynamic
     //TODO: add equipement list and services list
     public void projectCreate(final String name,
                               final String startDate,
@@ -91,7 +88,7 @@ public class ProjectDs {
                               final String description,
                               final String shortDescription,
                               final String budget,
-                              final String userEmail,
+                              final String group,
                               final String category,
                               final ProjectDs.Callback callback) {
         Map<String, String> params = new HashMap<String, String>();
@@ -101,10 +98,10 @@ public class ProjectDs {
         params.put("description", description);
         params.put("shortDescription", shortDescription);
         params.put("budget", budget);
-        params.put("equipementsList", "ss");
-        params.put("servicesList", "ss");
-        params.put("id_category", "2");
-        params.put("id_group", "2");
+        params.put("equipementsList", "");
+        params.put("servicesList", "");
+        params.put("id_category", category);
+        params.put("id_group", group);
 
         Log.d("zab", params.toString());
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,

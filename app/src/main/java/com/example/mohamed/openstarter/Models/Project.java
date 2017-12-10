@@ -1,5 +1,7 @@
 package com.example.mohamed.openstarter.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
 
 import org.greenrobot.greendao.annotation.Entity;
@@ -8,11 +10,13 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Transient;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
-public class Project {
+public class Project implements Parcelable {
 
     //****Persistent properties
     @Id(autoincrement = true)
@@ -47,7 +51,7 @@ public class Project {
 
     @Generated(hash = 863198504)
     public Project(long id, String name, Date creationDate, Date startDate, Date finishDate, String description, String shortDescription,
-            float budget, float currentBudget, String equipmentsList, String servicesList) {
+                   float budget, float currentBudget, String equipmentsList, String servicesList) {
         this.id = id;
         this.name = name;
         this.creationDate = creationDate;
@@ -184,4 +188,61 @@ public class Project {
         return result;
     }
 
+    //*************Parcel part
+
+    public Project(Parcel in) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        String[] data = new String[9];
+        in.readStringArray(data);
+
+        this.id = Long.parseLong(data[0]);
+        this.name = data[1];
+        this.creationDate = dateFormat.parse(data[2]);
+        this.startDate = dateFormat.parse(data[3]);
+        this.finishDate = dateFormat.parse(data[4]);
+        this.description = data[5];
+        this.shortDescription = data[6];
+        this.budget = Float.parseFloat(data[7]);
+        this.currentBudget = Float.parseFloat(data[8]);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        parcel.writeStringArray(new String[]{String.valueOf(this.id),
+                this.name,
+                dateFormat.format(this.creationDate),
+                dateFormat.format(this.startDate),
+                dateFormat.format(this.finishDate),
+                this.description,
+                this.shortDescription,
+                String.valueOf(this.budget),
+                String.valueOf(this.currentBudget),
+        });
+    }
+
+    public static final Parcelable.Creator<Project> CREATOR = new Parcelable.Creator<Project>() {
+
+        @Override
+        public Project createFromParcel(Parcel source) {
+            Project project = new Project();
+            try {
+                project = new Project(source);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return (project);
+        }
+
+        @Override
+        public Project[] newArray(int size) {
+
+            return new Project[size];
+        }
+    };
 }

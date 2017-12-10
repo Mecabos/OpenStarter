@@ -8,19 +8,19 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.mohamed.openstarter.Models.Category;
+import com.example.mohamed.openstarter.Models.CollaborationGroup;
 import com.example.mohamed.openstarter.R;
 
 /**
  * Created by Bacem on 12/5/2017.
  */
 
-public class CategoriesSpinnerAdapter extends ArrayAdapter<Category> {
+public class CollaborationGroupSpinnerAdapter extends ArrayAdapter<CollaborationGroup> {
 
         private Activity context;
-        Category[] data = null;
+        CollaborationGroup[] data = null;
 
-        public CategoriesSpinnerAdapter(Activity context, int resource, Category[] categoriesList)
+        public CollaborationGroupSpinnerAdapter(Activity context, int resource, CollaborationGroup[] categoriesList)
         {
             super(context, resource, categoriesList);
             this.context = context;
@@ -33,14 +33,14 @@ public class CategoriesSpinnerAdapter extends ArrayAdapter<Category> {
         if(row == null)
         {
             LayoutInflater inflater = context.getLayoutInflater();
-            row = inflater.inflate(R.layout.spinner_item_category, parent, false);
+            row = inflater.inflate(R.layout.spinner_item_collaboration_group, parent, false);
         }
-        String item = data[position].getLabel();
+        String item = data[position].getName();
         if(item != null)
         {
-            TextView categoryName = row.findViewById(R.id.tv_category_name);
-            categoryName.setTextColor(Color.BLACK);
-            categoryName.setText(item);
+            TextView collaborationGroupName = row.findViewById(R.id.tv_collaboration_group_name);
+            collaborationGroupName.setTextColor(Color.BLACK);
+            collaborationGroupName.setText(item);
         }
 
         return row;
@@ -53,15 +53,15 @@ public class CategoriesSpinnerAdapter extends ArrayAdapter<Category> {
             if(row == null)
             {
                 LayoutInflater inflater = context.getLayoutInflater();
-                row = inflater.inflate(R.layout.spinner_item_category, parent, false);
+                row = inflater.inflate(R.layout.spinner_item_collaboration_group, parent, false);
             }
 
-            String item = data[position].getLabel();
+            String item = data[position].getName();
             if(item != null)
             {
-                TextView categoryName = row.findViewById(R.id.tv_category_name);
-                categoryName.setTextColor(Color.BLACK);
-                categoryName.setText(item);
+                TextView collaborationGroupName = row.findViewById(R.id.tv_collaboration_group_name);
+                collaborationGroupName.setTextColor(Color.BLACK);
+                collaborationGroupName.setText(item);
             }
 
             return row;
