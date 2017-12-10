@@ -53,6 +53,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.ernestoyaquello.stepperform:vertical-stepper-form:0.9.9'
     compile 'com.vlstr:blurdialog:1.0.0'
+    compile 'com.geniusforapp.fancydialog:FancyDialog:0.1.4'
 
 
 }

@@ -93,7 +93,7 @@ public class EditProfilActivity extends AppCompatActivity {
 
                 Log.d("datee",birthdate.getText().toString());
                 if (firstName.getText().toString().equals("") || lastName.getText().toString().equals("")|| birthdate.getText().toString().equals("")) {
-                    Toast.makeText(EditProfilActivity.this, "first name and last name are required ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditProfilActivity.this, "first name and last name and birthdate are required ", Toast.LENGTH_LONG).show();
                 } else {
 
                     blurDialog.show();

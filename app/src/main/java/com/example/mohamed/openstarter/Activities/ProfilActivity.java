@@ -22,7 +22,7 @@ public class ProfilActivity extends AppCompatActivity {
     Toolbar toolbar;
     TextView fullname, email, tv_bio;
     CircleImageView avatar;
-    Button bt_editProfil;
+    Button bt_editProfil, bt_groups;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,7 @@ public class ProfilActivity extends AppCompatActivity {
         fullname = findViewById(R.id.fullname);
         tv_bio = findViewById(R.id.bio);
         bt_editProfil = findViewById(R.id.bt_editProfil);
+        bt_groups = findViewById(R.id.bt_showGroups);
         avatar = findViewById(R.id.avatar);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -42,8 +43,50 @@ public class ProfilActivity extends AppCompatActivity {
         bt_editProfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO : refresh
                 Intent i2 = new Intent(ProfilActivity.this, EditProfilActivity.class);
                 startActivity(i2);
+            }
+        });
+
+        bt_groups.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                /*FancyAlertDialog.Builder alert = new FancyAlertDialog.Builder(ProfilActivity.this)
+                        //.setImageRecourse(R.drawable.ic_cloud_computing)
+                        .setTextTitle("GROUPS")
+                        //.setTextSubTitle("username")
+                        .setBody("List of groups here")
+                        //.setNegativeColor(R.color.colorNegative)
+                        .setNegativeButtonText("Later")
+                        .setOnNegativeClicked(new FancyAlertDialog.OnNegativeClicked() {
+                            @Override
+                            public void OnClick(View view, Dialog dialog) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButtonText("Continue")
+                        //.setPositiveColor(R.color.colorPositive)
+                        .setOnPositiveClicked(new FancyAlertDialog.OnPositiveClicked() {
+                            @Override
+                            public void OnClick(View view, Dialog dialog) {
+                                //Toast.makeText(ProfilActivity.this, "Updating", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setBodyGravity(FancyAlertDialog.TextGravity.LEFT)
+                        .setTitleGravity(FancyAlertDialog.TextGravity.CENTER)
+                        .setSubtitleGravity(FancyAlertDialog.TextGravity.RIGHT)
+                        .setCancelable(false)
+                        .build();
+                alert.show();*/
+
+                //TODO : list groups
+                Intent i2 = new Intent(ProfilActivity.this, GroupActivity.class);
+                startActivity(i2);
+
+
             }
         });
 
