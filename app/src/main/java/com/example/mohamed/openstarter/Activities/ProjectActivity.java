@@ -42,6 +42,7 @@ public class ProjectActivity extends AppCompatActivity {
 
     private void initializeFragment(){
 
+
         setProject();
         mSectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
         //set up the viewpager with the sections adapter
