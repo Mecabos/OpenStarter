@@ -114,6 +114,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     public static final String STATE_COLLABORATION_GROUP= "collaborationGroup";
 
     //Activity vars
+    private static String PROJECT_TAG = "project" ;
     private boolean confirmBack = true;
     private ProgressDialog progressDialog;
     private VerticalStepperFormLayout verticalStepperForm;
@@ -254,7 +255,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                     public void onSuccessCreate(Project createdProject) {
                         progressDialog.cancel();
                         Intent myIntent = new Intent(getBaseContext(), ProjectActivity.class);
-                        myIntent.putExtra("id", createdProject.getId());
+                        myIntent.putExtra(PROJECT_TAG,createdProject);
                         myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         getBaseContext().startActivity(myIntent);
                     }

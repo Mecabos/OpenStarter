@@ -91,6 +91,7 @@ public class ProjectDs {
                               final String group,
                               final String category,
                               final ProjectDs.Callback callback) {
+
         Map<String, String> params = new HashMap<String, String>();
         params.put("name", name);
         params.put("startDate", startDate);
@@ -102,8 +103,6 @@ public class ProjectDs {
         params.put("servicesList", "");
         params.put("id_category", category);
         params.put("id_group", group);
-
-        Log.d("zab", params.toString());
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 URL_CREATE_PROJECT,
                 new JSONObject(params),
