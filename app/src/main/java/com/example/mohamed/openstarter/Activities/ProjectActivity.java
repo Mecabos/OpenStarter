@@ -2,7 +2,7 @@ package com.example.mohamed.openstarter.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.design.widget.TabLayout;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
@@ -13,7 +13,6 @@ import com.example.mohamed.openstarter.Fragments.TabProjectCommunityFragment;
 import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 import com.github.florent37.bubbletab.BubbleTab;
-import com.ldoublem.ringPregressLibrary.OnSelectRing;
 import com.ldoublem.ringPregressLibrary.Ring;
 import com.ldoublem.ringPregressLibrary.RingProgress;
 

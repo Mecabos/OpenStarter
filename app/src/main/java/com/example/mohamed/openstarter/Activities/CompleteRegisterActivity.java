@@ -98,7 +98,7 @@ public class CompleteRegisterActivity extends AppCompatActivity {
 
                     blurDialog.show();
                     UserDs ds = new UserDs();
-                    ds.addUser(firebaseAuth.getCurrentUser().getEmail(), firstName.getText().toString(), lastName.getText().toString(), birthdate.getText().toString(), bio.getText().toString(), new UserDs.CallbackGet() {
+                    ds.addUser(firebaseAuth.getCurrentUser().getEmail(), firstName.getText().toString(), lastName.getText().toString(), birthdate.getText().toString(), bio.getText().toString(), new UserDs.CallbackAdd() {
                         @Override
                         public void onSuccess() {
                             blurDialog.hide();

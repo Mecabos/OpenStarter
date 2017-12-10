@@ -15,7 +15,11 @@
         <activity
             android:name=".Activities.SplashScreenActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Activities.RegisterActivity"
@@ -38,30 +42,29 @@
         <activity
             android:name=".Activities.ProfilActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" >
+
         </activity>
         <activity
             android:name=".Activities.CompleteRegisterActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Activities.MainActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Activities.ProjectActivity"
             android:label="@string/title_activity_project"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.IntroductionActivity" />
-        <activity android:name=".Activities.CreateProjectActivity">
-
-
+        <activity android:name=".Activities.CreateProjectActivity" />
+        <activity
+            android:name=".Activities.EditProfilActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".Activities.GroupActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".Activities.EditProfilActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".Activities.EditGroupActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
     </application>
 
 </manifest>

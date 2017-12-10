@@ -19,67 +19,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Mohamed on 11/27/2017.
+ * Created by Mohamed on 12/9/2017.
  */
 
-public class UserDs {
+public class GroupDs {
 
-    final String TAG = "User";
+    final String TAG = "grouppp";
     // Tag used to cancel the request
     String tag_json_obj = "json_obj_req";
 
-    private final String URL_SERVER = "http://192.168.1.3/androidws/web/app_dev.php";
-    //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
+    //private final String URL_SERVER = "http://192.168.1.60/androidws/web/app_dev.php";
+    private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
+    //private final String URL_SERVER = "http://openstarter.unaux.com/AndroidWS/web/app_dev.php";
 
-    private final String URL_GET_BY_EMAIL = URL_SERVER + "/user/getByEmail";
-    private final String URL_CREATE = URL_SERVER + "/user/new";
-    private final String URL_UPDATE = URL_SERVER + "/user/update";
+    private final String URL_GET_BY_NAME = URL_SERVER + "/collaborationGroup/getByName";
+    private final String URL_CREATE = URL_SERVER + "/collaborationGroup/new";
+    private final String URL_UPDATE = URL_SERVER + "/collaborationGroup/updateName";
 
     private Gson mGson;
 
-    public UserDs(){
+    public GroupDs(){
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setDateFormat("yyyy/MM/dd HH:mm:ss");
         mGson = gsonBuilder.create();
     }
 
-    public void getUserByEmail(String email,final CallbackGet callback){
-        // Tag used to cancel the request
+    /*public void addGroup(final String name, final String creator, final CallbackAdd callback) {
 
         Map<String, String> params = new HashMap<>();
-        params.put("email", email);
-
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                URL_GET_BY_EMAIL, new JSONObject(params),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        User createdUser = mGson.fromJson(response.toString(), User.class);
-                        Log.d(TAG,createdUser.toString());
-                        callback.onSuccess(createdUser);
-                    }
-
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG,"error while reaching server");
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                callback.onError(error);
-
-            }
-        });
-
-        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
-    }
-
-
-
-
-
-    public void addUser(final String email, final String firstname, final String lastname, String birthdate, String bio,final CallbackAdd callback) {
-
-        Map<String, String> params = new HashMap<>();
-        params.put("email", email);
+        params.put("name", name);
         params.put("firstname", firstname);
         params.put("lastname", lastname);
         params.put("birthdate", birthdate+" 00:00:00");
@@ -108,17 +76,13 @@ public class UserDs {
 // Adding request to request queue
         Log.d("TAG", Arrays.toString(jsonObjReq.getBody()));
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
-    }
+    }*/
 
-
-    public void updateUser(final String email, final String firstname, final String lastname, String birthdate, String bio,final CallbackUpdate callback) {
+    public void updateGroup(final String oldName, final String newName, final CallbackUpdate callback) {
 
         Map<String, String> params = new HashMap<>();
-        params.put("email", email);
-        params.put("firstname", firstname);
-        params.put("lastname", lastname);
-        params.put("birthdate", birthdate+" 00:00:00");
-        params.put("bio", bio);
+        params.put("oldName", oldName);
+        params.put("newName", newName);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 URL_UPDATE, new JSONObject(params),
@@ -144,7 +108,6 @@ public class UserDs {
         Log.d("TAG", Arrays.toString(jsonObjReq.getBody()));
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
-
 
     public interface CallbackAdd{
         void onSuccess();
