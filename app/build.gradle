@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -44,7 +45,7 @@ dependencies {
     compile 'com.lalongooo:rings:1.0.0'
     compile 'com.github.florent37:diagonallayout:1.0.7'
     compile 'com.flaviofaria:kenburnsview:1.0.7'
-    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.flaviofaria:kenburnsview:1.0.7'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.florent37:bubbletab:1.0.0'
@@ -54,7 +55,11 @@ dependencies {
     compile 'com.ernestoyaquello.stepperform:vertical-stepper-form:0.9.9'
     compile 'com.vlstr:blurdialog:1.0.0'
     compile 'com.geniusforapp.fancydialog:FancyDialog:0.1.4'
-
+    compile 'com.ldoublem.thumbUplib:ThumbUplib:0.5'
+    compile 'com.github.markushi:circlebutton:1.1'
+    compile "com.android.support:support-v4:+"
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.daimajia.slider:library:1.1.5@aar'
 
 }
 

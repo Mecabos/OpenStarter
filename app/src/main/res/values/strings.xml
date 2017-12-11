@@ -13,7 +13,7 @@
     <string name="order_id_mock" translatable="false"># 1234–5678</string>
     <string name="price_mock" translatable="false">$25</string>
     <string name="requests_count_mock" translatable="false">5</string>
-    <string name="contributors_count_badge" translatable="false">CONTRIBUTORS</string>
+    <string name="follows_count_badge" translatable="false">FOLLOWS</string>
     <string name="weight_mock" translatable="false">50 oz</string>
     <string name="goal_value_badge" translatable="false">GOAL</string>
     <string name="pledge_mock" translatable="false">$150</string>
@@ -53,6 +53,7 @@
     <string name="project_group_mock" translatable="false">Group #1</string>
     <string name="project_made_by_badge" translatable="false">Made By :</string>
     <string name="project_category_badge" translatable="false">CATEGORY</string>
+    <string name="project_followers_badge" translatable="false">FOLLOWERS</string>
     <string name="project_category_mock" translatable="false">ART</string>
     <!--New Project Activity Strings -->
     <string-array name="create_project_steps_titles">

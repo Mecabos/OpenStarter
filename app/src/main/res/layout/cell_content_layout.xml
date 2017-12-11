@@ -73,7 +73,7 @@
             android:layout_above="@id/content_contributors_count"
             android:layout_alignStart="@id/content_contributors_count"
             android:paddingStart="20dp"
-            android:text="@string/contributors_count_badge" />
+            android:text="@string/follows_count_badge" />
 
         <TextView
             android:id="@+id/content_pledges_sum"
