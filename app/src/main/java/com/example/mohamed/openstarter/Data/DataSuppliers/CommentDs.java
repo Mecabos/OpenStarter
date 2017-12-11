@@ -28,7 +28,7 @@ import java.util.Map;
 public class CommentDs {
 
     //**** URL STRINGS
-    private final String URL_SERVER = "http://192.168.100.5/androidws/web/app_dev.php";
+    private final String URL_SERVER = "http://192.168.1.58/androidws/web/app_dev.php";
     //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
     private final String URL_GET_BY_PROJECT_COMMENT = URL_SERVER + "/comment/getByProject";
     private final String URL_CREATE_COMMENT = URL_SERVER + "/comment/create";
@@ -63,7 +63,7 @@ public class CommentDs {
             public void onErrorResponse(VolleyError error) {
                 String body = "";
                 //get status code here
-                String statusCode = String.valueOf(error.networkResponse.statusCode);
+                //String statusCode = String.valueOf(error.networkResponse.statusCode);
                 //get response body and parse with appropriate encoding
                 if (error.networkResponse.data != null) {
                     try {

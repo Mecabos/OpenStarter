@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -23,13 +24,15 @@ public class ProfilActivity extends AppCompatActivity {
     TextView fullname, email, tv_bio;
     CircleImageView avatar;
     Button bt_editProfil, bt_groups;
+    private Spinner collaborationGroupSpinner;
+    private long collaborationGroupSelectedId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
         email = findViewById(R.id.email);
         fullname = findViewById(R.id.fullname);
@@ -90,6 +93,63 @@ public class ProfilActivity extends AppCompatActivity {
             }
         });
 
+
+        /*collaborationGroupSpinner = new Spinner(ProfilActivity.this);
+        CollaborationGroupDs collaborationGroupDs = new CollaborationGroupDs();
+        collaborationGroupDs.collaborationGroupGetByUser(firebaseAuth.getCurrentUser().getEmail(),new CollaborationGroupDs.Callback() {
+            @Override
+            public void onSuccessGet(List<CollaborationGroup> groupsList) {
+                if (groupsList.size() > 0){
+                    CollaborationGroup[] dataArray = new CollaborationGroup[groupsList.size()];
+                    collaborationGroupSelectedId=groupsList.get(0).getId();
+                    for (int i = 0; i < groupsList.size(); i++  ){
+
+                        dataArray[i]=groupsList.get(i);
+                    }
+                    final ArrayAdapter<CollaborationGroup> groupSpinnerAdapter = new CollaborationGroupSpinnerAdapter(
+                            instance, android.R.layout.simple_spinner_item,dataArray);
+
+                    collaborationGroupSpinner.setAdapter(groupSpinnerAdapter);
+                    collaborationGroupSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        public void onItemSelected(AdapterView<?> parent, View view,
+                                                   int pos, long id) {
+
+                            CollaborationGroup selectedCollaborationGroup = (CollaborationGroup) parent.getItemAtPosition(pos);
+                            collaborationGroupSelectedId = selectedCollaborationGroup.getId();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                }else {
+                    AlertDialog noAdminGroupAlert = new AlertDialog.Builder(instance).create();
+                    noAdminGroupAlert.setTitle("Alert");
+                    noAdminGroupAlert.setMessage("You have no groups you're administrating, please create a group or get into a group with admin rights");
+                    noAdminGroupAlert.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    Intent myIntent = new Intent(getBaseContext(), MainActivity.class);
+                                    myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    getBaseContext().startActivity(myIntent);
+                                }
+                            });
+                    noAdminGroupAlert.show();
+
+                }
+
+            }
+
+            @Override
+            public void onSuccessCreate(CollaborationGroup createdGroup) {}
+
+            @Override
+            public void onFail() {}
+        });*/
+
+
         UserDs ds = new UserDs();
         ds.getUserByEmail(firebaseAuth.getCurrentUser().getEmail(), new UserDs.CallbackGet() {
             @Override
@@ -110,5 +170,10 @@ public class ProfilActivity extends AppCompatActivity {
         if (firebaseAuth.getCurrentUser().getPhotoUrl() != null)
             Picasso.with(this).load(firebaseAuth.getCurrentUser().getPhotoUrl()).into(avatar);
 
+    }
+    @Override
+    public void onBackPressed() {
+        Intent myIntent = new Intent(this, MainActivity.class);
+        startActivity(myIntent);
     }
 }

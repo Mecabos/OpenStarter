@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i2 = new Intent(MainActivity.this, ProfilActivity.class);
                 startActivity(i2);
+                finish();
 
             }
         });
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "item2 clicked", Toast.LENGTH_SHORT).show();
                 Intent i2 = new Intent(MainActivity.this, CreateProjectActivity.class);
                 startActivity(i2);
+                finish();
             }
         });
 

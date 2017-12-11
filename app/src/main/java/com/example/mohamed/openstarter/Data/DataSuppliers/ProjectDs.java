@@ -1,7 +1,5 @@
 package com.example.mohamed.openstarter.Data.DataSuppliers;
 
-import android.util.Log;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -15,7 +13,6 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +26,7 @@ public class ProjectDs {
 
 
     //**** URL STRINGS
-    private final String URL_SERVER = "http://192.168.100.5/androidws/web/app_dev.php";
+    private final String URL_SERVER = "http://192.168.1.58/androidws/web/app_dev.php";
     //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
     private final String  URL_GET_ALL_PROJECT = URL_SERVER + "/project/getAll" ;
     private final String  URL_CREATE_PROJECT = URL_SERVER + "/project/create" ;

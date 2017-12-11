@@ -1,11 +1,9 @@
 package com.example.mohamed.openstarter.Fragments;
 
 
-import android.app.ListFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,7 +21,6 @@ import com.example.mohamed.openstarter.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Bacem on 11/27/2017.

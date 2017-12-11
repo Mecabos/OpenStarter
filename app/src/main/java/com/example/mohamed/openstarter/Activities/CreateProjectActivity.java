@@ -3,7 +3,6 @@ package com.example.mohamed.openstarter.Activities;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
@@ -15,11 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -115,7 +112,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     //Activity vars
     private static String PROJECT_TAG = "project" ;
-    private static String COLLABORATION_GROUP_TAG = "collaboration group" ;
+    private static String COLLABORATION_GROUP_TAG = "collaboration group";
     private static String CATEGORY_TAG = "category" ;
     private boolean confirmBack = true;
     private ProgressDialog progressDialog;
@@ -779,7 +776,6 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                     final ArrayAdapter<CollaborationGroup> groupSpinnerAdapter = new CollaborationGroupSpinnerAdapter(
                             instance, android.R.layout.simple_spinner_item,dataArray);
 
-
                     collaborationGroupSpinner.setAdapter(groupSpinnerAdapter);
                     collaborationGroupSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         public void onItemSelected(AdapterView<?> parent, View view,
@@ -820,6 +816,12 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
             public void onFail() {}
         });
         return collaborationGroupSpinner;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent myIntent = new Intent(this, MainActivity.class);
+        startActivity(myIntent);
     }
 
 }

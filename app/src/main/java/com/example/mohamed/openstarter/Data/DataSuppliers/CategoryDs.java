@@ -1,24 +1,17 @@
 package com.example.mohamed.openstarter.Data.DataSuppliers;
 
-import android.util.Log;
-
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.mohamed.openstarter.Models.Category;
 import com.example.mohamed.openstarter.app.AppController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Bacem on 11/20/2017.
@@ -28,7 +21,7 @@ public class CategoryDs {
 
 
     //**** URL STRINGS
-    private final String URL_SERVER = "http://192.168.100.5/androidws/web/app_dev.php";
+    private final String URL_SERVER = "http://192.168.1.58/androidws/web/app_dev.php";
     //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
     private final String  URL_GET_ALL_CATEGORY = URL_SERVER + "/category/getAll" ;
 

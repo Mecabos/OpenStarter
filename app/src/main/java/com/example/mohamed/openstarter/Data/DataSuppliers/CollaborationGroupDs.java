@@ -1,7 +1,5 @@
 package com.example.mohamed.openstarter.Data.DataSuppliers;
 
-import android.util.Log;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -24,7 +22,7 @@ import java.util.List;
 public class CollaborationGroupDs {
 
     //**** URL STRINGS
-    private final String URL_SERVER = "http://192.168.100.5/androidws/web/app_dev.php";
+    private final String URL_SERVER = "http://192.168.1.58/androidws/web/app_dev.php";
     //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
     private final String URL_GET_BY_USER_COLLABORATION_GROUP = URL_SERVER + "/collaborationGroup/getByAdminUser";
 

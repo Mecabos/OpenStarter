@@ -28,7 +28,7 @@ public class UserDs {
     // Tag used to cancel the request
     String tag_json_obj = "json_obj_req";
 
-    private final String URL_SERVER = "http://192.168.100.5/androidws/web/app_dev.php";
+    private final String URL_SERVER = "http://192.168.1.58/androidws/web/app_dev.php";
     //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
 
     private final String URL_GET_BY_EMAIL = URL_SERVER + "/user/getByEmail";
