@@ -1,3 +1,4 @@
+
 package com.example.mohamed.openstarter.Adapters;
 
 import android.content.Context;
@@ -10,9 +11,11 @@ import android.widget.TextView;
 import com.daimajia.slider.library.SliderLayout;
 import com.example.mohamed.openstarter.R;
 
+
 /**
  * Created by Bacem on 12/11/2017.
  */
+
 
 public class TransformerAdapter extends BaseAdapter{
 
@@ -43,3 +46,4 @@ public class TransformerAdapter extends BaseAdapter{
         return t;
     }
 }
+
