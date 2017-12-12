@@ -1,49 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
 
-    <com.daimajia.slider.library.SliderLayout
-        android:id="@+id/slider"
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        />
-    <!--<com.daimajia.slider.library.Indicators.PagerIndicator
-        android:id="@+id/custom_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        app:selected_color="#0095BF"
-        app:unselected_color="#55333333"
-        app:selected_drawable="@drawable/avatar"
-        app:shape="oval"
-        app:selected_padding_left="5dp"
-        app:selected_padding_right="5dp"
-        app:unselected_padding_left="5dp"
-        app:unselected_padding_right="5dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        app:selected_width="6dp"
-        app:selected_height="6dp"
-        app:unselected_width="6dp"
-        app:unselected_height="6dp"
-        android:layout_marginBottom="20dp"
-        />-->
-    <!--<com.daimajia.slider.library.Indicators.PagerIndicator
-        android:id="@+id/custom_indicator2"
-        style="@style/AndroidImageSlider_Corner_Oval_Orange"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        />-->
-    <!--<ListView
-        android:layout_below="@+id/slider"
-        android:id="@+id/transformers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>-->
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ll1"
+            android:layout_width="0dp"
+            android:layout_height="208dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/campaignSlider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="31dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll1"
+            app:layout_constraintVertical_bias="0.0">
+
+            <LinearLayout
+                android:id="@+id/ll2_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="7">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:orientation="vertical">
 
 
-</android.support.constraint.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_weight="4"
+                        android:gravity="center_horizontal" />
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="-10dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@color/contentDividerLine" />
+
+                    <TextView
+                        android:id="@+id/tv_timer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_weight="4"
+                        android:fontFamily="@font/arimo"
+                        android:gravity="center"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll2_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title_short_description_badge"
+                    style="@style/ProjectTabsTitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:text="Description" />
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="15dp"
+                    android:text="OQHLQMSDFHLQSDJFHKSLQDJFHLSQKJDFHKQSDHFSQDJFHKSMQLDFHLQSDKJFHLQSKDFHLKQSJDHFLKQJSDHFLKQSJHFLQKSJDFHLQKSJDHFLQSJDFHLKQSJDFHLKQSJDFHLKQSJDFHQLSDFJHQKSDFLKKQJSHDFLKJQHDSFLKJHQSDLKFJHQSDFKJ" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

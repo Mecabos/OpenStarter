@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import com.example.mohamed.openstarter.Activities.MainActivity;
 import com.example.mohamed.openstarter.Activities.ProjectActivity;
+import com.example.mohamed.openstarter.Data.DataSuppliers.FollowDs;
 import com.example.mohamed.openstarter.Helpers.NumbersHelper;
+import com.example.mohamed.openstarter.Helpers.TimeHelper;
 import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 import com.example.mohamed.openstarter.foldingcell.FoldingCell;
@@ -73,6 +75,7 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
             viewHolder.titleShortDescription = cell.findViewById(R.id.title_project_short_description);
             viewHolder.contentShortDescription = cell.findViewById(R.id.content_project_short_description);
             viewHolder.contentDeadLine = cell.findViewById(R.id.content_deadline);
+            viewHolder.titleSideBar = cell.findViewById(R.id.title_side_bar) ;
 
 
             viewHolder.contentRequestBtn = cell.findViewById(R.id.content_request_btn);
@@ -106,14 +109,7 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
         SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy/MM/dd");
         String dayFromDate1 = dayFormat.format(project.getStartDate());
         String dayFromDate2 = dayFormat.format(project.getFinishDate());
-            //Getting deadline
-        Long secs = (project.getFinishDate().getTime() - project.getStartDate().getTime()) / 1000;
-        Long days = secs / 86400;
-        secs = secs % 86400;
-        Long hours = secs / 3600;
-        secs = secs % 3600;
-        Long mins = secs / 60;
-        secs = secs % 60;
+
             // setting the btn request
         project.setRequestBtnClickListener(new View.OnClickListener() {
             @Override
@@ -146,10 +142,9 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
         viewHolder.titleShortDescription.setText(project.getShortDescription());
         viewHolder.contentShortDescription.setText(project.getShortDescription());
         viewHolder.titleShortDescription.setText(project.getShortDescription());
-        viewHolder.contentDeadLine.setText(days.toString()+ "Days "+ hours.toString()+" Hours "+ mins + "Minutes and " + secs + "seconds");
+        viewHolder.contentDeadLine.setText(TimeHelper.getTimeLeft(project.getStartDate(),project.getFinishDate()));
+        viewHolder.titleSideBar.setBackgroundColor(Color.parseColor(project.getCategory().getColor()));
 
-        RelativeLayout sideBar = cell.findViewById(R.id.title_side_bar) ;
-        sideBar.setBackgroundColor(Color.parseColor(project.getCategory().getColor()));
 
 
         // set custom btn handler for list project from that project
@@ -198,6 +193,7 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
         TextView titleGoal;
         TextView titleEndDay;
         TextView titleEndTime;
+        RelativeLayout titleSideBar;
         TextView titleShortDescription;
         //content elements
         TextView contentProjectName;

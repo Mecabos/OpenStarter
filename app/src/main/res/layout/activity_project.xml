@@ -7,6 +7,19 @@
     android:background="@drawable/background"
     tools:context="com.example.mohamed.openstarter.Activities.ProjectActivity">
 
+    <com.vlstr.blurdialog.BlurDialog
+        android:id="@+id/blurLoader"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:elevation="34dp"
+        android:visibility="invisible"
+        app:blurDialogDuration="length_infinite"
+        app:blurDialogIcon="@mipmap/ic_launcher"
+        app:blurDialogTitle="Hello World!"
+        app:blurOverlayColor="@color/colorOverlay"/>
 
     <com.github.florent37.diagonallayout.DiagonalLayout
         android:id="@+id/diagonalLayout"
@@ -142,7 +155,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
-                android:text="112"
                 android:textColor="#ffff"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -207,12 +219,15 @@
             android:background="@android:color/white"
             android:clipToPadding="false"
             android:elevation="10dp"
-
             app:bubbleTab_circleColor="@color/colorPrimary"
             app:bubbleTab_circleRatio="1.25"
             app:bubbleTab_image0="@drawable/ic_local_play"
             app:bubbleTab_image1="@drawable/ic_person_pin"
-            app:bubbleTab_image2="@drawable/ic_chat"></com.github.florent37.bubbletab.BubbleTab>
+            app:bubbleTab_image2="@drawable/ic_chat"
+            app:tabMode="scrollable"
+            >
+
+        </com.github.florent37.bubbletab.BubbleTab>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/container"
