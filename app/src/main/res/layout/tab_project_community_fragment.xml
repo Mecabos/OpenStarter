@@ -1,90 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
-
+    android:background="@drawable/background"
+    >
     <android.support.constraint.ConstraintLayout
         android:layout_width="fill_parent"
-        android:layout_height="110dp"
-        android:background="@color/white">
+        android:layout_height="wrap_content"
+        >
 
-        <com.ldoublem.ringPregressLibrary.RingProgress
-            android:id="@+id/ring_progress"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:elevation="5dp"
-            app:bgColor="#707070"
-            app:bgShadowColor="#ffffff"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:ringSweepAngle="180"
-            app:ringWidthScale="0.5"
-            app:rotate="180"
-            app:showBackground="true"
-            app:showBackgroundShadow="false"
-            app:showRingCorner="false">
-
-        </com.ldoublem.ringPregressLibrary.RingProgress>
-
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="200dp"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="fill_parent"
             android:layout_height="110dp"
-            android:background="@drawable/square_unchangeabl"
-            android:orientation="vertical"></LinearLayout>
+            android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="200dp"
-            android:layout_marginTop="60dp"
-            android:src="@color/contentDividerLine"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <com.ldoublem.ringPregressLibrary.RingProgress
+                android:id="@+id/ring_progress"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:elevation="5dp"
+                app:bgColor="#707070"
+                app:bgShadowColor="#ffffff"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:ringSweepAngle="180"
+                app:ringWidthScale="0.5"
+                app:rotate="180"
+                app:showBackground="true"
+                app:showBackgroundShadow="false"
+                app:showRingCorner="false">
 
-        <TextView
-            android:id="@+id/project_contributors_count"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="center"
-            android:text="55 people have already contributed to this project"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/linearLayout3"
-            app:layout_constraintTop_toTopOf="parent" />
+            </com.ldoublem.ringPregressLibrary.RingProgress>
 
-        <Button
-            android:id="@+id/btn_contribute"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="center"
-            android:text="Contribute"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
-            app:layout_constraintEnd_toEndOf="@+id/project_contributors_count"
-            app:layout_constraintHorizontal_bias="0.481"
-            app:layout_constraintStart_toStartOf="@+id/project_contributors_count"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="200dp"
+                android:layout_height="110dp"
+                android:background="@drawable/square_unchangeabl"
+                android:orientation="vertical"></LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="200dp"
+                android:layout_marginTop="60dp"
+                android:src="@color/contentDividerLine"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/project_contributors_count"
+                style="@style/ProjectTabsText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:gravity="center"
+                android:text="55 people have already contributed to this project"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_contribute"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="center"
+                android:text="Contribute"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
+                app:layout_constraintEnd_toEndOf="@+id/project_contributors_count"
+                app:layout_constraintHorizontal_bias="0.481"
+                app:layout_constraintStart_toStartOf="@+id/project_contributors_count"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+
+        </android.support.constraint.ConstraintLayout>
 
 
     </android.support.constraint.ConstraintLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+
+
+</ScrollView>

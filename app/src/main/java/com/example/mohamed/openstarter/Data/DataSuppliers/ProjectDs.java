@@ -26,7 +26,7 @@ public class ProjectDs {
 
 
     //**** URL STRINGS
-    private final String URL_SERVER = "http://192.168.1.58/androidws/web/app_dev.php";
+    private final String URL_SERVER = "http://192.168.1.3/androidws/web/app_dev.php";
     //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
     private final String  URL_GET_ALL_PROJECT = URL_SERVER + "/project/getAll" ;
     private final String  URL_CREATE_PROJECT = URL_SERVER + "/project/create" ;

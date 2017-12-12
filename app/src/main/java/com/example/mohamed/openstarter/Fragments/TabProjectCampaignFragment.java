@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -15,8 +16,12 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.example.mohamed.openstarter.Activities.ProjectActivity;
+import com.example.mohamed.openstarter.Helpers.TimeHelper;
+import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 /**
@@ -26,7 +31,12 @@ import java.util.HashMap;
 public class TabProjectCampaignFragment extends Fragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
 
     private static final String TAG = "TabProjectCampaignFragment";
-    private SliderLayout mDemoSlider;
+    private SliderLayout mCampaignSlider;
+
+    private TextView tvTimer ;
+    private TextView tvDate;
+    private TextView tvDescription;
+    private Project mProject = new Project() ;
 
     @Nullable
     @Override
@@ -41,7 +51,25 @@ public class TabProjectCampaignFragment extends Fragment implements BaseSliderVi
 
     private void initializeFragment(View view) {
 
-        mDemoSlider = view.findViewById(R.id.slider);
+        mProject = ((ProjectActivity)getActivity()).getProject() ;
+
+        tvTimer = view.findViewById(R.id.tv_timer);
+        tvTimer.setText(TimeHelper.getTimeLeft(mProject.getStartDate(),mProject.getFinishDate())+" Left");
+
+        tvDate = view.findViewById(R.id.tv_date);
+        SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy/MM/dd");
+        tvDate.setText("Started : "+dayFormat.format(mProject.getStartDate())+ " Ends : "+ dayFormat.format(mProject.getFinishDate()));
+
+        tvDescription = view.findViewById(R.id.tv_description);
+        tvDescription.setText(mProject.getDescription());
+
+        initializeSlider (view);
+    }
+
+    //*****************Slider*****************
+    private void initializeSlider (View view){
+
+        mCampaignSlider = view.findViewById(R.id.campaignSlider);
 
         HashMap<String,String> url_maps = new HashMap<String, String>();
 
@@ -63,21 +91,20 @@ public class TabProjectCampaignFragment extends Fragment implements BaseSliderVi
             textSliderView.getBundle()
                     .putString("extra",name);
 
-            mDemoSlider.addSlider(textSliderView);
+            mCampaignSlider.addSlider(textSliderView);
         }
 
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mDemoSlider.stopAutoCycle();
-        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-        mDemoSlider.addOnPageChangeListener(this);
-
+        mCampaignSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        mCampaignSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mCampaignSlider.stopAutoCycle();
+        mCampaignSlider.setCustomAnimation(new DescriptionAnimation());
+        mCampaignSlider.addOnPageChangeListener(this);
     }
 
     @Override
     public void onStop() {
         // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
-        mDemoSlider.stopAutoCycle();
+        mCampaignSlider.stopAutoCycle();
         super.onStop();
     }
 
@@ -101,4 +128,5 @@ public class TabProjectCampaignFragment extends Fragment implements BaseSliderVi
     public void onPageScrollStateChanged(int state) {
 
     }
+    //****************************************
 }
