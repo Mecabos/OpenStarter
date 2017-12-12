@@ -82,6 +82,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }
         } catch (IOException e) {
             e.printStackTrace();
+
         }
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
