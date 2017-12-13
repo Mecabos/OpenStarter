@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
         final BlurDialog blurDialog = findViewById(R.id.blurLoader);
         blurDialog.create(getWindow().getDecorView(), 6);
         blurDialog.setTitle("Loading Projects");

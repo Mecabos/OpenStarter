@@ -21,7 +21,7 @@ public class CategoryDs {
 
 
     //**** URL STRINGS
-    private final String URL_SERVER = "http://192.168.1.3/androidws/web/app_dev.php";
+    private final String URL_SERVER = "http:// 172.16.247.198/androidws/web/app_dev.php";
     //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
     private final String  URL_GET_ALL_CATEGORY = URL_SERVER + "/category/getAll" ;
 

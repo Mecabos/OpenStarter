@@ -4,6 +4,7 @@ package com.example.mohamed.openstarter.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,10 +16,12 @@ import android.widget.Toast;
 import com.example.mohamed.openstarter.Activities.ProjectActivity;
 import com.example.mohamed.openstarter.Adapters.CommentListAdapter;
 import com.example.mohamed.openstarter.Data.DataSuppliers.CommentDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.NotificationDs;
 import com.example.mohamed.openstarter.Models.Comment;
 import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 
@@ -96,6 +99,24 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
                             adapter.add(createdComment);
 
                             Toast.makeText(getActivity(), "Comment posted", Toast.LENGTH_LONG).show();
+
+
+                            //notif here
+                            //MyFirebaseInstanceIDService instanceIDService = new MyFirebaseInstanceIDService();
+                            //String notifToken = instanceIDService.refreshedToken;
+                            Log.d("notiff", "Refreshed token: " + FirebaseInstanceId.getInstance().getToken());
+                            NotificationDs notificationDs = new NotificationDs();
+                            notificationDs.addNotification(FirebaseInstanceId.getInstance().getToken(), "new comment","new comment added", new NotificationDs.CallbackSend() {
+                                @Override
+                                public void onSuccess() {
+                                    Log.d("notiff", " notification success");
+                                }
+
+                                @Override
+                                public void onError() {
+                                    Log.d("notiff", "error notification ");
+                                }
+                            });
 
                         }
                     });
