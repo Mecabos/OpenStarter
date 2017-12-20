@@ -250,11 +250,11 @@
             android:textColor="#ffffff" />
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="120dp"
+            android:layout_width="70dp"
+            android:layout_height="150dp"
             android:layout_marginLeft="50dp"
             android:layout_gravity="center"
-            android:src="@drawable/goldmedal"
+            android:src="@drawable/gold"
             android:contentDescription="medal" />
 
     </LinearLayout>

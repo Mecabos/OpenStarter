@@ -1,3 +1,4 @@
+/*
 package com.example.mohamed.openstarter.Data.DataSuppliers;
 
 import android.util.Log;
@@ -18,9 +19,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+*/
 /**
  * Created by Mohamed on 12/9/2017.
- */
+ *//*
+
 
 public class GroupDs {
 
@@ -44,7 +47,8 @@ public class GroupDs {
         mGson = gsonBuilder.create();
     }
 
-    /*public void addGroup(final String name, final String creator, final CallbackAdd callback) {
+    */
+/*public void addGroup(final String name, final String creator, final CallbackAdd callback) {
 
         Map<String, String> params = new HashMap<>();
         params.put("name", name);
@@ -76,7 +80,8 @@ public class GroupDs {
 // Adding request to request queue
         Log.d("TAG", Arrays.toString(jsonObjReq.getBody()));
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
-    }*/
+    }*//*
+
 
     public void updateGroup(final String oldName, final String newName, final CallbackUpdate callback) {
 
@@ -125,3 +130,4 @@ public class GroupDs {
     }
 
 }
+*/

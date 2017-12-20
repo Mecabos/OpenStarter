@@ -23,9 +23,9 @@ public class IntroductionActivity extends AhoyOnboarderActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("City Guide", "Detailed guides to help you plan your trip.", R.drawable.avatar);
-        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Travel Blog", "Share your travel experiences with a vast network of fellow travellers.", R.drawable.com_facebook_button_login_logo);
-        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Chat", "Connect with like minded people and exchange your travel stories.", R.drawable.com_facebook_favicon_blue);
+        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("Welcome to OpenStarter", "Open starter is an open project funding app created for anyone who wishes to have a quick way to find suporters for his project", R.drawable.big_logo);
+        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Create a collaboration group", "Create a collaboration group and invite your team mates to start creating a project.", R.drawable.com_facebook_button_login_logo);
+        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Look for cool projects", "Look for projects that inspire you and that you want to support and help becoming a reality", R.drawable.com_facebook_favicon_blue);
 
         ahoyOnboarderCard1.setBackgroundColor(R.color.black_transparent);
         ahoyOnboarderCard2.setBackgroundColor(R.color.black_transparent);

@@ -2,12 +2,13 @@ package com.example.mohamed.openstarter.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mohamed.openstarter.Data.DataSuppliers.GroupDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.CollaborationGroupDs;
 import com.example.mohamed.openstarter.Helpers.GradientBackgroundPainter;
 import com.example.mohamed.openstarter.R;
 import com.vlstr.blurdialog.BlurDialog;
@@ -30,6 +31,8 @@ public class EditGroupActivity extends AppCompatActivity {
         groupName = findViewById(R.id.groupName);
         update = findViewById(R.id.bt_update_group);
 
+        groupName.setText(getIntent().getStringExtra("groupName"));
+
         //background set
         View backgroundImage = findViewById(R.id.bg_view);
         final int[] drawables = new int[3];
@@ -49,9 +52,9 @@ public class EditGroupActivity extends AppCompatActivity {
                 } else {
 
                     blurDialog.show();
-                    GroupDs ds = new GroupDs();
-                    String oldGroupName="Legacy team";
-                    ds.updateGroup(oldGroupName,groupName.getText().toString(), new GroupDs.CallbackUpdate() {
+                    CollaborationGroupDs ds = new CollaborationGroupDs();
+                    Log.d("updatee group name",getIntent().getStringExtra("groupName"));
+                    ds.updateGroup(getIntent().getStringExtra("groupName"),groupName.getText().toString(), new CollaborationGroupDs.CallbackUpdate() {
 
                         @Override
                         public void onSuccess() {

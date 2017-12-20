@@ -16,14 +16,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
 import com.example.mohamed.openstarter.Helpers.GradientBackgroundPainter;
+import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 import com.vlstr.blurdialog.BlurDialog;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class EditProfilActivity extends AppCompatActivity {
@@ -84,6 +87,23 @@ public class EditProfilActivity extends AppCompatActivity {
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(intent, IMG_REQUEST);
+            }
+        });
+
+        UserDs ds = new UserDs();
+        ds.getUserByEmail(firebaseAuth.getCurrentUser().getEmail(), new UserDs.CallbackGet() {
+            @Override
+            public void onSuccess(User createdUser) {
+                firstName.setText(createdUser.getFirstName());
+                lastName.setText(createdUser.getLastName());
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                birthdate.setText(format.format(createdUser.getBirthDate()));
+                bio.setText(createdUser.getBio());
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Log.d("Userr","user not found");
             }
         });
 

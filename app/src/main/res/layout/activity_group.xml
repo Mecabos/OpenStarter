@@ -230,6 +230,32 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/diagonalLayout"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="240dp">
+
+        <TextView
+            android:id="@+id/groupListTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="group List"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:textColor="#ffffff" />
+
+        <Spinner
+            android:id="@+id/groupList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

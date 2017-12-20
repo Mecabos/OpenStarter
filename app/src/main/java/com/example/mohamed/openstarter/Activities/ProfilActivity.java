@@ -26,6 +26,7 @@ public class ProfilActivity extends AppCompatActivity {
     Button bt_editProfil, bt_groups;
     private Spinner collaborationGroupSpinner;
     private long collaborationGroupSelectedId;
+    private long user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +155,7 @@ public class ProfilActivity extends AppCompatActivity {
         ds.getUserByEmail(firebaseAuth.getCurrentUser().getEmail(), new UserDs.CallbackGet() {
             @Override
             public void onSuccess(User createdUser) {
+                user_id = createdUser.getId();
                 String name = createdUser.getFirstName()+" "+createdUser.getLastName();
                 String bio = createdUser.getBio();
                 fullname.setText(name);

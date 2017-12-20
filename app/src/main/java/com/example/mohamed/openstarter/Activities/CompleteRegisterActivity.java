@@ -136,7 +136,9 @@ public class CompleteRegisterActivity extends AppCompatActivity {
                         setBirthdate(year, monthOfYear, dayOfMonth);
                     }
                 }, year, monthOfYear, dayOfMonth);
+        calendar.add(Calendar.YEAR, -18);
         birthdatePicker.getDatePicker().setMaxDate(calendar.getTime().getTime());
+
     }
 
     private void setBirthdate(int year, int monthOfYear, int dayOfMonth) {

@@ -82,7 +82,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     private static final int MIN_CHARACTERS_DESCRIPTION = 2;
     private static final int MAX_CHARACTERS_DESCRIPTION = 600;
     public static final String STATE_DESCRIPTION = "description";
-    
+
     // Start Date step
     private TextView startDateDayTextView;
     private DatePickerDialog startDateDayPicker;
@@ -108,12 +108,12 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     // Collaboration Group step
     private Spinner collaborationGroupSpinner;
     private Long collaborationGroupSelectedId;
-    public static final String STATE_COLLABORATION_GROUP= "collaborationGroup";
+    public static final String STATE_COLLABORATION_GROUP = "collaborationGroup";
 
     //Activity vars
-    private static String PROJECT_TAG = "project" ;
+    private static String PROJECT_TAG = "project";
     private static String COLLABORATION_GROUP_TAG = "collaboration group";
-    private static String CATEGORY_TAG = "category" ;
+    private static String CATEGORY_TAG = "category";
     private boolean confirmBack = true;
     private ProgressDialog progressDialog;
     private VerticalStepperFormLayout verticalStepperForm;
@@ -131,7 +131,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     private void initializeActivity() {
         firebaseAuth = FirebaseAuth.getInstance();
-        instance = this ;
+        instance = this;
         // Start date step vars
         calendar = Calendar.getInstance();
         setStartDateDayPicker(calendar);
@@ -215,7 +215,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                 checkStartDateStep(startDateDayTextView.getText().toString());
                 break;
             case FINISH_DATE_STEP_NUM:
-                checkFinishDateStep(finishDateDayTextView.getText().toString()+ " " + finishDateTimeTextView.getText().toString());
+                checkFinishDateStep(finishDateDayTextView.getText().toString() + " " + finishDateTimeTextView.getText().toString());
                 break;
             case BUDGET_STEP_NUM:
                 checkBudgetStep(budgetEditText.getText().toString());
@@ -237,10 +237,10 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     private void executeDataSending() {
         //Toast.makeText(this, ,Toast.LENGTH_LONG).show();
-        ProjectDs projectDs = new ProjectDs () ;
+        ProjectDs projectDs = new ProjectDs();
         projectDs.projectCreate(nameEditText.getText().toString(),
-                startDateDayTextView.getText().toString() + " " + startDateTimeTextView.getText().toString() +":00",
-                finishDateDayTextView.getText().toString() + " " + finishDateTimeTextView.getText().toString() +":00",
+                startDateDayTextView.getText().toString() + " " + startDateTimeTextView.getText().toString() + ":00",
+                finishDateDayTextView.getText().toString() + " " + finishDateTimeTextView.getText().toString() + ":00",
                 shortDescriptionEditText.getText().toString(),
                 descriptionEditText.getText().toString(),
                 budgetEditText.getText().toString(),
@@ -248,18 +248,20 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                 categorySelectedId.toString(),
                 new ProjectDs.Callback() {
                     @Override
-                    public void onSuccessGet(List<Project> result) {}
+                    public void onSuccessGet(List<Project> result) {
+                    }
 
                     @Override
                     public void onSuccessCreate(Project createdProject) {
                         progressDialog.cancel();
                         Intent myIntent = new Intent(getBaseContext(), ProjectActivity.class);
-                        myIntent.putExtra(PROJECT_TAG,createdProject);
-                        myIntent.putExtra(COLLABORATION_GROUP_TAG,createdProject.getCollaborationGroup());
-                        myIntent.putExtra(CATEGORY_TAG,createdProject.getCategory());
-                        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        myIntent.putExtra(PROJECT_TAG, createdProject);
+                        myIntent.putExtra(COLLABORATION_GROUP_TAG, createdProject.getCollaborationGroup());
+                        myIntent.putExtra(CATEGORY_TAG, createdProject.getCategory());
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         getBaseContext().startActivity(myIntent);
                     }
+
                     @Override
                     public void onFail() {
                     }
@@ -337,13 +339,13 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
             public void onSuccessGet(List<Category> categoriesList) {
 
                 Category[] dataArray = new Category[categoriesList.size()];
-                categorySelectedId=categoriesList.get(0).getId();
-               for (int i = 0; i < categoriesList.size(); i++  ){
+                categorySelectedId = categoriesList.get(0).getId();
+                for (int i = 0; i < categoriesList.size(); i++) {
 
-                   dataArray[i]=categoriesList.get(i);
-               }
+                    dataArray[i] = categoriesList.get(i);
+                }
                 final ArrayAdapter<Category> spinnerAdapter = new CategoriesSpinnerAdapter(
-                        instance, android.R.layout.simple_spinner_item,dataArray);
+                        instance, android.R.layout.simple_spinner_item, dataArray);
 
 
                 categorySpinner.setAdapter(spinnerAdapter);
@@ -361,8 +363,10 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                     }
                 });
             }
+
             @Override
-            public void onFail() {}
+            public void onFail() {
+            }
         });
         return categorySpinner;
     }
@@ -480,7 +484,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
         return DescriptionIsCorrect;
     }
-    
+
     //******************************************
     //************************ START DATE
 
@@ -627,7 +631,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     private boolean checkFinishDateStep(String finishDateString) {
         boolean finishDateIsCorrect = false;
-        String startDateString = startDateDayTextView.getText().toString() + " " + startDateTimeTextView.getText().toString() ;
+        String startDateString = startDateDayTextView.getText().toString() + " " + startDateTimeTextView.getText().toString();
         SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         try {
             Date finishDate = dayFormat.parse(finishDateString);
@@ -637,14 +641,14 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                     finishDateIsCorrect = true;
                     verticalStepperForm.setStepAsCompleted(FINISH_DATE_STEP_NUM);
                     //verticalStepperForm.setActiveStepAsCompleted();
-                } else{
+                } else {
                     String finishDateError = getResources().getString(R.string.error_finish_date);
-                    verticalStepperForm.setStepAsUncompleted(FINISH_DATE_STEP_NUM,finishDateError);
+                    verticalStepperForm.setStepAsUncompleted(FINISH_DATE_STEP_NUM, finishDateError);
                     //verticalStepperForm.setActiveStepAsUncompleted(finishDateError);
                 }
-            }else {
+            } else {
                 String finishDateError = getResources().getString(R.string.error_finish_date);
-                verticalStepperForm.setStepAsUncompleted(FINISH_DATE_STEP_NUM,finishDateError);
+                verticalStepperForm.setStepAsUncompleted(FINISH_DATE_STEP_NUM, finishDateError);
                 //verticalStepperForm.setActiveStepAsUncompleted(finishDateError);
             }
         } catch (ParseException e) {
@@ -741,7 +745,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     private boolean checkBudgetStep(String budgetString) {
         boolean budgetIsCorrect = false;
-        if (budgetString != null && !budgetString.equals("") ){
+        if (budgetString != null && !budgetString.equals("")) {
             long budget = Long.valueOf(budgetString);
             if (budget > 0) {
                 budgetIsCorrect = true;
@@ -750,7 +754,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                 String budgetError = getResources().getString(R.string.error_budget);
                 verticalStepperForm.setActiveStepAsUncompleted(budgetError);
             }
-        }else {
+        } else {
             String budgetError = getResources().getString(R.string.error_budget);
             verticalStepperForm.setActiveStepAsUncompleted(budgetError);
         }
@@ -763,18 +767,18 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     private View createProjectCollaborationGroupStep() {
         collaborationGroupSpinner = new Spinner(this);
         CollaborationGroupDs collaborationGroupDs = new CollaborationGroupDs();
-        collaborationGroupDs.collaborationGroupGetByAdminUser(firebaseAuth.getCurrentUser().getEmail(),new CollaborationGroupDs.Callback() {
+        collaborationGroupDs.collaborationGroupGetByAdminUser(firebaseAuth.getCurrentUser().getEmail(), new CollaborationGroupDs.Callback() {
             @Override
             public void onSuccessGet(List<CollaborationGroup> groupsList) {
-                if (groupsList.size() > 0){
+                if (groupsList.size() > 0) {
                     CollaborationGroup[] dataArray = new CollaborationGroup[groupsList.size()];
-                    collaborationGroupSelectedId=groupsList.get(0).getId();
-                    for (int i = 0; i < groupsList.size(); i++  ){
+                    collaborationGroupSelectedId = groupsList.get(0).getId();
+                    for (int i = 0; i < groupsList.size(); i++) {
 
-                        dataArray[i]=groupsList.get(i);
+                        dataArray[i] = groupsList.get(i);
                     }
                     final ArrayAdapter<CollaborationGroup> groupSpinnerAdapter = new CollaborationGroupSpinnerAdapter(
-                            instance, android.R.layout.simple_spinner_item,dataArray);
+                            instance, android.R.layout.simple_spinner_item, dataArray);
 
                     collaborationGroupSpinner.setAdapter(groupSpinnerAdapter);
                     collaborationGroupSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -790,7 +794,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
                         }
                     });
-                }else {
+                } else {
                     AlertDialog noAdminGroupAlert = new AlertDialog.Builder(instance).create();
                     noAdminGroupAlert.setTitle("Alert");
                     noAdminGroupAlert.setMessage("You have no groups you're administrating, please create a group or get into a group with admin rights");
@@ -799,7 +803,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                     Intent myIntent = new Intent(getBaseContext(), MainActivity.class);
-                                    myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     getBaseContext().startActivity(myIntent);
                                 }
                             });
@@ -810,10 +814,12 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
             }
 
             @Override
-            public void onSuccessCreate(CollaborationGroup createdGroup) {}
+            public void onSuccessCreate(CollaborationGroup createdGroup) {
+            }
 
             @Override
-            public void onFail() {}
+            public void onFail() {
+            }
         });
         return collaborationGroupSpinner;
     }

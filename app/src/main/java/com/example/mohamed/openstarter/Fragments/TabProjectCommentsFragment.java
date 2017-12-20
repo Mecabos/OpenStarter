@@ -104,6 +104,8 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
                             //notif here
                             //MyFirebaseInstanceIDService instanceIDService = new MyFirebaseInstanceIDService();
                             //String notifToken = instanceIDService.refreshedToken;
+                            etComment.getText().clear();
+                            etComment.clearFocus();
                             Log.d("notiff", "Refreshed token: " + FirebaseInstanceId.getInstance().getToken());
                             NotificationDs notificationDs = new NotificationDs();
                             notificationDs.addNotification(FirebaseInstanceId.getInstance().getToken(), "new comment","new comment added", new NotificationDs.CallbackSend() {
