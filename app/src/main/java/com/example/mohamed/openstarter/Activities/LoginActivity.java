@@ -79,13 +79,13 @@ public class LoginActivity extends AppCompatActivity {
                 explode.setDuration(500);
                 getWindow().setExitTransition(explode);
                 getWindow().setEnterTransition(explode);
-                blurDialog.show();
 
                 if (etUsername.getText().toString().equals("")) {
                     Toast.makeText(LoginActivity.this, "username can't be empty", Toast.LENGTH_SHORT).show();
                 } else if (etPassword.getText().toString().equals("")) {
                     Toast.makeText(LoginActivity.this, "password can't be empty", Toast.LENGTH_SHORT).show();
                 } else {
+                    blurDialog.show();
                     (firebaseAuth.signInWithEmailAndPassword(etUsername.getText().toString(), etPassword.getText().toString()))
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override

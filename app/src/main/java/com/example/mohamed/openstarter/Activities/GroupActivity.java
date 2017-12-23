@@ -1,6 +1,8 @@
 package com.example.mohamed.openstarter.Activities;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,22 +11,30 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mohamed.openstarter.Adapters.CollaborationGroupSpinnerAdapter;
 import com.example.mohamed.openstarter.Data.DataSuppliers.CollaborationGroupDs;
+import com.example.mohamed.openstarter.Helpers.DialogHelper;
 import com.example.mohamed.openstarter.Models.CollaborationGroup;
 import com.example.mohamed.openstarter.R;
-import com.geniusforapp.fancydialog.FancyAlertDialog;
 import com.google.firebase.auth.FirebaseAuth;
+import com.vlstr.blurdialog.BlurDialog;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class GroupActivity extends AppCompatActivity {
 
-    Button bt_members, bt_editGroup;
+    private DialogHelper dialogHelper;
+    private BlurDialog blurDialog;
+
+    Button bt_members, bt_editGroup, bt_addGroup;
     TextView tv_name, tv_creationDate;
     private Spinner collaborationGroupSpinner;
     private Long collaborationGroupSelectedId;
@@ -35,20 +45,65 @@ public class GroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
 
+        dialogHelper = new DialogHelper() ;
         instance = this ;
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        blurDialog = findViewById(R.id.blurLoader);
+        dialogHelper.blurDialogShow(instance,blurDialog,"Creating group");
+
+        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         collaborationGroupSpinner = findViewById(R.id.groupList);
         collaborationGroupSelectedId = 0L;
 
         bt_members = findViewById(R.id.bt_members);
         bt_editGroup = findViewById(R.id.bt_editGroup);
+        bt_addGroup = findViewById(R.id.bt_addGroup);
         tv_name = findViewById(R.id.groupName);
         tv_creationDate = findViewById(R.id.creationDate);
+
+        bt_addGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final AlertDialog alertDialog = new AlertDialog.Builder(GroupActivity.this).create();
+                final EditText groupName = new EditText(GroupActivity.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                groupName.setLayoutParams(lp);
+                alertDialog.setView(groupName);
+                alertDialog.setTitle("New Collaboration group");
+                alertDialog.setMessage("pick a name for your collaboration group, it must be unique !");
+                alertDialog.setButton(Dialog.BUTTON_POSITIVE,"DONE",new DialogInterface.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialogHelper.blurDialogShow(instance,blurDialog,"Creating group");
+                        CollaborationGroupDs collaborationGroupDs = new CollaborationGroupDs();
+                        collaborationGroupDs.addGroup(groupName.getText().toString(), firebaseAuth.getCurrentUser().getEmail(), new CollaborationGroupDs.CallbackAdd() {
+                            @Override
+                            public void onSuccess() {
+                                dialogHelper.blurDialogHide(instance,blurDialog);
+                                alertDialog.hide();
+                            }
+
+                            @Override
+                            public void onFail() {
+                                dialogHelper.blurDialogHide(instance,blurDialog);
+                                Toast.makeText(GroupActivity.this, "failed", Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                    }
+                });
+                alertDialog.show();
+
+            }
+        });
 
         bt_members.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FancyAlertDialog.Builder alert = new FancyAlertDialog.Builder(GroupActivity.this)
+                /*FancyAlertDialog.Builder alert = new FancyAlertDialog.Builder(GroupActivity.this)
                         //.setImageRecourse(R.drawable.ic_cloud_computing)
                         .setTextTitle("MEMBERS")
                         //.setTextSubTitle("username")
@@ -74,7 +129,11 @@ public class GroupActivity extends AppCompatActivity {
                         .setSubtitleGravity(FancyAlertDialog.TextGravity.RIGHT)
                         .setCancelable(false)
                         .build();
-                alert.show();
+                alert.show();*/
+
+                Intent i1 = new Intent(GroupActivity.this, ManageMembersActivity.class);
+                i1.putExtra("groupName",tv_name.getText().toString());
+                startActivity(i1);
             }
         });
 
@@ -94,9 +153,12 @@ public class GroupActivity extends AppCompatActivity {
             @Override
             public void onSuccessGet(final List<CollaborationGroup> groupsList) {
 
+                dialogHelper.blurDialogHide(instance,blurDialog);
                 CollaborationGroup firstGroup = groupsList.get(0);
                 tv_name.setText(firstGroup.getName());
-                //tv_creationDate.setText(firstGroup.getCreationDate().toString());
+                DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                String creationDate = df.format(firstGroup.getCreationDate());
+                tv_creationDate.setText(creationDate);
 
 
                 if (groupsList.size() > 0){
@@ -119,8 +181,11 @@ public class GroupActivity extends AppCompatActivity {
                             CollaborationGroup selectedCollaborationGroup = (CollaborationGroup) parent.getItemAtPosition(pos);
                             collaborationGroupSelectedId = selectedCollaborationGroup.getId();
                             Toast.makeText(GroupActivity.this, "group selected", Toast.LENGTH_LONG).show();
-                            CollaborationGroup firstGroup = groupsList.get(pos);
-                            tv_name.setText(firstGroup.getName());
+                            CollaborationGroup selectedGroup = groupsList.get(pos);
+                            tv_name.setText(selectedGroup.getName());
+                            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                            String creationDate = df.format(selectedGroup.getCreationDate());
+                            tv_creationDate.setText(creationDate);
                         }
 
                         @Override

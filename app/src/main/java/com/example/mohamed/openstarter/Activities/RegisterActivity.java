@@ -201,7 +201,6 @@ public class RegisterActivity extends AppCompatActivity {
                 explode.setDuration(500);
                 getWindow().setExitTransition(explode);
                 getWindow().setEnterTransition(explode);
-                blurDialog.show();
 
                 if (username.getText().toString().equals("")) {
                     Toast.makeText(RegisterActivity.this, "username can't be empty", Toast.LENGTH_SHORT).show();
@@ -210,6 +209,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     if (pass.getText().toString().equals(repeatpass.getText().toString())) {
 
+                        blurDialog.show();
                         (firebaseAuth.createUserWithEmailAndPassword(username.getText().toString(), pass.getText().toString()))
                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override

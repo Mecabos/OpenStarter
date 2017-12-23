@@ -22,11 +22,11 @@ import java.util.Map;
  * Created by Bacem on 11/20/2017.
  */
 
-public class ProjectDs {
+public class ProjectDs extends ConnectionDs{
 
 
     //**** URL STRINGS
-    private final String URL_SERVER = "http://172.16.247.198/androidws/web/app_dev.php";
+    //private final String URL_SERVER = "http://172.16.247.198/androidws/web/app_dev.php";
     //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
     private final String  URL_GET_ALL_PROJECT = URL_SERVER + "/project/getAll" ;
     private final String  URL_CREATE_PROJECT = URL_SERVER + "/project/create" ;

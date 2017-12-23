@@ -8,7 +8,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.mohamed.openstarter.Models.CollaborationGroup;
+import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.app.AppController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,18 +23,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Bacem on 12/9/2017.
+ * Created by Mohamed on 12/23/2017.
  */
 
-public class CollaborationGroupDs extends ConnectionDs {
-
+public class MembershipDs extends ConnectionDs {
     //**** URL STRINGS
-    //private final String URL_SERVER = "http://172.16.247.198/androidws/web/app_dev.php";
     //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
-    private final String URL_GET_BY_ADMIN_USER_COLLABORATION_GROUP = URL_SERVER + "/collaborationGroup/getByAdminUser";
-    private final String URL_GET_BY_USER_COLLABORATION_GROUP = URL_SERVER + "/collaborationGroup/getByUser";
-    private final String URL_UPDATE = URL_SERVER + "/collaborationGroup/updateName";
-    private final String URL_CREATE = URL_SERVER + "/collaborationGroup/new";
+    private final String URL_GET_BY_GROUP_NAME_MEMBERSHIP = URL_SERVER + "/membership/getByGroupName";
+    private final String URL_CREATE = URL_SERVER + "/membership/addMember";
+    private final String URL_DELETE = URL_SERVER + "/membership/deleteMember";
 
     //**** TAG STRINGS
     private final String TAG = "COLLABORATIONGROUP-WS";
@@ -43,23 +40,23 @@ public class CollaborationGroupDs extends ConnectionDs {
 
     private Gson mGson;
 
-    public CollaborationGroupDs() {
+    public MembershipDs() {
         GsonBuilder gsonBuilder =
                 new GsonBuilder()
                         .setDateFormat("yyyy/MM/dd HH:mm:ss");
         mGson = gsonBuilder.create();
     }
 
-    public void collaborationGroupGetByAdminUser(final String email, final CollaborationGroupDs.Callback callback) {
+    public void userGetByGroupName(final String name, final MembershipDs.CallbackGetByName callback) {
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.POST,
-                URL_GET_BY_ADMIN_USER_COLLABORATION_GROUP,
+                URL_GET_BY_GROUP_NAME_MEMBERSHIP,
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        ArrayList<CollaborationGroup> groupsList = new ArrayList<>();
-                        groupsList.addAll(Arrays.asList(mGson.fromJson(response.toString(), CollaborationGroup[].class)));
-                        callback.onSuccessGet(groupsList);
+                        ArrayList<User> userList = new ArrayList<>();
+                        userList.addAll(Arrays.asList(mGson.fromJson(response.toString(), User[].class)));
+                        callback.onSuccessGet(userList);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -69,34 +66,7 @@ public class CollaborationGroupDs extends ConnectionDs {
         }) {
             @Override
             public byte[] getBody() {
-                String body = "{\"email\": \"" + email + "\"}";
-                return body.getBytes();
-            }
-        };
-
-        AppController.getInstance().addToRequestQueue(req, REQUEST_TAG_GET_BY_USER);
-    }
-
-    public void collaborationGroupGetByUser(final String email, final CollaborationGroupDs.CallbackGetByUser callback) {
-        JsonArrayRequest req = new JsonArrayRequest(Request.Method.POST,
-                URL_GET_BY_USER_COLLABORATION_GROUP,
-                null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        ArrayList<CollaborationGroup> groupsList = new ArrayList<>();
-                        groupsList.addAll(Arrays.asList(mGson.fromJson(response.toString(), CollaborationGroup[].class)));
-                        callback.onSuccessGet(groupsList);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                callback.onFail();
-            }
-        }) {
-            @Override
-            public byte[] getBody() {
-                String body = "{\"email\": \"" + email + "\"}";
+                String body = "{\"groupName\": \"" + name + "\"}";
                 return body.getBytes();
             }
         };
@@ -105,44 +75,12 @@ public class CollaborationGroupDs extends ConnectionDs {
     }
 
 
-    public void updateGroup(final String oldName, final String newName, final CollaborationGroupDs.CallbackUpdate callback) {
+    public void addMembership(final String name, final String creatorEmail, int isAdmin, final MembershipDs.CallbackAdd callback) {
 
         Map<String, String> params = new HashMap<>();
-        params.put("oldName", oldName);
-        params.put("newName", newName);
-
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                URL_UPDATE, new JSONObject(params),
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        callback.onSuccess();
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                callback.onError();
-            }
-        }) {
-
-
-        };
-
-// Adding request to request queue
-        Log.d("TAG", Arrays.toString(jsonObjReq.getBody()));
-        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
-    }
-
-
-
-    public void addGroup(final String name, final String creatorEmail, final CallbackAdd callback) {
-
-        Map<String, String> params = new HashMap<>();
-        params.put("name", name);
-        params.put("creatorEmail", creatorEmail);
+        params.put("groupName", name);
+        params.put("email", creatorEmail);
+        params.put("isAdmin", Integer.toString(isAdmin));
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 URL_CREATE, new JSONObject(params),
@@ -164,19 +102,42 @@ public class CollaborationGroupDs extends ConnectionDs {
 
         };
 
-// Adding request to request queue
         Log.d("TAG", Arrays.toString(jsonObjReq.getBody()));
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
 
 
-    public interface Callback {
-        void onSuccessGet(List<CollaborationGroup> result);
+    public void deleteMembership(final String groupName, final int user_id, final MembershipDs.CallbackDelete callback) {
 
-        void onSuccessCreate(CollaborationGroup createdGroup);
+        Map<String, String> params = new HashMap<>();
+        params.put("groupName", groupName);
+        params.put("id_user", Integer.toString(user_id));
 
-        void onFail();
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                URL_DELETE, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        callback.onSuccess();
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                callback.onFail();
+            }
+        }) {
+
+
+        };
+
+// Adding request to request queue
+        Log.d("TAG", Arrays.toString(jsonObjReq.getBody()));
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
+
 
     public interface CallbackAdd {
         void onSuccess();
@@ -184,15 +145,17 @@ public class CollaborationGroupDs extends ConnectionDs {
         void onFail();
     }
 
-    public interface CallbackGetByUser {
-        void onSuccessGet(List<CollaborationGroup> result);
+    public interface CallbackGetByName {
+        void onSuccessGet(List<User> result);
 
         void onFail();
     }
 
-    public interface CallbackUpdate {
+    public interface CallbackDelete {
         void onSuccess();
 
-        void onError();
+        void onFail();
     }
+
+
 }

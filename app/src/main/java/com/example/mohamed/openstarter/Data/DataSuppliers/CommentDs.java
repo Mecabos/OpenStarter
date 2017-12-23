@@ -25,10 +25,10 @@ import java.util.Map;
  * Created by Bacem on 12/3/2017.
  */
 
-public class CommentDs {
+public class CommentDs extends ConnectionDs {
 
     //**** URL STRINGS
-    private final String URL_SERVER = "http://172.16.247.198/androidws/web/app_dev.php";
+    //private final String URL_SERVER = "http://172.16.247.198/androidws/web/app_dev.php";
     //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
     private final String URL_GET_BY_PROJECT_COMMENT = URL_SERVER + "/comment/getByProject";
     private final String URL_CREATE_COMMENT = URL_SERVER + "/comment/create";

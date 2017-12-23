@@ -60,6 +60,11 @@ public class EditProfilActivity extends AppCompatActivity {
         avatar = findViewById(R.id.avatar);
         go = findViewById(R.id.bt_finish);
 
+        firstName.setText(getIntent().getStringExtra("firstName"));
+        lastName.setText(getIntent().getStringExtra("lastName"));
+        bio.setText(getIntent().getStringExtra("bio"));
+        birthdate.setText(getIntent().getStringExtra("birthDate"));
+
         //background set
         View backgroundImage = findViewById(R.id.bg_view);
         final int[] drawables = new int[3];

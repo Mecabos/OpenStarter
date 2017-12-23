@@ -17,11 +17,11 @@ import java.util.List;
  * Created by Bacem on 11/20/2017.
  */
 
-public class CategoryDs {
+public class CategoryDs extends ConnectionDs {
 
 
     //**** URL STRINGS
-    private final String URL_SERVER = "http://172.16.247.198/androidws/web/app_dev.php";
+    //private final String URL_SERVER = "http://172.16.247.198/androidws/web/app_dev.php";
     //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
     private final String  URL_GET_ALL_CATEGORY = URL_SERVER + "/category/getAll" ;
 
