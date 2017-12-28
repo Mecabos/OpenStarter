@@ -3,19 +3,19 @@ package com.example.mohamed.openstarter.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
+import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.ToOne;
+import org.greenrobot.greendao.annotation.Transient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
-import org.greenrobot.greendao.annotation.NotNull;
-import org.greenrobot.greendao.annotation.Transient;
 
 /**
  * Created by Bacem on 12/3/2017.
@@ -31,6 +31,8 @@ public class CollaborationGroup implements Parcelable {
     private String name;
     @Property
     private Date creationDate;
+    @Property
+    private int projectsCount;
     @Property
     @ToOne(joinProperty = "id")
     private User creator;
@@ -80,7 +82,14 @@ public class CollaborationGroup implements Parcelable {
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
-    
+
+    public int getProjectsCount() {
+        return projectsCount;
+    }
+
+    public void setProjectsCount(int projectsCount) {
+        this.projectsCount = projectsCount;
+    }
 
     //*************Parcel part
     @Keep
@@ -94,11 +103,12 @@ public class CollaborationGroup implements Parcelable {
         this.creationDate = dateFormat.parse(data[2]);
     }
 
-    @Generated(hash = 172764942)
-    public CollaborationGroup(long id, String name, Date creationDate) {
+    @Generated(hash = 2080925811)
+    public CollaborationGroup(long id, String name, Date creationDate, int projectsCount) {
         this.id = id;
         this.name = name;
         this.creationDate = creationDate;
+        this.projectsCount = projectsCount;
     }
 
     @Override

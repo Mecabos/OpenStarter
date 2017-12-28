@@ -1,6 +1,7 @@
 package com.example.mohamed.openstarter.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.mohamed.openstarter.Activities.ProfilActivity;
 import com.example.mohamed.openstarter.Activities.ProjectActivity;
 import com.example.mohamed.openstarter.Adapters.CommentListAdapter;
 import com.example.mohamed.openstarter.Data.DataSuppliers.CommentDs;
@@ -69,6 +72,19 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
             public void onSuccessCreate(Comment createdComment) {
             }
 
+        });
+
+        commentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Intent intent = new Intent(getActivity(), ProfilActivity.class);
+                String user_email = "aaaa@aa.aa";
+                intent.putExtra("user_id", user_email);
+                Toast.makeText(getActivity(), "userr ="+Long.toString(id),Toast.LENGTH_LONG).show();
+                //startActivity(intent);
+
+            }
         });
     }
 

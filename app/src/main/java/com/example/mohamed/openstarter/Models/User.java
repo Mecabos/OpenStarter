@@ -1,11 +1,11 @@
 package com.example.mohamed.openstarter.Models;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 
 import java.util.Date;
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by Bacem on 12/3/2017.
@@ -27,19 +27,22 @@ public class User {
     private Date birthDate;
     @Property
     private String bio;
+    @Property
+    private int projectsCount;
 
     public User() {
     }
 
-    @Generated(hash = 498865411)
+    @Generated(hash = 1516248569)
     public User(long id, String firstName, String lastName, String email,
-            Date birthDate, String bio) {
+            Date birthDate, String bio, int projectsCount) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.birthDate = birthDate;
         this.bio = bio;
+        this.projectsCount = projectsCount;
     }
 
     @Override
@@ -119,5 +122,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getProjectsCount() {
+        return projectsCount;
+    }
+
+    public void setProjectsCount(int projectsCount) {
+        this.projectsCount = projectsCount;
     }
 }

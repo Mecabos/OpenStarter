@@ -7,13 +7,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
+import com.example.mohamed.openstarter.Helpers.DialogHelper;
 import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
+import com.vlstr.blurdialog.BlurDialog;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,13 +26,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfilActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    TextView fullname, email, tv_bio,tv_birthDate;
+    TextView fullname, email, tv_bio,tv_birthDate, tv_projectsCount;
     CircleImageView avatar;
     Button bt_editProfil, bt_groups;
     private long user_id;
 
     String firstName=" ";
     String lastName=" ";
+
+    private DialogHelper dialogHelper;
+    private BlurDialog blurDialog;
+    public static ProfilActivity instance = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +45,16 @@ public class ProfilActivity extends AppCompatActivity {
 
         final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
+        instance = this;
+        dialogHelper = new DialogHelper();
+        blurDialog = findViewById(R.id.blurLoader);
+
         email = findViewById(R.id.email);
         tv_birthDate = findViewById(R.id.birthdate);
         fullname = findViewById(R.id.fullname);
         tv_bio = findViewById(R.id.bio);
         bt_editProfil = findViewById(R.id.bt_editProfil);
+        tv_projectsCount = findViewById(R.id.projectsCount);
         bt_groups = findViewById(R.id.bt_showGroups);
         avatar = findViewById(R.id.avatar);
         toolbar = findViewById(R.id.toolbar);
@@ -104,10 +116,12 @@ public class ProfilActivity extends AppCompatActivity {
 
 
 
+        dialogHelper.blurDialogShow(instance,blurDialog,"Loading profil");
         UserDs ds = new UserDs();
-        ds.getUserByEmail(firebaseAuth.getCurrentUser().getEmail(), new UserDs.CallbackGet() {
+        ds.getUserByEmailWithCount(firebaseAuth.getCurrentUser().getEmail(), new UserDs.CallbackGet() {
             @Override
             public void onSuccess(User createdUser) {
+                dialogHelper.blurDialogHide(instance,blurDialog);
                 user_id = createdUser.getId();
                 firstName = createdUser.getFirstName();
                 lastName = createdUser.getLastName();
@@ -115,6 +129,7 @@ public class ProfilActivity extends AppCompatActivity {
                 String bio = createdUser.getBio();
                 fullname.setText(name);
                 tv_bio.setText(bio);
+                tv_projectsCount.setText(Integer.toString(createdUser.getProjectsCount()));
                 DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                 String birthDate = df.format(createdUser.getBirthDate());
                 tv_birthDate.setText(birthDate);
@@ -122,7 +137,9 @@ public class ProfilActivity extends AppCompatActivity {
 
             @Override
             public void onError(VolleyError error) {
-
+                dialogHelper.blurDialogHide(instance,blurDialog);
+                finish();
+                Toast.makeText(ProfilActivity.this, "couldn't load profil", Toast.LENGTH_LONG).show();
             }
         });
 

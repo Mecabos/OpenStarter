@@ -35,9 +35,9 @@ public class GroupActivity extends AppCompatActivity {
     private BlurDialog blurDialog;
 
     Button bt_members, bt_editGroup, bt_addGroup;
-    TextView tv_name, tv_creationDate;
+    TextView tv_name, tv_creationDate, tv_projectCount;
     private Spinner collaborationGroupSpinner;
-    private Long collaborationGroupSelectedId;
+    Long collaborationGroupSelectedId;
     public static GroupActivity instance = null;
 
     @Override
@@ -48,7 +48,7 @@ public class GroupActivity extends AppCompatActivity {
         dialogHelper = new DialogHelper() ;
         instance = this ;
         blurDialog = findViewById(R.id.blurLoader);
-        dialogHelper.blurDialogShow(instance,blurDialog,"Creating group");
+        dialogHelper.blurDialogShow(instance,blurDialog,"Loading group info");
 
         final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         collaborationGroupSpinner = findViewById(R.id.groupList);
@@ -58,6 +58,7 @@ public class GroupActivity extends AppCompatActivity {
         bt_editGroup = findViewById(R.id.bt_editGroup);
         bt_addGroup = findViewById(R.id.bt_addGroup);
         tv_name = findViewById(R.id.groupName);
+        tv_projectCount = findViewById(R.id.projectsCount);
         tv_creationDate = findViewById(R.id.creationDate);
 
         bt_addGroup.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +90,8 @@ public class GroupActivity extends AppCompatActivity {
                             @Override
                             public void onFail() {
                                 dialogHelper.blurDialogHide(instance,blurDialog);
-                                Toast.makeText(GroupActivity.this, "failed", Toast.LENGTH_LONG).show();
+                                Toast.makeText(GroupActivity.this, "could not load group info", Toast.LENGTH_LONG).show();
+                                finish();
                             }
                         });
 
@@ -156,6 +158,7 @@ public class GroupActivity extends AppCompatActivity {
                 dialogHelper.blurDialogHide(instance,blurDialog);
                 CollaborationGroup firstGroup = groupsList.get(0);
                 tv_name.setText(firstGroup.getName());
+                tv_projectCount.setText(Integer.toString(firstGroup.getProjectsCount()));
                 DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                 String creationDate = df.format(firstGroup.getCreationDate());
                 tv_creationDate.setText(creationDate);
@@ -183,6 +186,7 @@ public class GroupActivity extends AppCompatActivity {
                             Toast.makeText(GroupActivity.this, "group selected", Toast.LENGTH_LONG).show();
                             CollaborationGroup selectedGroup = groupsList.get(pos);
                             tv_name.setText(selectedGroup.getName());
+                            tv_projectCount.setText(Integer.toString(selectedGroup.getProjectsCount()));
                             DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                             String creationDate = df.format(selectedGroup.getCreationDate());
                             tv_creationDate.setText(creationDate);

@@ -1,6 +1,7 @@
 package com.example.mohamed.openstarter.Fragments;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +9,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.mohamed.openstarter.Activities.PaymentActivity;
 import com.example.mohamed.openstarter.Activities.ProjectActivity;
 import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
@@ -26,6 +29,7 @@ import java.util.Random;
 public class TabProjectCommunityFragment extends Fragment {
 
     RingProgress mRingProgress ;
+    Button btn_contribute;
     List<Ring> mlistRing = new ArrayList<>();
     Random random = new Random();
     Project mProject = new Project() ;
@@ -37,6 +41,13 @@ public class TabProjectCommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_project_community_fragment,container,false) ;
         initializeFragment(view);
+        btn_contribute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PaymentActivity.class);
+                startActivity(intent);
+            }
+        });
         return  view ;
 
     }
@@ -44,6 +55,7 @@ public class TabProjectCommunityFragment extends Fragment {
     private void initializeFragment (View view){
         mProject = ((ProjectActivity)getActivity()).getProject() ;
         mRingProgress = view.findViewById(R.id.ring_progress);
+        btn_contribute = view.findViewById(R.id.btn_contribute);
         setData();
     }
 

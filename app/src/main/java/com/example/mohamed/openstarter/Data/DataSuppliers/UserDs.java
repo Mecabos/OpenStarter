@@ -32,6 +32,7 @@ public class UserDs extends ConnectionDs{
     //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
 
     private final String URL_GET_BY_EMAIL = URL_SERVER + "/user/getByEmail";
+    private final String URL_GET_BY_EMAIL_WITH_COUNT = URL_SERVER + "/user/getProjectsCount";
     private final String URL_CREATE = URL_SERVER + "/user/new";
     private final String URL_UPDATE = URL_SERVER + "/user/update";
 
@@ -51,6 +52,35 @@ public class UserDs extends ConnectionDs{
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 URL_GET_BY_EMAIL, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        User createdUser = mGson.fromJson(response.toString(), User.class);
+                        Log.d(TAG,createdUser.toString());
+                        callback.onSuccess(createdUser);
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG,"error while reaching server");
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                callback.onError(error);
+
+            }
+        });
+
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+
+    public void getUserByEmailWithCount(String email,final CallbackGet callback){
+        // Tag used to cancel the request
+
+        Map<String, String> params = new HashMap<>();
+        params.put("email", email);
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                URL_GET_BY_EMAIL_WITH_COUNT, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

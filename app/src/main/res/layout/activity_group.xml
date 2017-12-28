@@ -200,16 +200,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Collaborators"
+                android:text="Projects"
                 android:textColor="#ffffff"
                 android:textSize="24sp" />
 
             <TextView
+                android:id="@+id/projectsCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:fontFamily="sans-serif-condensed"
-                android:text="15"
+                android:text="0"
                 android:layout_gravity="center"
                 android:textColor="#ffffff"
                 android:textSize="24sp"

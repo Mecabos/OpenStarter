@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.mohamed.openstarter.Adapters.ProjectListAdapter;
 import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectDs;
+import com.example.mohamed.openstarter.Helpers.DialogHelper;
 import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 import com.example.mohamed.openstarter.foldingcell.FoldingCell;
@@ -28,6 +29,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     ProjectDs projectDs = new ProjectDs();
+
+    private DialogHelper dialogHelper;
+    private BlurDialog blurDialog;
+    public static MainActivity instance = null;
 
     ListView projectListView;
     ResideMenu resideMenu;
@@ -49,12 +54,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        instance = this;
+        dialogHelper = new DialogHelper();
+        blurDialog = findViewById(R.id.blurLoader);
 
 
-        final BlurDialog blurDialog = findViewById(R.id.blurLoader);
-        blurDialog.create(getWindow().getDecorView(), 6);
-        blurDialog.setTitle("Loading Projects");
-        blurDialog.show();
+        dialogHelper.blurDialogShow(instance,blurDialog,"Loading projects");
 
         final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         //Setting projectListView
@@ -137,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccessGet(List<Project> projectList) {
 
 
-                blurDialog.hide();
+                dialogHelper.blurDialogHide(instance,blurDialog);
                 // create custom adapter that holds elements and their state (we need hold a id's of unfolded elements for reusable elements)
                 final ProjectListAdapter adapter = new ProjectListAdapter(getBaseContext(), projectList);
 
@@ -162,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFail() {
-                blurDialog.hide();
+                dialogHelper.blurDialogHide(instance,blurDialog);
                 Toast.makeText(MainActivity.this, "could not load projects", Toast.LENGTH_LONG).show();
             }
         });

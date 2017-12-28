@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
+import com.example.mohamed.openstarter.Helpers.DialogHelper;
 import com.example.mohamed.openstarter.Helpers.GradientBackgroundPainter;
 import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.R;
@@ -39,11 +40,19 @@ public class LoginActivity extends AppCompatActivity {
     private GradientBackgroundPainter gradientBackgroundPainter;
     public static String PREFERENCE_FIlENAME = "intro";
     //public static String LOGIN_PREFERENCE_FIlENAME = "login";
+    private DialogHelper dialogHelper;
+    private BlurDialog blurDialog;
+    public static LoginActivity instance = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        instance = this;
+        dialogHelper = new DialogHelper();
+        blurDialog = findViewById(R.id.blurLoader);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -59,9 +68,8 @@ public class LoginActivity extends AppCompatActivity {
             finish();_
         }*/
 
-        final BlurDialog blurDialog = findViewById(R.id.blurLoader);
-        blurDialog.create(getWindow().getDecorView(), 6);
-        blurDialog.setTitle("Please wait");
+
+
 
 
         View backgroundImage = findViewById(R.id.bg_view);
@@ -85,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (etPassword.getText().toString().equals("")) {
                     Toast.makeText(LoginActivity.this, "password can't be empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    blurDialog.show();
+                    dialogHelper.blurDialogShow(instance,blurDialog,"Connecting");
                     (firebaseAuth.signInWithEmailAndPassword(etUsername.getText().toString(), etPassword.getText().toString()))
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -102,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                                     Log.d("userr", createdUser.toString());
                                                     Log.d("userr", "user missing");
-                                                    blurDialog.hide();
+                                                    dialogHelper.blurDialogHide(instance,blurDialog);
                                                     Intent i2 = new Intent(LoginActivity.this, CompleteRegisterActivity.class);
                                                     startActivity(i2);
                                                     finish();
@@ -112,13 +120,13 @@ public class LoginActivity extends AppCompatActivity {
 
                                                     //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
                                                     if (getIntroSharedPref().equals("waiting")){
-                                                        blurDialog.hide();
+                                                        dialogHelper.blurDialogHide(instance,blurDialog);
                                                         Intent i2 = new Intent(LoginActivity.this, IntroductionActivity.class);
                                                         startActivity(i2);
                                                         finish();
                                                     }
                                                     else{
-                                                        blurDialog.hide();
+                                                        dialogHelper.blurDialogHide(instance,blurDialog);
                                                         Intent i2 = new Intent(LoginActivity.this, MainActivity.class);
                                                         startActivity(i2);
                                                         finish();
@@ -130,14 +138,14 @@ public class LoginActivity extends AppCompatActivity {
 
                                             @Override
                                             public void onError(VolleyError error) {
-                                                blurDialog.hide();
+                                                dialogHelper.blurDialogHide(instance,blurDialog);
                                                 Toast.makeText(LoginActivity.this, "couldn't reach the server", Toast.LENGTH_LONG).show();
                                             }
                                         });
 
 
                                     } else {
-                                        blurDialog.hide();
+                                        dialogHelper.blurDialogHide(instance,blurDialog);
                                         Log.e("Registration", task.getException().getMessage());
                                         Toast.makeText(LoginActivity.this, "wrong email or password", Toast.LENGTH_SHORT).show();
                                     }

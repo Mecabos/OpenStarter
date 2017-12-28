@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:diagonal="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#313131"
     tools:context="com.example.mohamed.openstarter.Activities.ProfilActivity">
+
+    <com.vlstr.blurdialog.BlurDialog
+        android:id="@+id/blurLoader"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:elevation="34dp"
+        android:visibility="invisible"
+        app:blurDialogDuration="length_infinite"
+        app:blurDialogIcon="@mipmap/ic_launcher"
+        app:blurDialogTitle="Hello World!"
+        app:blurOverlayColor="@color/colorOverlay"/>
 
     <com.github.florent37.diagonallayout.DiagonalLayout
         android:id="@+id/diagonalLayout"
@@ -190,6 +205,7 @@
                 android:textSize="24sp" />
 
             <TextView
+                android:id="@+id/projectsCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
