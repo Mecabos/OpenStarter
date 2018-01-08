@@ -81,17 +81,9 @@
         <activity
             android:name=".Activities.EditGroupActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".Activities.UploadImageActivity">
+        <!--<activity android:name=".Activities.UploadImageActivity">
 
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-
-        </activity>
+        </activity>-->
         <activity
             android:name=".Activities.ManageMembersActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

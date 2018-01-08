@@ -35,6 +35,7 @@ public class UserDs extends ConnectionDs{
     private final String URL_GET_BY_EMAIL_WITH_COUNT = URL_SERVER + "/user/getProjectsCount";
     private final String URL_CREATE = URL_SERVER + "/user/new";
     private final String URL_UPDATE = URL_SERVER + "/user/update";
+    private final String URL_UPDATE_TOKEN = URL_SERVER + "/user/updateToken";
 
     private Gson mGson;
 
@@ -151,6 +152,38 @@ public class UserDs extends ConnectionDs{
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 URL_UPDATE, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        callback.onSuccess();
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                callback.onError();
+            }
+        }) {
+
+
+        };
+
+// Adding request to request queue
+        Log.d("TAG", Arrays.toString(jsonObjReq.getBody()));
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+
+
+    public void updateToken(final String email, final String token, final CallbackUpdate callback) {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("email", email);
+        params.put("token", token);
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                URL_UPDATE_TOKEN, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
 
                     @Override

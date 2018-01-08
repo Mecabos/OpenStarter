@@ -7,6 +7,8 @@ package com.example.mohamed.openstarter.Helpers;
 
 import android.util.Log;
 
+import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
@@ -43,6 +45,18 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
      * @param token The new token.
      */
     private void sendRegistrationToServer(String token) {
-        // TODO: Implement this method to send token to your app server.
+
+        UserDs userDs = new UserDs();
+        userDs.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), token, new UserDs.CallbackUpdate() {
+            @Override
+            public void onSuccess() {
+                Log.d("userr","token updated");
+            }
+
+            @Override
+            public void onError() {
+                Log.d("userr","token failed to update");
+            }
+        });
     }
 }

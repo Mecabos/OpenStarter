@@ -87,7 +87,7 @@
                             android:background="@drawable/selector_bg_edit_2"
                             android:defaultFocusHighlightEnabled="false"
                             android:hint="Email"
-                            android:inputType="textPersonName"
+                            android:inputType="textEmailAddress"
                             android:paddingBottom="2dp"
                             android:textColor="#f0f7f4"
                             android:textColorHint="#c5c5c5"
