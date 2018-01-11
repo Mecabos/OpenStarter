@@ -52,6 +52,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.vlstr.blurdialog.BlurDialog;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -222,7 +223,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                         if (task.isSuccessful()) {
 
-                                            UserDs ds = new UserDs();
+                                            final UserDs ds = new UserDs();
                                             ds.getUserByEmail(username.getText().toString(), new UserDs.CallbackGet() {
                                                 @Override
                                                 public void onSuccess(User createdUser) {
@@ -230,7 +231,17 @@ public class RegisterActivity extends AppCompatActivity {
                                                     if (createdUser.getEmail() == null) {
 
                                                         Log.d("userr", createdUser.toString());
-                                                        Log.d("userr", "user missing");
+                                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                                            @Override
+                                                            public void onSuccess() {
+                                                                Log.d("userr","token updated");
+                                                            }
+
+                                                            @Override
+                                                            public void onError() {
+                                                                Log.d("userr","token failed to update");
+                                                            }
+                                                        });
                                                         dialogHelper.blurDialogHide(instance,blurDialog);
                                                         Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
                                                         startActivity(i2);
@@ -238,6 +249,17 @@ public class RegisterActivity extends AppCompatActivity {
                                                     } else {
                                                         Toast.makeText(RegisterActivity.this, "login successful", Toast.LENGTH_SHORT).show();
 
+                                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                                            @Override
+                                                            public void onSuccess() {
+                                                                Log.d("userr","token updated");
+                                                            }
+
+                                                            @Override
+                                                            public void onError() {
+                                                                Log.d("userr","token failed to update");
+                                                            }
+                                                        });
                                                         //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
                                                         if (getIntroSharedPref().equals("done")){
                                                             dialogHelper.blurDialogHide(instance,blurDialog);
@@ -330,7 +352,7 @@ public class RegisterActivity extends AppCompatActivity {
                             //showToast(user.getEmail());
 
 
-                            UserDs ds = new UserDs();
+                            final UserDs ds = new UserDs();
                             assert user != null;
                             ds.getUserByEmail(user.getEmail(), new UserDs.CallbackGet() {
                                 @Override
@@ -339,7 +361,17 @@ public class RegisterActivity extends AppCompatActivity {
                                     if (createdUser.getEmail() == null) {
 
                                         Log.d("userr", createdUser.toString());
-                                        Log.d("userr", "user missing");
+                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                            @Override
+                                            public void onSuccess() {
+                                                Log.d("userr","token updated");
+                                            }
+
+                                            @Override
+                                            public void onError() {
+                                                Log.d("userr","token failed to update");
+                                            }
+                                        });
                                         dialogHelper.blurDialogHide(instance,blurDialog);
                                         Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
                                         startActivity(i2);
@@ -348,6 +380,17 @@ public class RegisterActivity extends AppCompatActivity {
                                         Toast.makeText(RegisterActivity.this, "login successful", Toast.LENGTH_SHORT).show();
                                         //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
 
+                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                            @Override
+                                            public void onSuccess() {
+                                                Log.d("userr","token updated");
+                                            }
+
+                                            @Override
+                                            public void onError() {
+                                                Log.d("userr","token failed to update");
+                                            }
+                                        });
                                         if (getIntroSharedPref().equals("done")){
                                             dialogHelper.blurDialogHide(instance,blurDialog);
                                             Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
@@ -498,7 +541,7 @@ public class RegisterActivity extends AppCompatActivity {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
 
 
-                            UserDs ds = new UserDs();
+                            final UserDs ds = new UserDs();
                             assert user != null;
                             ds.getUserByEmail(user.getEmail(), new UserDs.CallbackGet() {
                                 @Override
@@ -507,12 +550,33 @@ public class RegisterActivity extends AppCompatActivity {
                                     if (createdUser.getEmail() == null) {
 
                                         Log.d("userr", createdUser.toString());
-                                        Log.d("userr", "user missing");
+                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                            @Override
+                                            public void onSuccess() {
+                                                Log.d("userr","token updated");
+                                            }
+
+                                            @Override
+                                            public void onError() {
+                                                Log.d("userr","token failed to update");
+                                            }
+                                        });
                                         dialogHelper.blurDialogHide(instance,blurDialog);
                                         Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
                                         startActivity(i2);
                                         finish();
                                     } else {
+                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                            @Override
+                                            public void onSuccess() {
+                                                Log.d("userr","token updated");
+                                            }
+
+                                            @Override
+                                            public void onError() {
+                                                Log.d("userr","token failed to update");
+                                            }
+                                        });
                                         Toast.makeText(RegisterActivity.this, "login successful", Toast.LENGTH_SHORT).show();
                                         //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
                                         if (getIntroSharedPref().equals("done")){

@@ -5,5 +5,5 @@ package com.example.mohamed.openstarter.Data.DataSuppliers;
  */
 
 public class ConnectionDs {
-    final String URL_SERVER = "http://192.168.43.149/androidws/web/app_dev.php";
+    final String URL_SERVER = "http://192.168.1.2/androidws/web/app_dev.php";
 }

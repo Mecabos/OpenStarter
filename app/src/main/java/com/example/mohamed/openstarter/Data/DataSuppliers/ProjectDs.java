@@ -1,11 +1,14 @@
 package com.example.mohamed.openstarter.Data.DataSuppliers;
 
+import android.util.Log;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.mohamed.openstarter.Models.Project;
+import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.app.AppController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,29 +25,30 @@ import java.util.Map;
  * Created by Bacem on 11/20/2017.
  */
 
-public class ProjectDs extends ConnectionDs{
+public class ProjectDs extends ConnectionDs {
 
 
     //**** URL STRINGS
     //private final String URL_SERVER = "http://172.16.247.198/androidws/web/app_dev.php";
     //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
-    private final String  URL_GET_ALL_PROJECT = URL_SERVER + "/project/getAll" ;
-    private final String  URL_CREATE_PROJECT = URL_SERVER + "/project/create" ;
+    private final String URL_GET_ALL_PROJECT = URL_SERVER + "/project/getAll";
+    private final String URL_CREATE_PROJECT = URL_SERVER + "/project/create";
+    private final String URL_GET_MEMBERS = URL_SERVER + "/project/getMembers";
 
     //**** TAG STRINGS
-    private final String  TAG = "PROJECT-WS" ;
-    private final String  REQUEST_TAG_GET_ALL = "project_getAll_req" ;
-    private final String  REQUEST_TAG_CREATE_PROJECT = "project_create_req";
+    private final String TAG = "PROJECT-WS";
+    private final String REQUEST_TAG_GET_ALL = "project_getAll_req";
+    private final String REQUEST_TAG_CREATE_PROJECT = "project_create_req";
 
     private Gson mGson;
 
-    public ProjectDs(){
+    public ProjectDs() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setDateFormat("yyyy/MM/dd HH:mm:ss");
         mGson = gsonBuilder.create();
     }
 
-    public void projectGetAll(final Callback callback){
+    public void projectGetAll(final Callback callback) {
         // Tag used to cancel the request
 
         JsonArrayRequest req = new JsonArrayRequest(URL_GET_ALL_PROJECT,
@@ -53,7 +57,7 @@ public class ProjectDs extends ConnectionDs{
                     public void onResponse(JSONArray response) {
                         List<Project> projectList = Arrays.asList(mGson.fromJson(response.toString(), Project[].class));
                         callback.onSuccessGet(projectList);
-                        }
+                    }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -73,11 +77,13 @@ public class ProjectDs extends ConnectionDs{
                 }
                 Log.e(TAG,body);
 
-            */}
+            */
+            }
         });
         AppController.getInstance().addToRequestQueue(req, REQUEST_TAG_GET_ALL);
     }
-//TODO: make name of category unique
+
+    //TODO: make name of category unique
     //TODO: add equipement list and services list
     public void projectCreate(final String name,
                               final String startDate,
@@ -113,17 +119,52 @@ public class ProjectDs extends ConnectionDs{
                 }, new Response.ErrorListener() {
 
             @Override
-            public void onErrorResponse(VolleyError error) {}
+            public void onErrorResponse(VolleyError error) {
+            }
         }) {
         };
 
         AppController.getInstance().addToRequestQueue(jsonObjReq, REQUEST_TAG_CREATE_PROJECT);
     }
 
+    public void projectGetGroupMembersAll(final String projectId, final CallbackGet callback) {
 
-    public interface Callback{
+
+        JsonArrayRequest req = new JsonArrayRequest(URL_GET_MEMBERS,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        List<User> projectList = Arrays.asList(mGson.fromJson(response.toString(), User[].class));
+                        callback.onSuccessGet(projectList);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFail();
+
+
+                Log.d("userr","failed to get users");
+
+            }
+        }){
+            @Override
+            public byte[] getBody() {
+                String body = "{\"projectId\":" + projectId + "}";
+                return body.getBytes();
+            }
+        };
+        AppController.getInstance().addToRequestQueue(req, REQUEST_TAG_GET_ALL);
+    }
+
+
+    public interface Callback {
         void onSuccessGet(List<Project> result);
         void onSuccessCreate(Project createdProject);
+        void onFail();
+    }
+
+    public interface CallbackGet {
+        void onSuccessGet(List<User> result);
         void onFail();
     }
 }

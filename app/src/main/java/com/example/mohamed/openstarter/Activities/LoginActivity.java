@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.vlstr.blurdialog.BlurDialog;
 
 public class LoginActivity extends AppCompatActivity {
@@ -67,9 +68,6 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(i2);
             finish();_
         }*/
-
-
-
 
 
         View backgroundImage = findViewById(R.id.bg_view);
@@ -120,12 +118,37 @@ public class LoginActivity extends AppCompatActivity {
 
                                                     //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
                                                     if (getIntroSharedPref().equals("waiting")){
+                                                        UserDs userDs = new UserDs();
+                                                        userDs.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                                            @Override
+                                                            public void onSuccess() {
+                                                                Log.d("userr","token updated");
+                                                            }
+
+                                                            @Override
+                                                            public void onError() {
+                                                                Log.d("userr","token failed to update");
+                                                            }
+                                                        });
                                                         dialogHelper.blurDialogHide(instance,blurDialog);
                                                         Intent i2 = new Intent(LoginActivity.this, IntroductionActivity.class);
                                                         startActivity(i2);
                                                         finish();
                                                     }
                                                     else{
+                                                        UserDs userDs = new UserDs();
+                                                        Log.d("mytoken",FirebaseInstanceId.getInstance().getToken());
+                                                        userDs.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                                            @Override
+                                                            public void onSuccess() {
+                                                                Log.d("userr","token updated");
+                                                            }
+
+                                                            @Override
+                                                            public void onError() {
+                                                                Log.d("userr","token failed to update");
+                                                            }
+                                                        });
                                                         dialogHelper.blurDialogHide(instance,blurDialog);
                                                         Intent i2 = new Intent(LoginActivity.this, MainActivity.class);
                                                         startActivity(i2);

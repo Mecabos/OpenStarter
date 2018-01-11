@@ -20,13 +20,17 @@ import com.example.mohamed.openstarter.Activities.ProjectActivity;
 import com.example.mohamed.openstarter.Adapters.CommentListAdapter;
 import com.example.mohamed.openstarter.Data.DataSuppliers.CommentDs;
 import com.example.mohamed.openstarter.Data.DataSuppliers.NotificationDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectDs;
 import com.example.mohamed.openstarter.Models.Comment;
 import com.example.mohamed.openstarter.Models.Project;
+import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.iid.FirebaseInstanceId;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Bacem on 11/27/2017.
@@ -90,6 +94,8 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        mProject = ((ProjectActivity) getActivity()).getProject();
+
         final int DRAWABLE_LEFT = 0;
         final int DRAWABLE_TOP = 1;
         final int DRAWABLE_RIGHT = 2;
@@ -100,7 +106,7 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
                 EditText comment = (EditText) v;
                 String commentText = comment.getText().toString();
                 String userEmail = firebaseAuth.getCurrentUser().getEmail();
-                String projectId = String.valueOf(((ProjectActivity) getActivity()).getProject().getId());
+                final String projectId = String.valueOf(((ProjectActivity) getActivity()).getProject().getId());
                 if (commentText.trim().length() == 0)
                     Toast.makeText(getActivity(), "Write a comment before sending", Toast.LENGTH_LONG).show();
                 else {
@@ -117,30 +123,57 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
                             Toast.makeText(getActivity(), "Comment posted", Toast.LENGTH_LONG).show();
 
 
+                            Log.d("notiffy", "users "+String.valueOf(mProject.getId()));
                             //notif here
                             //MyFirebaseInstanceIDService instanceIDService = new MyFirebaseInstanceIDService();
                             //String notifToken = instanceIDService.refreshedToken;
                             etComment.getText().clear();
                             etComment.clearFocus();
-                            Log.d("notiff", "Refreshed token: " + FirebaseInstanceId.getInstance().getToken());
-                            NotificationDs notificationDs = new NotificationDs();
-                            notificationDs.addNotification(FirebaseInstanceId.getInstance().getToken(), "new comment","new comment added", new NotificationDs.CallbackSend() {
+                            //Log.d("notiff", "Refreshed token: " + FirebaseInstanceId.getInstance().getToken());
+
+                            //Log.d("notiffy", "users "+String.valueOf(mProject.getId()));
+
+                            ProjectDs projectDs = new ProjectDs();
+
+                            projectDs.projectGetGroupMembersAll(String.valueOf(mProject.getId()), new ProjectDs.CallbackGet() {
                                 @Override
-                                public void onSuccess() {
-                                    Log.d("notiff", " notification success");
+                                public void onSuccessGet(List<User> result) {
+
+                                    JSONArray jsonArray = new JSONArray();
+                                    //List<String> tokens = new ArrayList<>();
+                                    for (User user:result) {
+                                        jsonArray.put(user.getToken());
+                                    }
+
+                                    NotificationDs notificationDs = new NotificationDs();
+
+                                    notificationDs.addNotification(jsonArray, "new comment","new comment added", new NotificationDs.CallbackSend() {
+                                        @Override
+                                        public void onSuccess() {
+                                            Log.d("notiff", " notification success");
+                                        }
+
+                                        @Override
+                                        public void onError() {
+                                            Log.d("notiff", "error notification ");
+                                        }
+                                    });
+
                                 }
 
                                 @Override
-                                public void onError() {
-                                    Log.d("notiff", "error notification ");
+                                public void onFail() {
+
+                                    Log.d("notiff", "failed to load users");
+
                                 }
                             });
+
 
                         }
                     });
 
                 }
-
 
                 return true;
             }

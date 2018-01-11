@@ -28,7 +28,6 @@ public class UserDs extends ConnectionDs{
     // Tag used to cancel the request
     String tag_json_obj = "json_obj_req";
 
-    //private final String URL_SERVER = "http://172.16.247.198/androidws/web/app_dev.php";
     //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
 
     private final String URL_GET_BY_EMAIL = URL_SERVER + "/user/getByEmail";

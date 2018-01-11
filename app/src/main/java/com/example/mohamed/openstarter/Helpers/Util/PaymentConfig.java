@@ -6,5 +6,5 @@ package com.example.mohamed.openstarter.Helpers.Util;
 
 public class PaymentConfig {
 
-    public static final String PAYPAL_CLIENT_ID="AfE_7Y9xHQIG5JM4NwMem4MKzx1l7_mlUI2Gloz99qXrfJPCL1We_0knHaZXL3lRWkbFLPI1LeY-RwCo";
+    public static final String PAYPAL_CLIENT_ID="AapvZPp_Z-cE0ddfMmTE7cgKTHnBi9gWaL366gDBN7qUPL_Yv8I1MJDGRZz7DLBuZ2T-aPPIGiYrDzj_";
 }
