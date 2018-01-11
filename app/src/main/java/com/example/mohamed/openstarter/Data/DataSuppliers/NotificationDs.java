@@ -46,8 +46,8 @@ public class NotificationDs extends ConnectionDs{
 
     public void addNotification(final JSONArray tokens, final String title, final String body, final CallbackSend callback) {
 
-        Map<String, String> params = new HashMap<>();
-        Map<String, String> tokenParams = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
+        //Map<String, String> tokenParams = new HashMap<>();
         //JSONObject tokenJson = new JSONObject();
 
         //String jsonToken = mGson.toJ(tokens);
@@ -55,11 +55,13 @@ public class NotificationDs extends ConnectionDs{
 
         /*tokenParams.put("tokens",jsonToken);
         tokenJson.put(jsonToken);*/
-        JSONArray jsonArray = new JSONArray();
+        //JSONArray jsonArray = new JSONArray();
 
-        Log.d("notiff",tokens.toString());
 
-        params.put("tokens", tokens.toString());
+        Log.d("notiff","tokens : " + tokens.toString());
+        Log.d("notiff","value of tokens : " + String.valueOf(tokens));
+
+        params.put("token", tokens);
         params.put("title", title);
         params.put("body", body);
 

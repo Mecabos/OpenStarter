@@ -123,7 +123,7 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
                             Toast.makeText(getActivity(), "Comment posted", Toast.LENGTH_LONG).show();
 
 
-                            Log.d("notiffy", "users "+String.valueOf(mProject.getId()));
+                            Log.d("notiffy", "users "/*+String.valueOf(mProject.getId())*/);
                             //notif here
                             //MyFirebaseInstanceIDService instanceIDService = new MyFirebaseInstanceIDService();
                             //String notifToken = instanceIDService.refreshedToken;

@@ -45,6 +45,7 @@ public class TabProjectCommunityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PaymentActivity.class);
+                intent.putExtra("projectId",String.valueOf(mProject.getId()));
                 startActivity(intent);
             }
         });
