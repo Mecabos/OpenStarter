@@ -46,6 +46,7 @@ public class ContributionListAdapter extends ArrayAdapter<ContributionsWithUsers
             holder.userName = row.findViewById(R.id.fullName);
             holder.contribDate = row.findViewById(R.id.contributionDate);
             holder.amount = row.findViewById(R.id.amount);
+            holder.email = row.findViewById(R.id.email);
             holder.userImage = row.findViewById(R.id.avatar);
             row.setTag(holder);
         } else {
@@ -61,12 +62,14 @@ public class ContributionListAdapter extends ArrayAdapter<ContributionsWithUsers
         String contributionDate = dayFromDate + " " +  timefromDate ;
         // Text
         String amountText = String.valueOf(contributionsWithUsers.getAmount());
+        String emailText = String.valueOf(contributionsWithUsers.getEmail());
         //Image
         int imageMock = R.drawable.avatar ;
 
         holder.userName.setText(userNameDate);
         holder.contribDate.setText(contributionDate);
-        holder.amount.setText(amountText);
+        holder.amount.setText("amount : "+amountText+"$");
+        holder.email.setText(emailText);
         holder.userImage.setImageResource(imageMock);
 
         return row;
@@ -76,6 +79,7 @@ public class ContributionListAdapter extends ArrayAdapter<ContributionsWithUsers
         TextView userName;
         TextView contribDate;
         TextView amount;
+        TextView email;
         ImageView userImage;
     }
 

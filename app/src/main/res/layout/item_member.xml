@@ -45,16 +45,6 @@
         android:text="email"
         android:textColor="#827f93" />
 
-    <TextView
-        android:id="@+id/contributionDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/dividerTop"
-        android:layout_margin="26dp"
-        android:text="Nov 20, 6:12 PM"
-        android:textColor="#827f93" />
-
 
     <View
         android:id="@+id/divider"
@@ -65,18 +55,5 @@
         android:layout_marginRight="16dp"
         android:background="#ebebeb" />
 
-
-    <TextView
-        android:id="@+id/amount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/avatar"
-        android:layout_margin="5dp"
-        android:text="amount : 20$ "
-        android:textSize="20sp"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textColor="#00a100" />
 
 </RelativeLayout>

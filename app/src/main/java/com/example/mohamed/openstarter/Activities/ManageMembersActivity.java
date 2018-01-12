@@ -12,17 +12,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.mohamed.openstarter.Adapters.MemberListAdapter;
 import com.example.mohamed.openstarter.Data.DataSuppliers.MembershipServer;
 import com.example.mohamed.openstarter.Helpers.DialogHelper;
 import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.R;
 import com.vlstr.blurdialog.BlurDialog;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ManageMembersActivity extends AppCompatActivity {
@@ -49,21 +47,22 @@ public class ManageMembersActivity extends AppCompatActivity {
             @Override
             public void onSuccessGet(final List<User> result) {
 
-                List<HashMap<String, String>> liste = new ArrayList<>();
+                //List<HashMap<String, String>> liste = new ArrayList<>();
 
 
-                HashMap<String, String> hash;
+                /*HashMap<String, String> hash;
                 for (User u : result) {
                     hash = new HashMap<>();
                     hash.put("fullname", u.getFirstName() + " " + u.getLastName());
                     //hash.put("id",Long.toString(u.getId()));
                     liste.add(hash);
-                }
+                }*/
 
-                SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), liste, R.layout.useritem, new String[]{"fullname"}, new int[]{R.id.name});
+                //SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), liste, R.layout.useritem, new String[]{"fullname"}, new int[]{R.id.name});
 
                 lv = findViewById(R.id.listMembers);
-                lv.setAdapter(simpleAdapter);
+
+                lv.setAdapter(new MemberListAdapter(ManageMembersActivity.this,R.layout.item_member,result));
                 lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> arg0, View arg1,

@@ -2,8 +2,6 @@ package com.example.mohamed.openstarter.Fragments;
 
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -46,7 +44,6 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
     ListView commentsListView;
     EditText etComment;
     private FirebaseAuth firebaseAuth;
-
 
     private static final String TAG = "TabProjectCommentsFragment";
 
