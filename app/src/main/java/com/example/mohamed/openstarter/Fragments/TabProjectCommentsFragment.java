@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.mohamed.openstarter.Activities.ProfilActivity;
 import com.example.mohamed.openstarter.Activities.ProjectActivity;
 import com.example.mohamed.openstarter.Adapters.CommentListAdapter;
+import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
 import com.example.mohamed.openstarter.Data.DataSuppliers.CommentDs;
 import com.example.mohamed.openstarter.Data.DataSuppliers.NotificationDs;
 import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectDs;
@@ -38,7 +39,7 @@ import java.util.List;
 
 public class TabProjectCommentsFragment extends Fragment implements View.OnTouchListener {
 
-    Project mProject = new Project();
+    ProjectWithFollowCount mProject = new ProjectWithFollowCount();
     CommentDs commentDs = new CommentDs();
     CommentListAdapter adapter;
     ListView commentsListView;

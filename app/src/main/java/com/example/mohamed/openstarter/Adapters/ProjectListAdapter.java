@@ -3,6 +3,7 @@ package com.example.mohamed.openstarter.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +14,19 @@ import android.widget.Toast;
 
 import com.example.mohamed.openstarter.Activities.MainActivity;
 import com.example.mohamed.openstarter.Activities.ProjectActivity;
+import com.example.mohamed.openstarter.Data.CustomClasses.FollowCount;
+import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
 import com.example.mohamed.openstarter.Data.DataSuppliers.FollowDs;
 import com.example.mohamed.openstarter.Helpers.NumbersHelper;
 import com.example.mohamed.openstarter.Helpers.TimeHelper;
+import com.example.mohamed.openstarter.Models.Follow;
 import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 import com.example.mohamed.openstarter.foldingcell.FoldingCell;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -29,25 +34,27 @@ import java.util.List;
  * Simple example of ListAdapter for using with Folding Cell
  * Adapter holds indexes of unfolded elements for correct work with default reusable views behavior
  */
-public class ProjectListAdapter extends ArrayAdapter<Project> {
+public class ProjectListAdapter extends ArrayAdapter<ProjectWithFollowCount> {
 
     private static String PROJECT_TAG = "project" ;
     private static String COLLABORATION_GROUP_TAG = "collaboration group" ;
     private static String CATEGORY_TAG = "category" ;
-
+    private static String FOLLOW_COUNT_TAG = "follow count" ;
 
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
     private View.OnClickListener defaultRequestBtnClickListener;
+    private List<ProjectWithFollowCount> projectsList = null;
 
-
-    public ProjectListAdapter(Context context, List<Project> objects) {
-        super(context, 0, objects);
+    public ProjectListAdapter(Context context, List<ProjectWithFollowCount> projectsList) {
+        super(context, 0, projectsList);
+        this.projectsList = projectsList;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         // get item for selected view
-        final Project project = getItem(position);
+        final ProjectWithFollowCount project = getItem(position);
         // if cell is exists - reuse it, if not - create the new one from resource
         FoldingCell cell = (FoldingCell) convertView;
         ViewHolder viewHolder;
@@ -127,8 +134,8 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
         viewHolder.contentProjectName.setText(project.getName());
         viewHolder.titleRemainingBudget.setText("$"+remainingBudget);
         viewHolder.contentReachedBudget.setText(reachedBudget+" %");
-        viewHolder.titleContributorsCount.setText("241");
-        viewHolder.contentContributorsCount.setText("241");
+        viewHolder.titleContributorsCount.setText(String.valueOf(project.getFollowCount()));
+        viewHolder.contentContributorsCount.setText(String.valueOf(project.getFollowCount()));
         viewHolder.titlePledgesSum.setText("$"+ currentBudget);
         viewHolder.contentPledgesSum.setText("$"+ currentBudget);
         viewHolder.titleGoal.setText("$"+ budget);
@@ -211,5 +218,14 @@ public class ProjectListAdapter extends ArrayAdapter<Project> {
 
         TextView contentRequestBtn;
 
+    }
+
+    public void refreshProjects(List<ProjectWithFollowCount> newProjectsList) {
+
+        //must be stored in a temp list to be able to add the elemets
+        List<ProjectWithFollowCount> tempList = new ArrayList<>(newProjectsList);
+        this.projectsList.clear();
+        this.projectsList.addAll(tempList);
+        notifyDataSetChanged();
     }
 }

@@ -7,12 +7,14 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.Layout;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -28,6 +30,7 @@ import android.widget.TimePicker;
 
 import com.example.mohamed.openstarter.Adapters.CategoriesSpinnerAdapter;
 import com.example.mohamed.openstarter.Adapters.CollaborationGroupSpinnerAdapter;
+import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
 import com.example.mohamed.openstarter.Data.DataSuppliers.CategoryDs;
 import com.example.mohamed.openstarter.Data.DataSuppliers.CollaborationGroupDs;
 import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectDs;
@@ -125,11 +128,12 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project);
-
+        
         initializeActivity();
     }
 
     private void initializeActivity() {
+
         firebaseAuth = FirebaseAuth.getInstance();
         instance = this;
         // Start date step vars
@@ -248,8 +252,11 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                 categorySelectedId.toString(),
                 new ProjectDs.Callback() {
                     @Override
-                    public void onSuccessGet(List<Project> result) {
-                    }
+                    public void onSuccessGet(List<Project> result) {}
+                    @Override
+                    public void onSuccessGetWithFollowCount(List<ProjectWithFollowCount> result) {}
+                    @Override
+                    public void onFail() {}
 
                     @Override
                     public void onSuccessCreate(Project createdProject) {
@@ -262,9 +269,6 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                         getBaseContext().startActivity(myIntent);
                     }
 
-                    @Override
-                    public void onFail() {
-                    }
                 });
 
     }

@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
 import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.app.AppController;
@@ -78,6 +79,25 @@ public class ProjectDs extends ConnectionDs {
                 Log.e(TAG,body);
 
             */
+            }
+        });
+        AppController.getInstance().addToRequestQueue(req, REQUEST_TAG_GET_ALL);
+    }
+
+    public void projectWithCountGetAll(final Callback callback) {
+        // Tag used to cancel the request
+
+        JsonArrayRequest req = new JsonArrayRequest(URL_GET_ALL_PROJECT,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        List<ProjectWithFollowCount> projectList = Arrays.asList(mGson.fromJson(response.toString(), ProjectWithFollowCount[].class));
+                        callback.onSuccessGetWithFollowCount(projectList);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFail();
             }
         });
         AppController.getInstance().addToRequestQueue(req, REQUEST_TAG_GET_ALL);
@@ -159,6 +179,7 @@ public class ProjectDs extends ConnectionDs {
 
     public interface Callback {
         void onSuccessGet(List<Project> result);
+        void onSuccessGetWithFollowCount(List<ProjectWithFollowCount> result);
         void onSuccessCreate(Project createdProject);
         void onFail();
     }

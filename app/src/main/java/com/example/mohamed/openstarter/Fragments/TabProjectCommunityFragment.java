@@ -13,6 +13,7 @@ import android.widget.Button;
 
 import com.example.mohamed.openstarter.Activities.PaymentActivity;
 import com.example.mohamed.openstarter.Activities.ProjectActivity;
+import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
 import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 import com.ldoublem.ringPregressLibrary.Ring;
@@ -32,7 +33,7 @@ public class TabProjectCommunityFragment extends Fragment {
     Button btn_contribute;
     List<Ring> mlistRing = new ArrayList<>();
     Random random = new Random();
-    Project mProject = new Project() ;
+    ProjectWithFollowCount mProject = new ProjectWithFollowCount() ;
 
     private static final String TAG = "TabProjectCommunityFragment";
 

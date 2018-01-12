@@ -1,17 +1,24 @@
 package com.example.mohamed.openstarter.Activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.allattentionhere.fabulousfilter.AAH_FabulousFragment;
 import com.example.mohamed.openstarter.Adapters.ProjectListAdapter;
+import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
 import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectDs;
+import com.example.mohamed.openstarter.Fragments.FilterFabProjectFragment;
 import com.example.mohamed.openstarter.Helpers.DialogHelper;
 import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
@@ -21,18 +28,27 @@ import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
 import com.vlstr.blurdialog.BlurDialog;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Example of using Folding Cell with ListView and ListAdapter
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  implements AAH_FabulousFragment.Callbacks, AAH_FabulousFragment.AnimationListener{
 
-    ProjectDs projectDs = new ProjectDs();
+
+
+    public static MainActivity instance = null;
+
 
     private DialogHelper dialogHelper;
     private BlurDialog blurDialog;
-    public static MainActivity instance = null;
+    private ProjectDs projectDs = new ProjectDs();
+    private FloatingActionButton fab ;
+    private FilterFabProjectFragment dialogFilterFrag;
+    private ArrayMap<String, List<String>> applied_filters = new ArrayMap<>();
+    private List<ProjectWithFollowCount> mOriginalProjectsList = new ArrayList<>();
 
     ListView projectListView;
     ResideMenu resideMenu;
@@ -53,6 +69,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        fab = findViewById(R.id.fab);
+        dialogFilterFrag = FilterFabProjectFragment.newInstance();
+        dialogFilterFrag.setParentFab(fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogFilterFrag.show(getSupportFragmentManager(), dialogFilterFrag.getTag());
+            }
+        });
 
         instance = this;
         dialogHelper = new DialogHelper();
@@ -137,15 +162,18 @@ public class MainActivity extends AppCompatActivity {
 
         projectListView = findViewById(R.id.mainProjectListView);
 
-        projectDs.projectGetAll(new ProjectDs.Callback() {
+        projectDs.projectWithCountGetAll(new ProjectDs.Callback() {
+
             @Override
-            public void onSuccessGet(List<Project> projectList) {
-
-
+            public void onSuccessGetWithFollowCount(List<ProjectWithFollowCount> projectList) {
+                List <ProjectWithFollowCount> tempList = new ArrayList<>();
+                //the usage of the temp list is very important cause without it you'll get a reference of the original list and it will get changed every time
+                tempList.addAll(projectList);
+                getmOriginalProjectsList().addAll(tempList);
+                Log.d ("AAZZ","OriginalProjectsList size on load = "+ getmOriginalProjectsList().size() );
                 dialogHelper.blurDialogHide(instance,blurDialog);
                 // create custom adapter that holds elements and their state (we need hold a id's of unfolded elements for reusable elements)
-                final ProjectListAdapter adapter = new ProjectListAdapter(getBaseContext(), projectList);
-
+                final ProjectListAdapter adapter = new ProjectListAdapter(getBaseContext(), tempList);
 
                 // set elements to adapter
                 projectListView.setAdapter(adapter);
@@ -163,15 +191,94 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onSuccessCreate(Project createdProject) {}
-
-            @Override
             public void onFail() {
                 dialogHelper.blurDialogHide(instance,blurDialog);
                 Toast.makeText(MainActivity.this, "could not load projects", Toast.LENGTH_LONG).show();
             }
+
+            @Override
+            public void onSuccessCreate(Project createdProject) {}
+            @Override
+            public void onSuccessGet(List<Project> projectList) {}
+
         });
+    }
 
+    @Override
+    public void onResult(Object result) {
+        if (result.toString().equalsIgnoreCase("swiped_down")) {
+            //do something or nothing
+        } else {
+            if (result != null) {
+                ArrayMap<String, List<String>> applied_filters = (ArrayMap<String, List<String>>) result;
+                List<ProjectWithFollowCount> tempList = new ArrayList<>();
+                tempList.addAll(getmOriginalProjectsList());
+                List<ProjectWithFollowCount> filteredList = tempList;
+                if (applied_filters.size() != 0) {
+                    //iterate over arraymap
+                    for (Map.Entry<String, List<String>> entry : applied_filters.entrySet()) {
+                        //Log.d("k9res", "entry.key: " + entry.getKey());
+                        switch (entry.getKey()) {
+                            case "category":
+                                filteredList = ProjectWithFollowCount.getCategoryFilteredProjects(entry.getValue(), filteredList);
+                                break;
+                            case "followers":
+                                filteredList = ProjectWithFollowCount.getFollowCountFilteredProjects(entry.getValue(), filteredList);
+                                break;
+                            case "goal":
+                                filteredList = ProjectWithFollowCount.getGoalReachFilteredProjects(entry.getValue(), filteredList);
+                                break;
+                        }
+                    }
+                    Log.d("k9res", "new size: " + filteredList.size());
+                    ((ProjectListAdapter)projectListView.getAdapter()).refreshProjects(filteredList);
+                } else {
+                    Log.d ("AAZZ","OriginalProjectsList size on result = "+ filteredList.size() );
+                    ((ProjectListAdapter)projectListView.getAdapter()).refreshProjects(filteredList);
+                }
+            }
+            //handle result
+        }
+    }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (dialogFilterFrag.isAdded()) {
+            dialogFilterFrag.dismiss();
+            dialogFilterFrag.show(getSupportFragmentManager(), dialogFilterFrag.getTag());
+        }
+    }
+
+    public ArrayMap<String, List<String>> getApplied_filters() {
+        return applied_filters;
+    }
+
+    @Override
+    public void onOpenAnimationStart() {
+
+    }
+
+    @Override
+    public void onOpenAnimationEnd() {
+
+    }
+
+    @Override
+    public void onCloseAnimationStart() {
+
+    }
+
+    @Override
+    public void onCloseAnimationEnd() {
+
+    }
+
+    public List<ProjectWithFollowCount> getmOriginalProjectsList() {
+        return mOriginalProjectsList;
+    }
+
+    public void setmOriginalProjectsList(List<ProjectWithFollowCount> mOriginalProjectsList) {
+        this.mOriginalProjectsList = mOriginalProjectsList;
     }
 }

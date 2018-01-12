@@ -17,6 +17,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.example.mohamed.openstarter.Activities.ProjectActivity;
+import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
 import com.example.mohamed.openstarter.Helpers.TimeHelper;
 import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
@@ -36,7 +37,7 @@ public class TabProjectCampaignFragment extends Fragment implements BaseSliderVi
     private TextView tvTimer ;
     private TextView tvDate;
     private TextView tvDescription;
-    private Project mProject = new Project() ;
+    private ProjectWithFollowCount mProject = new ProjectWithFollowCount() ;
 
     @Nullable
     @Override

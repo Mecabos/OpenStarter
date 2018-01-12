@@ -2,19 +2,19 @@ package com.example.mohamed.openstarter.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.mohamed.openstarter.Adapters.SectionPageAdapter;
+import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
 import com.example.mohamed.openstarter.Data.DataSuppliers.FollowDs;
 import com.example.mohamed.openstarter.Fragments.TabProjectCampaignFragment;
 import com.example.mohamed.openstarter.Fragments.TabProjectCommentsFragment;
 import com.example.mohamed.openstarter.Fragments.TabProjectCommunityFragment;
 import com.example.mohamed.openstarter.Helpers.DialogHelper;
-import com.example.mohamed.openstarter.Helpers.Util.FollowCount;
+import com.example.mohamed.openstarter.Data.CustomClasses.FollowCount;
 import com.example.mohamed.openstarter.Models.Category;
 import com.example.mohamed.openstarter.Models.CollaborationGroup;
 import com.example.mohamed.openstarter.Models.Follow;
@@ -22,20 +22,14 @@ import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 import com.github.florent37.bubbletab.BubbleTab;
 import com.google.firebase.auth.FirebaseAuth;
-import com.ldoublem.ringPregressLibrary.Ring;
-import com.ldoublem.ringPregressLibrary.RingProgress;
 import com.ldoublem.thumbUplib.ThumbUpView;
 import com.vlstr.blurdialog.BlurDialog;
 
-import android.os.Bundle;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class ProjectActivity extends AppCompatActivity {
 
@@ -44,7 +38,7 @@ public class ProjectActivity extends AppCompatActivity {
     private static String COLLABORATION_GROUP_TAG = "collaboration group";
     private static String CATEGORY_TAG = "category";
 
-    private Project mProject = new Project();
+    private ProjectWithFollowCount mProject = new ProjectWithFollowCount();
     private CollaborationGroup mCollaborationGroup = new CollaborationGroup();
     private Category mCategory = new Category();
     private FollowDs followDs;
@@ -211,7 +205,7 @@ public class ProjectActivity extends AppCompatActivity {
         });
     }
 
-    public Project getProject() {
+    public ProjectWithFollowCount getProject() {
         return mProject;
     }
 

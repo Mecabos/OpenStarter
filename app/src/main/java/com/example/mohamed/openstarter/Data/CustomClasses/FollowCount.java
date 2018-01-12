@@ -1,4 +1,4 @@
-package com.example.mohamed.openstarter.Helpers.Util;
+package com.example.mohamed.openstarter.Data.CustomClasses;
 
 /**
  * Created by Bacem on 12/12/2017.

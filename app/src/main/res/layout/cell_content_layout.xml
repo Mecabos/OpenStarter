@@ -19,11 +19,12 @@
             android:id="@+id/content_project_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:text="@string/order_id_mock"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
-
+        <!--android:layout_centerInParent="true"-->
         <TextView
             android:id="@+id/content_reached_budget"
             android:layout_width="wrap_content"
@@ -33,13 +34,6 @@
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/menu_icon" />
 
     </RelativeLayout>
 

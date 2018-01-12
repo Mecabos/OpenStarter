@@ -4,7 +4,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.mohamed.openstarter.Helpers.Util.FollowCount;
+import com.example.mohamed.openstarter.Data.CustomClasses.FollowCount;
 import com.example.mohamed.openstarter.Models.Follow;
 import com.example.mohamed.openstarter.app.AppController;
 import com.google.gson.Gson;
@@ -101,6 +101,30 @@ public class FollowDs extends ConnectionDs{
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("email_user", userEmail);
+        params.put("id_project", projectId);
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                URL_COUNT_BY_PROJECT_FOLLOW,
+                new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        FollowCount followCount = mGson.fromJson(response.toString(), FollowCount.class);
+                        callback.onSuccessCount(followCount);
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }) {
+        };
+        AppController.getInstance().addToRequestQueue(jsonObjReq, REQUEST_TAG_COUNT_BY_PROJECT_FOLLOW);
+    }
+
+    public void followCount(final String projectId, final FollowDs.Callback callback) {
+
+        Map<String, String> params = new HashMap<String, String>();
         params.put("id_project", projectId);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
