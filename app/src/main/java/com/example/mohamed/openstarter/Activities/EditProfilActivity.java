@@ -173,12 +173,15 @@ public class EditProfilActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int IMG_REQUEST, int resultCode, Intent data) {
         super.onActivityResult(IMG_REQUEST, resultCode, data);
-        Uri path = data.getData();
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
-            avatar.setImageBitmap(bitmap);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        if ( resultCode == RESULT_OK){
+            Uri path = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
+                avatar.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }

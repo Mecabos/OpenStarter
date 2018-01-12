@@ -160,16 +160,17 @@ public class CompleteRegisterActivity extends AppCompatActivity {
         super.onActivityResult(IMG_REQUEST, resultCode, data);
 
 
-        Uri uri = data.getData();
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-            avatar.setImageBitmap(bitmap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         if ( resultCode == RESULT_OK){
-            assert uri != null;
+
+            Uri uri = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                avatar.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //assert uri != null;
             StorageReference filePath = mStorage.child("photos").child(uri.getLastPathSegment());
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
