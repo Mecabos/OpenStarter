@@ -31,13 +31,16 @@ public class User {
     private int projectsCount;
     @Property
     private String token;
+    @Property
+    private int contributions;
 
     public User() {
     }
 
-    @Generated(hash = 1494555453)
+    @Generated(hash = 1109547446)
     public User(long id, String firstName, String lastName, String email,
-            Date birthDate, String bio, int projectsCount, String token) {
+            Date birthDate, String bio, int projectsCount, String token,
+            int contributions) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -46,6 +49,7 @@ public class User {
         this.bio = bio;
         this.projectsCount = projectsCount;
         this.token = token;
+        this.contributions = contributions;
     }
 
     @Override
@@ -141,5 +145,13 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public int getContributions() {
+        return contributions;
+    }
+
+    public void setContributions(int contributions) {
+        this.contributions = contributions;
     }
 }

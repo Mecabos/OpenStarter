@@ -17,6 +17,8 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +41,7 @@ public class ProjectDs extends ConnectionDs {
     //**** TAG STRINGS
     private final String TAG = "PROJECT-WS";
     private final String REQUEST_TAG_GET_ALL = "project_getAll_req";
+    private final String REQUEST_TAG_GET_MEMBERS = "project_getMembers_req";
     private final String REQUEST_TAG_CREATE_PROJECT = "project_create_req";
 
     private Gson mGson;
@@ -147,33 +150,44 @@ public class ProjectDs extends ConnectionDs {
         AppController.getInstance().addToRequestQueue(jsonObjReq, REQUEST_TAG_CREATE_PROJECT);
     }
 
-    public void projectGetGroupMembersAll(final String projectId, final CallbackGet callback) {
-
-
-        JsonArrayRequest req = new JsonArrayRequest(URL_GET_MEMBERS,
+    public void projectGetGroupMembersAll(final String projectId, final ProjectDs.CallbackGet callback) {
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.POST,
+                URL_GET_MEMBERS,
+                null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        List<User> projectList = Arrays.asList(mGson.fromJson(response.toString(), User[].class));
-                        callback.onSuccessGet(projectList);
+                        ArrayList<User> userList = new ArrayList<>() ;
+                        userList.addAll(Arrays.asList(mGson.fromJson(response.toString(), User[].class)));
+                        callback.onSuccessGet(userList);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                callback.onFail();
-
-
-                Log.d("userr","failed to get users");
+                String body = "";
+                //get status code here
+                //String statusCode = String.valueOf(error.networkResponse.statusCode);
+                //get response body and parse with appropriate encoding
+                if (error.networkResponse.data != null) {
+                    try {
+                        body = new String(error.networkResponse.data, "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.e(TAG, body);
 
             }
-        }){
+        }) {
             @Override
             public byte[] getBody() {
                 String body = "{\"projectId\":" + projectId + "}";
                 return body.getBytes();
             }
         };
-        AppController.getInstance().addToRequestQueue(req, REQUEST_TAG_GET_ALL);
+
+
+        AppController.getInstance().addToRequestQueue(req, REQUEST_TAG_GET_MEMBERS);
     }
 
 

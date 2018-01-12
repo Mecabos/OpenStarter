@@ -92,26 +92,19 @@ public class MainActivity extends AppCompatActivity  implements AAH_FabulousFrag
         resideMenu = new ResideMenu(this);
         resideMenu.setBackground(R.drawable.menu_background);
         resideMenu.attachToActivity(this);
+        resideMenu.setSwipeDirectionDisable( ResideMenu.DIRECTION_RIGHT);
 
-        String titles[] = {"featured projects", "Profile", "Add new Project", "Settings", "Logout"};
-        int icon[] = {R.drawable.ic_launcher, R.drawable.com_facebook_profile_picture_blank_square, R.drawable.plus, R.drawable.ic_launcher, R.drawable.logout};
+        String titles[] = { "Profile", "Add new Project","Logout"};
+        int icon[] = {R.drawable.com_facebook_profile_picture_blank_square, R.drawable.plus, R.drawable.logout};
 
 
         final ResideMenuItem item0 = new ResideMenuItem(this, icon[0], titles[0]);
         final ResideMenuItem item1 = new ResideMenuItem(this, icon[1], titles[1]);
         final ResideMenuItem item2 = new ResideMenuItem(this, icon[2], titles[2]);
-        final ResideMenuItem item3 = new ResideMenuItem(this, icon[3], titles[3]);
-        final ResideMenuItem item4 = new ResideMenuItem(this, icon[4], titles[4]);
+        /*final ResideMenuItem item3 = new ResideMenuItem(this, icon[3], titles[3]);
+        final ResideMenuItem item4 = new ResideMenuItem(this, icon[4], titles[4]);*/
 
         item0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "item0 clicked", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        item1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i2 = new Intent(MainActivity.this, ProfilActivity.class);
@@ -121,25 +114,18 @@ public class MainActivity extends AppCompatActivity  implements AAH_FabulousFrag
             }
         });
 
-        item2.setOnClickListener(new View.OnClickListener() {
+        item1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "item2 clicked", Toast.LENGTH_SHORT).show();
                 Intent i2 = new Intent(MainActivity.this, CreateProjectActivity.class);
                 startActivity(i2);
                 finish();
-            }
-        });
-
-        item3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "item3 clicked", Toast.LENGTH_SHORT).show();
 
             }
         });
 
-        item4.setOnClickListener(new View.OnClickListener() {
+        item2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 firebaseAuth.signOut();
@@ -147,15 +133,15 @@ public class MainActivity extends AppCompatActivity  implements AAH_FabulousFrag
                 Intent i2 = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(i2, oc2.toBundle());
                 finish();
-
             }
         });
+
+
 
         resideMenu.addMenuItem(item0, ResideMenu.DIRECTION_LEFT); // or  ResideMenu.DIRECTION_RIGHT
         resideMenu.addMenuItem(item1, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(item2, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(item3, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(item4, ResideMenu.DIRECTION_LEFT);
+
 
 
         //******************************

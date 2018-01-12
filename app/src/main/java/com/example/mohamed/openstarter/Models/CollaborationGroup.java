@@ -36,6 +36,8 @@ public class CollaborationGroup implements Parcelable {
     @Property
     @ToOne(joinProperty = "id")
     private User creator;
+    @Property
+    private boolean isUserAdmin;
 
 
     public CollaborationGroup() {
@@ -91,6 +93,14 @@ public class CollaborationGroup implements Parcelable {
         this.projectsCount = projectsCount;
     }
 
+    public boolean isUserAdmin() {
+        return isUserAdmin;
+    }
+
+    public void setUserAdmin(boolean userAdmin) {
+        isUserAdmin = userAdmin;
+    }
+
     //*************Parcel part
     @Keep
     public CollaborationGroup(Parcel in) throws ParseException {
@@ -103,12 +113,13 @@ public class CollaborationGroup implements Parcelable {
         this.creationDate = dateFormat.parse(data[2]);
     }
 
-    @Generated(hash = 2080925811)
-    public CollaborationGroup(long id, String name, Date creationDate, int projectsCount) {
+    @Generated(hash = 617803930)
+    public CollaborationGroup(long id, String name, Date creationDate, int projectsCount, boolean isUserAdmin) {
         this.id = id;
         this.name = name;
         this.creationDate = creationDate;
         this.projectsCount = projectsCount;
+        this.isUserAdmin = isUserAdmin;
     }
 
     @Override
@@ -211,6 +222,14 @@ public class CollaborationGroup implements Parcelable {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+
+    public boolean getIsUserAdmin() {
+        return this.isUserAdmin;
+    }
+
+    public void setIsUserAdmin(boolean isUserAdmin) {
+        this.isUserAdmin = isUserAdmin;
     }
 
     /** called by internal mechanisms, do not call yourself. */

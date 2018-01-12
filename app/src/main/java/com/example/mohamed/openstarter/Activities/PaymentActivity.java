@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mohamed.openstarter.Data.DataSuppliers.PaymentDs;
 import com.example.mohamed.openstarter.Helpers.Util.PaymentConfig;
+import com.example.mohamed.openstarter.Models.Payment;
 import com.example.mohamed.openstarter.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -83,6 +87,27 @@ public class PaymentActivity extends AppCompatActivity {
                         .putExtra("PaymentDetails",paymentDetails)
                         .putExtra("PaymentAmount",amount)
                         );
+
+                        Log.d("paypall","confirmed ");
+                        PaymentDs paymentDs = new PaymentDs();
+                        paymentDs.paymentCreate(FirebaseAuth.getInstance().getCurrentUser().getEmail(), getIntent().getStringExtra("projectId"), Float.parseFloat(amount), new PaymentDs.CallbackAdd() {
+                            @Override
+                            public void onSuccessCreate(Payment createdPayment) {
+                                Toast.makeText(PaymentActivity.this, "payment confirmed", Toast.LENGTH_SHORT).show();
+                                Log.d("paypall","payment added to database");
+                                finish();
+                            }
+
+                            @Override
+                            public void onFail() {
+                                Log.d("paypall","payment failed to add to database");
+
+                            }
+                        });
+
+                        finish();
+
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

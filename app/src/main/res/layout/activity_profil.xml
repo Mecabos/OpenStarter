@@ -178,6 +178,7 @@
                 android:textSize="24sp" />
 
             <TextView
+                android:id="@+id/contributions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -296,11 +297,12 @@
             android:textColor="#ffffff" />
 
         <ImageView
+            android:id="@+id/medal"
             android:layout_width="70dp"
             android:layout_height="150dp"
             android:layout_marginLeft="50dp"
             android:layout_gravity="center"
-            android:src="@drawable/gold"
+            android:src="@drawable/bronze"
             android:contentDescription="medal" />
 
     </LinearLayout>

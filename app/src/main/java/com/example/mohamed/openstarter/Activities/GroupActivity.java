@@ -34,6 +34,8 @@ public class GroupActivity extends AppCompatActivity {
     private DialogHelper dialogHelper;
     private BlurDialog blurDialog;
 
+    private boolean isAdminForSelectedGroup=false;
+
     Button bt_members, bt_editGroup, bt_addGroup;
     TextView tv_name, tv_creationDate, tv_projectCount;
     private Spinner collaborationGroupSpinner;
@@ -133,9 +135,14 @@ public class GroupActivity extends AppCompatActivity {
                         .build();
                 alert.show();*/
 
-                Intent i1 = new Intent(GroupActivity.this, ManageMembersActivity.class);
-                i1.putExtra("groupName",tv_name.getText().toString());
-                startActivity(i1);
+                if(isAdminForSelectedGroup){
+                    Intent i1 = new Intent(GroupActivity.this, ManageMembersActivity.class);
+                    i1.putExtra("groupName",tv_name.getText().toString());
+                    startActivity(i1);
+                }
+                else
+                    Toast.makeText(GroupActivity.this,"admin privileges requiered",Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -143,9 +150,14 @@ public class GroupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO : refresh
-                Intent i2 = new Intent(GroupActivity.this, EditGroupActivity.class);
-                i2.putExtra("groupName",tv_name.getText().toString());
-                startActivity(i2);
+                if(isAdminForSelectedGroup){
+                    Intent i2 = new Intent(GroupActivity.this, EditGroupActivity.class);
+                    i2.putExtra("groupName",tv_name.getText().toString());
+                    startActivity(i2);
+                }
+                else
+                    Toast.makeText(GroupActivity.this,"admin privileges requiered",Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -156,15 +168,20 @@ public class GroupActivity extends AppCompatActivity {
             public void onSuccessGet(final List<CollaborationGroup> groupsList) {
 
                 dialogHelper.blurDialogHide(instance,blurDialog);
-                CollaborationGroup firstGroup = groupsList.get(0);
-                tv_name.setText(firstGroup.getName());
-                tv_projectCount.setText(Integer.toString(firstGroup.getProjectsCount()));
-                DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-                String creationDate = df.format(firstGroup.getCreationDate());
-                tv_creationDate.setText(creationDate);
-
 
                 if (groupsList.size() > 0){
+
+
+                    CollaborationGroup firstGroup = groupsList.get(0);
+                    tv_name.setText(firstGroup.getName());
+                    tv_projectCount.setText(Integer.toString(firstGroup.getProjectsCount()));
+                    DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                    String creationDate = df.format(firstGroup.getCreationDate());
+                    tv_creationDate.setText(creationDate);
+
+                    isAdminForSelectedGroup = firstGroup.isUserAdmin();
+
+
                     Log.d("spinnerr","spinner loaded");
                     Log.d("spinnerr",groupsList.toString());
                     CollaborationGroup[] dataArray = new CollaborationGroup[groupsList.size()];
@@ -190,6 +207,8 @@ public class GroupActivity extends AppCompatActivity {
                             DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                             String creationDate = df.format(selectedGroup.getCreationDate());
                             tv_creationDate.setText(creationDate);
+
+                            isAdminForSelectedGroup = selectedGroup.isUserAdmin();
                         }
 
                         @Override
@@ -207,6 +226,8 @@ public class GroupActivity extends AppCompatActivity {
 
             @Override
             public void onFail() {
+                finish();
+                Toast.makeText(GroupActivity.this, "could not reach server", Toast.LENGTH_SHORT).show();
 
             }
         });

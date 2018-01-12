@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfilActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    TextView fullname, email, tv_bio,tv_birthDate, tv_projectsCount;
+    ImageView medal;
+    TextView fullname, email, tv_bio,tv_birthDate, tv_projectsCount, tv_contributions;
     CircleImageView avatar;
     Button bt_editProfil, bt_groups;
     private long user_id;
@@ -55,8 +57,10 @@ public class ProfilActivity extends AppCompatActivity {
         tv_bio = findViewById(R.id.bio);
         bt_editProfil = findViewById(R.id.bt_editProfil);
         tv_projectsCount = findViewById(R.id.projectsCount);
+        tv_contributions = findViewById(R.id.contributions);
         bt_groups = findViewById(R.id.bt_showGroups);
         avatar = findViewById(R.id.avatar);
+        medal = findViewById(R.id.medal);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -106,7 +110,7 @@ public class ProfilActivity extends AppCompatActivity {
                         .build();
                 alert.show();*/
 
-                //TODO : list groups
+
                 Intent i2 = new Intent(ProfilActivity.this, GroupActivity.class);
                 startActivity(i2);
 
@@ -130,9 +134,15 @@ public class ProfilActivity extends AppCompatActivity {
                 fullname.setText(name);
                 tv_bio.setText(bio);
                 tv_projectsCount.setText(Integer.toString(createdUser.getProjectsCount()));
+                tv_contributions.setText(Integer.toString(createdUser.getContributions()));
                 DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                 String birthDate = df.format(createdUser.getBirthDate());
                 tv_birthDate.setText(birthDate);
+
+                if (Integer.parseInt(tv_contributions.getText().toString())>=2)
+                    medal.setImageResource(R.drawable.gold);
+                else if (Integer.parseInt(tv_contributions.getText().toString())==1)
+                    medal.setImageResource(R.drawable.silver);
             }
 
             @Override
