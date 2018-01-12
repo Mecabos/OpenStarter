@@ -135,7 +135,7 @@ public class ProfilActivity extends AppCompatActivity {
                 tv_bio.setText(bio);
                 tv_projectsCount.setText(Integer.toString(createdUser.getProjectsCount()));
                 tv_contributions.setText(Integer.toString(createdUser.getContributions()));
-                DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
                 String birthDate = df.format(createdUser.getBirthDate());
                 tv_birthDate.setText(birthDate);
 

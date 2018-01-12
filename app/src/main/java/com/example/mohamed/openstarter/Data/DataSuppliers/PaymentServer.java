@@ -4,8 +4,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.mohamed.openstarter.Data.CustomClasses.NotifOnPayment;
 import com.example.mohamed.openstarter.Helpers.Util.ServerConnection;
-import com.example.mohamed.openstarter.Models.Payment;
 import com.example.mohamed.openstarter.app.AppController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -55,7 +55,7 @@ public class PaymentServer extends ServerConnection {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Payment createdPayment = mGson.fromJson(response.toString(), Payment.class);
+                        NotifOnPayment createdPayment = mGson.fromJson(response.toString(), NotifOnPayment.class);
                         callback.onSuccessCreate(createdPayment);
                     }
                 }, new Response.ErrorListener() {
@@ -73,7 +73,7 @@ public class PaymentServer extends ServerConnection {
 
     public interface CallbackAdd {
 
-        void onSuccessCreate(Payment createdPayment);
+        void onSuccessCreate(NotifOnPayment createdPayment);
 
         void onFail();
     }

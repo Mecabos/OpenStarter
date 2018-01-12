@@ -1,7 +1,6 @@
 package com.example.mohamed.openstarter.Fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.mohamed.openstarter.Activities.ProfilActivity;
 import com.example.mohamed.openstarter.Activities.ProjectActivity;
 import com.example.mohamed.openstarter.Adapters.CommentListAdapter;
 import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
@@ -168,7 +166,6 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
 
                                 }
                             });
-
 
                         }
                     });

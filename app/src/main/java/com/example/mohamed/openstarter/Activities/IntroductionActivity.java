@@ -24,8 +24,8 @@ public class IntroductionActivity extends AhoyOnboarderActivity {
         super.onCreate(savedInstanceState);
 
         AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("Welcome to OpenStarter", "Open starter is an open project funding app created for anyone who wishes to have a quick way to find suporters for his project", R.drawable.big_logo);
-        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Create a collaboration group", "Create a collaboration group and invite your team mates to start creating a project.", R.drawable.com_facebook_button_login_logo);
-        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Look for cool projects", "Look for projects that inspire you and that you want to support and help becoming a reality", R.drawable.com_facebook_favicon_blue);
+        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Discover", "Swipe right to get the side menu", R.drawable.swiperight);
+        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Get started", "Look for projects that inspire you and that you want to support and help becoming a reality", R.drawable.getstarted);
 
         ahoyOnboarderCard1.setBackgroundColor(R.color.black_transparent);
         ahoyOnboarderCard2.setBackgroundColor(R.color.black_transparent);

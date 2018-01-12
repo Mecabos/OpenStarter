@@ -10,9 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mohamed.openstarter.Data.CustomClasses.NotifOnPayment;
+import com.example.mohamed.openstarter.Data.DataSuppliers.NotificationServer;
 import com.example.mohamed.openstarter.Data.DataSuppliers.PaymentServer;
+import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectServer;
 import com.example.mohamed.openstarter.Helpers.Util.PaymentConfig;
-import com.example.mohamed.openstarter.Models.Payment;
+import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -20,9 +23,11 @@ import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class PaymentActivity extends AppCompatActivity {
 
@@ -95,9 +100,41 @@ public class PaymentActivity extends AppCompatActivity {
                         PaymentServer paymentDs = new PaymentServer();
                         paymentDs.paymentCreate(FirebaseAuth.getInstance().getCurrentUser().getEmail(), getIntent().getStringExtra("projectId"), Float.parseFloat(amount), new PaymentServer.CallbackAdd() {
                             @Override
-                            public void onSuccessCreate(Payment createdPayment) {
+                            public void onSuccessCreate(NotifOnPayment createdPayment) {
                                 Toast.makeText(PaymentActivity.this, "payment confirmed", Toast.LENGTH_SHORT).show();
                                 Log.d("paypall","payment added to database");
+
+                                if (createdPayment.isNotify()){
+                                    ProjectServer projectDs = new ProjectServer();
+                                    projectDs.projectGetGroupMembersAll(getIntent().getStringExtra("projectId"), new ProjectServer.CallbackGet() {
+                                        @Override
+                                        public void onSuccessGet(List<User> result) {
+
+                                            JSONArray jsonArray = new JSONArray();
+                                            //List<String> tokens = new ArrayList<>();
+                                            for (User user:result) {
+                                                jsonArray.put(user.getToken());
+                                            }
+                                            NotificationServer notificationDs = new NotificationServer();
+
+                                            notificationDs.addNotification(jsonArray, "goal attempt","goal budget has been attempt !", new NotificationServer.CallbackSend() {
+                                                @Override
+                                                public void onSuccess() {
+                                                    Log.d("notiff", " notification success");
+                                                }
+                                                @Override
+                                                public void onError() {
+                                                    Log.d("notiff", "error notification ");
+                                                }
+                                            });
+                                        }
+                                        @Override
+                                        public void onFail() {
+                                            Log.d("notiff", "failed to load users");
+
+                                        }
+                                    });
+                                }
                                 finish();
                             }
 
