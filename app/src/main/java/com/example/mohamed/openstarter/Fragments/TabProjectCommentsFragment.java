@@ -71,7 +71,7 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
         commentDs.commentGetByProject(String.valueOf(mProject.getId()), new CommentServer.Callback() {
             @Override
             public void onSuccessGet(ArrayList<Comment> commentsList) {
-                adapter = new CommentListAdapter(getActivity(), R.layout.item_comment, commentsList);
+                adapter = new CommentListAdapter(getActivity(), R.layout.item_custom_comment, commentsList);
                 commentsListView.setAdapter(adapter);
             }
 
@@ -85,12 +85,8 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                Intent intent = new Intent(getActivity(), ProfilActivity.class);
-                String user_email = "aaaa@aa.aa";
-                intent.putExtra("user_id", user_email);
-                Toast.makeText(getActivity(), "userr ="+Long.toString(id),Toast.LENGTH_LONG).show();
-                //startActivity(intent);
-
+                Comment comment = (Comment)commentsListView.getAdapter().getItem(position);
+                comment.getRequestClickListener();
             }
         });
     }

@@ -1,5 +1,7 @@
 package com.example.mohamed.openstarter.Models;
 
+import android.view.View;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
@@ -38,6 +40,9 @@ public class Comment {
     private transient CommentDao myDao;
     @Generated(hash = 251390918)
     private transient Long user__resolvedKey;
+
+    @Transient
+    private View.OnClickListener requestClickListener;
 
 
     public Comment() {
@@ -90,6 +95,14 @@ public class Comment {
 
     public void setCommentDate(Date commentDate) {
         this.commentDate = commentDate;
+    }
+
+    public View.OnClickListener getRequestClickListener() {
+        return requestClickListener;
+    }
+
+    public void setRequestClickListener(View.OnClickListener requestClickListener) {
+        this.requestClickListener = requestClickListener;
     }
 
     /** To-one relationship, resolved on first access. */
@@ -168,5 +181,6 @@ public class Comment {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getCommentDao() : null;
     }
-    
+
+
 }

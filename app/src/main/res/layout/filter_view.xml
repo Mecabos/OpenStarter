@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:background="@color/filtersfab"
+        android:background="@color/colorPrimary"
         tools:visibility="visible"
         android:id="@+id/rl_content"
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
         <android.support.design.widget.TabLayout
             app:tabSelectedTextColor="@android:color/white"
             app:tabTextColor="@android:color/white"
-            android:background="@color/filters_header"
+            android:background="@color/colorPrimaryDark"
             android:id="@+id/tabs_types"
             android:layout_width="match_parent"
             android:layout_height="48dp"

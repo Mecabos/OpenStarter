@@ -87,7 +87,7 @@ public class TabProjectCommunityFragment extends Fragment {
         mRingProgress = view.findViewById(R.id.ring_progress);
         btn_contribute = view.findViewById(R.id.btn_contribute);
         project_contributors_count = view.findViewById(R.id.project_contributors_count);
-        contributions = view.findViewById(R.id.contributions);
+        contributions =  view.findViewById(R.id.contributions);
         setData();
     }
 
@@ -106,7 +106,7 @@ public class TabProjectCommunityFragment extends Fragment {
             if (i == 1) {
                 int reachedBudget = Math.round((mProject.getCurrentBudget()*100)/ mProject.getBudget()) ;
                 r.setProgress(reachedBudget);
-                r.setValue(String.valueOf(mProject.getBudget()));
+                r.setValue(String.valueOf(mProject.getCurrentBudget()));
                 r.setStartColor(Color.rgb(17, 205, 110));
                 r.setEndColor(Color.argb(100, 17, 205, 110));
             }

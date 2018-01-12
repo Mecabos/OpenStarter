@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:background="#ff3700"
+        android:background="@color/colorPrimary"
         android:visibility="invisible"
         tools:ignore="MissingPrefix"
         tools:visibility="visible">
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_alignParentBottom="true"
-            android:background="#541301"
+            android:background="@color/colorPrimaryDark"
             android:orientation="horizontal"
             android:weightSum="2">
         </LinearLayout>
