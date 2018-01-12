@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.mohamed.openstarter.Data.CustomClasses.ContributionsWithUsers;
 import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
 import com.example.mohamed.openstarter.Helpers.Util.ServerConnection;
 import com.example.mohamed.openstarter.Models.Project;
@@ -33,16 +34,17 @@ public class ProjectServer extends ServerConnection {
 
 
     //**** URL STRINGS
-    //private final String URL_SERVER = "http://172.16.247.198/androidws/web/app_dev.php";
-    //private final String URL_SERVER = "http://openstarter.000webhostapp.com/AndroidWS/web/app_dev.php";
+
     private final String URL_GET_ALL_PROJECT = URL_SERVER + "/project/getAll";
     private final String URL_CREATE_PROJECT = URL_SERVER + "/project/create";
     private final String URL_GET_MEMBERS = URL_SERVER + "/project/getMembers";
+    private final String URL_GET_CONTRIBUTIONS = URL_SERVER + "/project/getContributionsByProject";
 
     //**** TAG STRINGS
     private final String TAG = "PROJECT-WS";
     private final String REQUEST_TAG_GET_ALL = "project_getAll_req";
     private final String REQUEST_TAG_GET_MEMBERS = "project_getMembers_req";
+    private final String REQUEST_TAG_GET_CONTRIBUTIONS = "project_getContributions_req";
     private final String REQUEST_TAG_CREATE_PROJECT = "project_create_req";
 
     private Gson mGson;
@@ -192,6 +194,48 @@ public class ProjectServer extends ServerConnection {
     }
 
 
+
+
+    public void projectGetContributionsWithUsers(final String projectId, final ProjectServer.CallbackGetContributions callback) {
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.POST,
+                URL_GET_CONTRIBUTIONS,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        ArrayList<ContributionsWithUsers> contributionsList = new ArrayList<>() ;
+                        contributionsList.addAll(Arrays.asList(mGson.fromJson(response.toString(), ContributionsWithUsers[].class)));
+                        callback.onSuccessGet(contributionsList);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String body = "";
+
+                if (error.networkResponse.data != null) {
+                    try {
+                        body = new String(error.networkResponse.data, "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.e(TAG, body);
+
+            }
+        }) {
+            @Override
+            public byte[] getBody() {
+                String body = "{\"projectId\":" + projectId + "}";
+                return body.getBytes();
+            }
+        };
+
+
+        AppController.getInstance().addToRequestQueue(req, REQUEST_TAG_GET_CONTRIBUTIONS);
+    }
+
+
+
     public interface Callback {
         void onSuccessGet(List<Project> result);
         void onSuccessGetWithFollowCount(List<ProjectWithFollowCount> result);
@@ -201,6 +245,11 @@ public class ProjectServer extends ServerConnection {
 
     public interface CallbackGet {
         void onSuccessGet(List<User> result);
+        void onFail();
+    }
+
+    public interface CallbackGetContributions {
+        void onSuccessGet(List<ContributionsWithUsers> result);
         void onFail();
     }
 }

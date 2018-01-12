@@ -43,9 +43,9 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
 
             holder = new CommentHolder();
 
-            holder.userName = (TextView) row.findViewById(R.id.tv_user_name);
-            holder.text = (TextView) row.findViewById(R.id.tv_user_comment);
-            holder.userImage = (ImageView) row.findViewById(R.id.img_user);
+            holder.userName = row.findViewById(R.id.tv_user_name);
+            holder.text = row.findViewById(R.id.tv_user_comment);
+            holder.userImage = row.findViewById(R.id.img_user);
             row.setTag(holder);
         } else {
             holder = (CommentHolder) row.getTag();

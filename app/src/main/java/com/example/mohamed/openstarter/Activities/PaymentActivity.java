@@ -59,7 +59,10 @@ public class PaymentActivity extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processPayment();
+                if (et_amount.getText().toString().equals(""))
+                    Toast.makeText(PaymentActivity.this, "please insert an amount", Toast.LENGTH_SHORT).show();
+                else
+                    processPayment();
             }
         });
     }

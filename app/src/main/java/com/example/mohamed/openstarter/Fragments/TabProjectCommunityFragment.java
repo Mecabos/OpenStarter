@@ -6,15 +6,21 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mohamed.openstarter.Activities.PaymentActivity;
 import com.example.mohamed.openstarter.Activities.ProjectActivity;
+import com.example.mohamed.openstarter.Adapters.ContributionListAdapter;
+import com.example.mohamed.openstarter.Data.CustomClasses.ContributionsWithUsers;
 import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
-import com.example.mohamed.openstarter.Models.Project;
+import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectServer;
 import com.example.mohamed.openstarter.R;
 import com.ldoublem.ringPregressLibrary.Ring;
 import com.ldoublem.ringPregressLibrary.RingProgress;
@@ -31,6 +37,8 @@ public class TabProjectCommunityFragment extends Fragment {
 
     RingProgress mRingProgress ;
     Button btn_contribute;
+    TextView project_contributors_count;
+    ListView contributions;
     List<Ring> mlistRing = new ArrayList<>();
     Random random = new Random();
     ProjectWithFollowCount mProject = new ProjectWithFollowCount() ;
@@ -50,6 +58,26 @@ public class TabProjectCommunityFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        ProjectServer projectServer = new ProjectServer();
+        projectServer.projectGetContributionsWithUsers(String.valueOf(mProject.getId()), new ProjectServer.CallbackGetContributions() {
+            @Override
+            public void onSuccessGet(List<ContributionsWithUsers> result) {
+                if (result.size()>0){
+                    project_contributors_count.setText(result.size()+" "+project_contributors_count.getText().toString());
+                    Log.d("contribs",result.toString());
+                    contributions.setAdapter(new ContributionListAdapter(getContext(),R.layout.item_contribution,result));
+                }
+                else
+                    project_contributors_count.setText("0 "+project_contributors_count.getText().toString());
+            }
+
+            @Override
+            public void onFail() {
+                Toast.makeText(getActivity(), "could not load project info", Toast.LENGTH_LONG).show();
+            }
+        });
+
         return  view ;
 
     }
@@ -58,6 +86,8 @@ public class TabProjectCommunityFragment extends Fragment {
         mProject = ((ProjectActivity)getActivity()).getProject() ;
         mRingProgress = view.findViewById(R.id.ring_progress);
         btn_contribute = view.findViewById(R.id.btn_contribute);
+        project_contributors_count = view.findViewById(R.id.project_contributors_count);
+        contributions = view.findViewById(R.id.contributions);
         setData();
     }
 

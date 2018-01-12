@@ -71,43 +71,6 @@ public class PaymentServer extends ServerConnection {
 
 
 
-
-    /*public void followCount(final String userEmail, final String projectId, final PaymentServer.Callback callback) {
-
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("email_user", userEmail);
-        params.put("id_project", projectId);
-
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                URL_COUNT_BY_PROJECT_FOLLOW,
-                new JSONObject(params),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        FollowCount followCount = mGson.fromJson(response.toString(), FollowCount.class);
-                        callback.onSuccessCount(followCount);
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        }) {
-        };
-        AppController.getInstance().addToRequestQueue(jsonObjReq, REQUEST_TAG_COUNT_BY_PROJECT_FOLLOW);
-    }*/
-
-
-    /*public interface Callback {
-        void onSuccessGet(ArrayList<Payment> result);
-
-        void onSuccessCreate(Payment createdPayment);
-
-        void onSuccessCount(FollowCount followCount);
-
-        void onSuccess();
-    }*/
-
     public interface CallbackAdd {
 
         void onSuccessCreate(Payment createdPayment);
