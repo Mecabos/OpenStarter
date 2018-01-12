@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.UserServer;
 import com.example.mohamed.openstarter.Helpers.DialogHelper;
 import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.R;
@@ -121,8 +121,8 @@ public class ProfilActivity extends AppCompatActivity {
 
 
         dialogHelper.blurDialogShow(instance,blurDialog,"Loading profil");
-        UserDs ds = new UserDs();
-        ds.getUserByEmailWithCount(firebaseAuth.getCurrentUser().getEmail(), new UserDs.CallbackGet() {
+        UserServer ds = new UserServer();
+        ds.getUserByEmailWithCount(firebaseAuth.getCurrentUser().getEmail(), new UserServer.CallbackGet() {
             @Override
             public void onSuccess(User createdUser) {
                 dialogHelper.blurDialogHide(instance,blurDialog);

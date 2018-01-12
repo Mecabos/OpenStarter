@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.mohamed.openstarter.Helpers.Util.ServerConnection;
 import com.example.mohamed.openstarter.Models.ProjectMedia;
 import com.example.mohamed.openstarter.app.AppController;
 import com.google.gson.Gson;
@@ -25,7 +26,7 @@ import java.util.Map;
  * Created by Bacem on 12/3/2017.
  */
 
-public class MediaDs extends ConnectionDs{
+public class MediaServer extends ServerConnection {
 
     //**** URL STRINGS
     //private final String URL_SERVER = "http://172.16.247.198/androidws/web/app_dev.php";
@@ -40,14 +41,14 @@ public class MediaDs extends ConnectionDs{
 
     private Gson mGson;
 
-    public MediaDs() {
+    public MediaServer() {
         GsonBuilder gsonBuilder =
                 new GsonBuilder()
                         .setDateFormat("yyyy/MM/dd HH:mm:ss");
         mGson = gsonBuilder.create();
     }
     //TODO:FIX
-    public void projectMediaGet(final String projectId, final MediaDs.Callback callback) {
+    public void projectMediaGet(final String projectId, final MediaServer.Callback callback) {
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.POST,
                 URL_GET_BY_PROJECT_PROJECT_MEDIA,
                 null,
@@ -87,7 +88,7 @@ public class MediaDs extends ConnectionDs{
         AppController.getInstance().addToRequestQueue(req, REQUEST_TAG_GET_BY_PROJECT);
     }
 
-    public void projectMediaCreate(final String mediaName, final String isPrimary, final String mediaType, final String media, final String projectId, final MediaDs.Callback callback) {
+    public void projectMediaCreate(final String mediaName, final String isPrimary, final String mediaType, final String media, final String projectId, final MediaServer.Callback callback) {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("media_name", mediaName);

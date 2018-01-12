@@ -7,7 +7,7 @@ package com.example.mohamed.openstarter.Helpers;
 
 import android.util.Log;
 
-import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.UserServer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
@@ -46,8 +46,8 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
      */
     private void sendRegistrationToServer(String token) {
 
-        UserDs userDs = new UserDs();
-        userDs.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), token, new UserDs.CallbackUpdate() {
+        UserServer userDs = new UserServer();
+        userDs.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), token, new UserServer.CallbackUpdate() {
             @Override
             public void onSuccess() {
                 Log.d("userr","token updated");

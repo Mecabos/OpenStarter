@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.UserServer;
 import com.example.mohamed.openstarter.Helpers.GradientBackgroundPainter;
 import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.R;
@@ -95,8 +95,8 @@ public class EditProfilActivity extends AppCompatActivity {
             }
         });
 
-        UserDs ds = new UserDs();
-        ds.getUserByEmail(firebaseAuth.getCurrentUser().getEmail(), new UserDs.CallbackGet() {
+        UserServer ds = new UserServer();
+        ds.getUserByEmail(firebaseAuth.getCurrentUser().getEmail(), new UserServer.CallbackGet() {
             @Override
             public void onSuccess(User createdUser) {
                 firstName.setText(createdUser.getFirstName());
@@ -122,8 +122,8 @@ public class EditProfilActivity extends AppCompatActivity {
                 } else {
 
                     blurDialog.show();
-                    UserDs ds = new UserDs();
-                    ds.updateUser(firebaseAuth.getCurrentUser().getEmail(), firstName.getText().toString(), lastName.getText().toString(), birthdate.getText().toString(), bio.getText().toString(), new UserDs.CallbackUpdate() {
+                    UserServer ds = new UserServer();
+                    ds.updateUser(firebaseAuth.getCurrentUser().getEmail(), firstName.getText().toString(), lastName.getText().toString(), birthdate.getText().toString(), bio.getText().toString(), new UserServer.CallbackUpdate() {
                         @Override
                         public void onSuccess() {
                             blurDialog.hide();

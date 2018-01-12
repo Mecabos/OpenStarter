@@ -4,6 +4,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.mohamed.openstarter.Helpers.Util.ServerConnection;
 import com.example.mohamed.openstarter.Models.Payment;
 import com.example.mohamed.openstarter.app.AppController;
 import com.google.gson.Gson;
@@ -18,7 +19,7 @@ import java.util.Map;
  * Created by Bacem on 12/10/2017.
  */
 
-public class PaymentDs extends ConnectionDs {
+public class PaymentServer extends ServerConnection {
 
 
     private final String URL_CREATE_PAYMENT = URL_SERVER + "/payment/create";
@@ -34,14 +35,14 @@ public class PaymentDs extends ConnectionDs {
 
     private Gson mGson;
 
-    public PaymentDs() {
+    public PaymentServer() {
         GsonBuilder gsonBuilder =
                 new GsonBuilder()
                         .setDateFormat("yyyy/MM/dd HH:mm:ss");
         mGson = gsonBuilder.create();
     }
 
-    public void paymentCreate(final String userEmail, final String projectId, float amount, final PaymentDs.CallbackAdd callback) {
+    public void paymentCreate(final String userEmail, final String projectId, float amount, final PaymentServer.CallbackAdd callback) {
 
         Map<String, String> params = new HashMap<>();
         params.put("email_user", userEmail);
@@ -71,7 +72,7 @@ public class PaymentDs extends ConnectionDs {
 
 
 
-    /*public void followCount(final String userEmail, final String projectId, final PaymentDs.Callback callback) {
+    /*public void followCount(final String userEmail, final String projectId, final PaymentServer.Callback callback) {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("email_user", userEmail);

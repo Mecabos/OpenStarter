@@ -3,24 +3,17 @@ package com.example.mohamed.openstarter.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.mohamed.openstarter.Activities.MainActivity;
 import com.example.mohamed.openstarter.Activities.ProjectActivity;
-import com.example.mohamed.openstarter.Data.CustomClasses.FollowCount;
 import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
-import com.example.mohamed.openstarter.Data.DataSuppliers.FollowDs;
 import com.example.mohamed.openstarter.Helpers.NumbersHelper;
 import com.example.mohamed.openstarter.Helpers.TimeHelper;
-import com.example.mohamed.openstarter.Models.Follow;
-import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 import com.example.mohamed.openstarter.foldingcell.FoldingCell;
 

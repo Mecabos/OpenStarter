@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mohamed.openstarter.Data.DataSuppliers.PaymentDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.PaymentServer;
 import com.example.mohamed.openstarter.Helpers.Util.PaymentConfig;
 import com.example.mohamed.openstarter.Models.Payment;
 import com.example.mohamed.openstarter.R;
@@ -89,8 +89,8 @@ public class PaymentActivity extends AppCompatActivity {
                         );
 
                         Log.d("paypall","confirmed ");
-                        PaymentDs paymentDs = new PaymentDs();
-                        paymentDs.paymentCreate(FirebaseAuth.getInstance().getCurrentUser().getEmail(), getIntent().getStringExtra("projectId"), Float.parseFloat(amount), new PaymentDs.CallbackAdd() {
+                        PaymentServer paymentDs = new PaymentServer();
+                        paymentDs.paymentCreate(FirebaseAuth.getInstance().getCurrentUser().getEmail(), getIntent().getStringExtra("projectId"), Float.parseFloat(amount), new PaymentServer.CallbackAdd() {
                             @Override
                             public void onSuccessCreate(Payment createdPayment) {
                                 Toast.makeText(PaymentActivity.this, "payment confirmed", Toast.LENGTH_SHORT).show();

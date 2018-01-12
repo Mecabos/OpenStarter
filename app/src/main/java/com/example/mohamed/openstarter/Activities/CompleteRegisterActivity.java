@@ -17,7 +17,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.UserServer;
 import com.example.mohamed.openstarter.Helpers.GradientBackgroundPainter;
 import com.example.mohamed.openstarter.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -106,8 +106,8 @@ public class CompleteRegisterActivity extends AppCompatActivity {
                 } else {
 
                     blurDialog.show();
-                    UserDs ds = new UserDs();
-                    ds.addUser(firebaseAuth.getCurrentUser().getEmail(), firstName.getText().toString(), lastName.getText().toString(), birthdate.getText().toString(), bio.getText().toString(), new UserDs.CallbackAdd() {
+                    UserServer ds = new UserServer();
+                    ds.addUser(firebaseAuth.getCurrentUser().getEmail(), firstName.getText().toString(), lastName.getText().toString(), birthdate.getText().toString(), bio.getText().toString(), new UserServer.CallbackAdd() {
                         @Override
                         public void onSuccess() {
                             blurDialog.hide();

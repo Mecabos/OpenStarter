@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.example.mohamed.openstarter.Data.DataSuppliers.MembershipDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.MembershipServer;
 import com.example.mohamed.openstarter.Helpers.DialogHelper;
 import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.R;
@@ -42,10 +42,10 @@ public class ManageMembersActivity extends AppCompatActivity {
         bt_addMember = findViewById(R.id.bt_addMember);
         dialogHelper = new DialogHelper();
         instance = this;
-        final MembershipDs membershipDs = new MembershipDs();
+        final MembershipServer membershipDs = new MembershipServer();
         final String groupName = getIntent().getStringExtra("groupName");
 
-        membershipDs.userGetByGroupName(groupName, new MembershipDs.CallbackGetByName() {
+        membershipDs.userGetByGroupName(groupName, new MembershipServer.CallbackGetByName() {
             @Override
             public void onSuccessGet(final List<User> result) {
 
@@ -78,7 +78,7 @@ public class ManageMembersActivity extends AppCompatActivity {
                                 .setMessage("are you sure ?")
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        membershipDs.deleteMembership(groupName, (int) id, new MembershipDs.CallbackDelete() {
+                                        membershipDs.deleteMembership(groupName, (int) id, new MembershipServer.CallbackDelete() {
                                             @Override
                                             public void onSuccess() {
                                                 Toast.makeText(ManageMembersActivity.this, "member deleted", Toast.LENGTH_LONG).show();
@@ -129,7 +129,7 @@ public class ManageMembersActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialogHelper.blurDialogShow(instance, blurDialog, "Adding member");
-                        membershipDs.addMembership(groupName, email.getText().toString(),  0, new MembershipDs.CallbackAdd() {
+                        membershipDs.addMembership(groupName, email.getText().toString(),  0, new MembershipServer.CallbackAdd() {
                             @Override
                             public void onSuccess() {
                                 dialogHelper.blurDialogHide(instance, blurDialog);

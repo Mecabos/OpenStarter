@@ -148,11 +148,11 @@ public class FilterFabProjectFragment extends AAH_FabulousFragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "CATEGORY";
+                    return "    CATEGORY    ";
                 case 1:
-                    return "FOLLOWERS";
+                    return "    FOLLOWERS    ";
                 case 2:
-                    return "GOAL";
+                    return "    GOAL    ";
             }
             return "";
         }

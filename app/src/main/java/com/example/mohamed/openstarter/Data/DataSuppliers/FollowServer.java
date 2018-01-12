@@ -5,6 +5,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.mohamed.openstarter.Data.CustomClasses.FollowCount;
+import com.example.mohamed.openstarter.Helpers.Util.ServerConnection;
 import com.example.mohamed.openstarter.Models.Follow;
 import com.example.mohamed.openstarter.app.AppController;
 import com.google.gson.Gson;
@@ -20,7 +21,7 @@ import java.util.Map;
  * Created by Bacem on 12/10/2017.
  */
 
-public class FollowDs extends ConnectionDs{
+public class FollowServer extends ServerConnection {
 
     //**** URL STRINGS
     //private final String URL_SERVER = "http://172.16.247.198/androidws/web/app_dev.php";
@@ -40,14 +41,14 @@ public class FollowDs extends ConnectionDs{
 
     private Gson mGson;
 
-    public FollowDs() {
+    public FollowServer() {
         GsonBuilder gsonBuilder =
                 new GsonBuilder()
                         .setDateFormat("yyyy/MM/dd HH:mm:ss");
         mGson = gsonBuilder.create();
     }
 
-    public void followCreate(final String userEmail, final String projectId, final FollowDs.Callback callback) {
+    public void followCreate(final String userEmail, final String projectId, final FollowServer.Callback callback) {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("email_user", userEmail);
@@ -72,7 +73,7 @@ public class FollowDs extends ConnectionDs{
         AppController.getInstance().addToRequestQueue(jsonObjReq, REQUEST_TAG_CREATE_FOLLOW);
     }
 
-    public void followDelete(final String userEmail, final String projectId, final FollowDs.Callback callback) {
+    public void followDelete(final String userEmail, final String projectId, final FollowServer.Callback callback) {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("email_user", userEmail);
@@ -97,7 +98,7 @@ public class FollowDs extends ConnectionDs{
     }
 
 
-    public void followCount(final String userEmail, final String projectId, final FollowDs.Callback callback) {
+    public void followCount(final String userEmail, final String projectId, final FollowServer.Callback callback) {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("email_user", userEmail);
@@ -122,7 +123,7 @@ public class FollowDs extends ConnectionDs{
         AppController.getInstance().addToRequestQueue(jsonObjReq, REQUEST_TAG_COUNT_BY_PROJECT_FOLLOW);
     }
 
-    public void followCount(final String projectId, final FollowDs.Callback callback) {
+    public void followCount(final String projectId, final FollowServer.Callback callback) {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("id_project", projectId);

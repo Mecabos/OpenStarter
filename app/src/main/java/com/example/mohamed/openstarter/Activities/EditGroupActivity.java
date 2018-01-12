@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mohamed.openstarter.Data.DataSuppliers.CollaborationGroupDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.CollaborationGroupServer;
 import com.example.mohamed.openstarter.Helpers.GradientBackgroundPainter;
 import com.example.mohamed.openstarter.R;
 import com.vlstr.blurdialog.BlurDialog;
@@ -52,9 +52,9 @@ public class EditGroupActivity extends AppCompatActivity {
                 } else {
 
                     blurDialog.show();
-                    CollaborationGroupDs ds = new CollaborationGroupDs();
+                    CollaborationGroupServer ds = new CollaborationGroupServer();
                     Log.d("updatee group name",getIntent().getStringExtra("groupName"));
-                    ds.updateGroup(getIntent().getStringExtra("groupName"),groupName.getText().toString(), new CollaborationGroupDs.CallbackUpdate() {
+                    ds.updateGroup(getIntent().getStringExtra("groupName"),groupName.getText().toString(), new CollaborationGroupServer.CallbackUpdate() {
 
                         @Override
                         public void onSuccess() {

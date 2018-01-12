@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.mohamed.openstarter.Helpers.Util.ServerConnection;
 import com.example.mohamed.openstarter.Models.Comment;
 import com.example.mohamed.openstarter.app.AppController;
 import com.google.gson.Gson;
@@ -25,7 +26,7 @@ import java.util.Map;
  * Created by Bacem on 12/3/2017.
  */
 
-public class CommentDs extends ConnectionDs {
+public class CommentServer extends ServerConnection {
 
     //**** URL STRINGS
     //private final String URL_SERVER = "http://172.16.247.198/androidws/web/app_dev.php";
@@ -40,14 +41,14 @@ public class CommentDs extends ConnectionDs {
 
     private Gson mGson;
 
-    public CommentDs() {
+    public CommentServer() {
         GsonBuilder gsonBuilder =
                 new GsonBuilder()
                         .setDateFormat("yyyy/MM/dd HH:mm:ss");
         mGson = gsonBuilder.create();
     }
 
-    public void commentGetByProject(final String projectId, final CommentDs.Callback callback) {
+    public void commentGetByProject(final String projectId, final CommentServer.Callback callback) {
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.POST,
                 URL_GET_BY_PROJECT_COMMENT,
                 null,
@@ -87,7 +88,7 @@ public class CommentDs extends ConnectionDs {
         AppController.getInstance().addToRequestQueue(req, REQUEST_TAG_GET_BY_PROJECT);
     }
 
-    public void commentCreate(final String comment, final String userEmail, final String projectId, final CommentDs.Callback callback) {
+    public void commentCreate(final String comment, final String userEmail, final String projectId, final CommentServer.Callback callback) {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("text", comment);

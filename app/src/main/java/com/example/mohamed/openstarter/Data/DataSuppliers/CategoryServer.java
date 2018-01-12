@@ -3,6 +3,7 @@ package com.example.mohamed.openstarter.Data.DataSuppliers;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.mohamed.openstarter.Helpers.Util.ServerConnection;
 import com.example.mohamed.openstarter.Models.Category;
 import com.example.mohamed.openstarter.app.AppController;
 import com.google.gson.Gson;
@@ -17,7 +18,7 @@ import java.util.List;
  * Created by Bacem on 11/20/2017.
  */
 
-public class CategoryDs extends ConnectionDs {
+public class CategoryServer extends ServerConnection {
 
 
     //**** URL STRINGS
@@ -31,7 +32,7 @@ public class CategoryDs extends ConnectionDs {
 
     private Gson mGson;
 
-    public CategoryDs(){
+    public CategoryServer(){
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setDateFormat("yyyy/MM/dd HH:mm:ss");
         mGson = gsonBuilder.create();

@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.UserServer;
 import com.example.mohamed.openstarter.Helpers.DialogHelper;
 import com.example.mohamed.openstarter.Helpers.GradientBackgroundPainter;
 import com.example.mohamed.openstarter.Models.User;
@@ -99,8 +99,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if (task.isSuccessful()) {
 
-                                        UserDs ds = new UserDs();
-                                        ds.getUserByEmail(etUsername.getText().toString(), new UserDs.CallbackGet() {
+                                        UserServer ds = new UserServer();
+                                        ds.getUserByEmail(etUsername.getText().toString(), new UserServer.CallbackGet() {
                                             @Override
                                             public void onSuccess(User createdUser) {
 
@@ -118,8 +118,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                                     //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
                                                     if (getIntroSharedPref().equals("waiting")){
-                                                        UserDs userDs = new UserDs();
-                                                        userDs.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                                        UserServer userDs = new UserServer();
+                                                        userDs.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserServer.CallbackUpdate() {
                                                             @Override
                                                             public void onSuccess() {
                                                                 Log.d("userr","token updated");
@@ -136,9 +136,9 @@ public class LoginActivity extends AppCompatActivity {
                                                         finish();
                                                     }
                                                     else{
-                                                        UserDs userDs = new UserDs();
+                                                        UserServer userDs = new UserServer();
                                                         Log.d("mytoken",FirebaseInstanceId.getInstance().getToken());
-                                                        userDs.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                                        userDs.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserServer.CallbackUpdate() {
                                                             @Override
                                                             public void onSuccess() {
                                                                 Log.d("userr","token updated");

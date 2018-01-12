@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.mohamed.openstarter.Adapters.SectionPageAdapter;
 import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
-import com.example.mohamed.openstarter.Data.DataSuppliers.FollowDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.FollowServer;
 import com.example.mohamed.openstarter.Fragments.TabProjectCampaignFragment;
 import com.example.mohamed.openstarter.Fragments.TabProjectCommentsFragment;
 import com.example.mohamed.openstarter.Fragments.TabProjectCommunityFragment;
@@ -18,7 +18,6 @@ import com.example.mohamed.openstarter.Data.CustomClasses.FollowCount;
 import com.example.mohamed.openstarter.Models.Category;
 import com.example.mohamed.openstarter.Models.CollaborationGroup;
 import com.example.mohamed.openstarter.Models.Follow;
-import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 import com.github.florent37.bubbletab.BubbleTab;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,7 +40,7 @@ public class ProjectActivity extends AppCompatActivity {
     private ProjectWithFollowCount mProject = new ProjectWithFollowCount();
     private CollaborationGroup mCollaborationGroup = new CollaborationGroup();
     private Category mCategory = new Category();
-    private FollowDs followDs;
+    private FollowServer followDs;
     private DialogHelper dialogHelper = new DialogHelper() ;
     public static ProjectActivity instance = null;
     private FirebaseAuth firebaseAuth;
@@ -76,7 +75,7 @@ public class ProjectActivity extends AppCompatActivity {
         setProject();
         setCollaborationGroup();
         setCategory();
-        followDs = new FollowDs();
+        followDs = new FollowServer();
 
         setTabs();
         setFollow();
@@ -124,7 +123,7 @@ public class ProjectActivity extends AppCompatActivity {
         tvFollowersCount = findViewById(R.id.project_followers_count);
         btnFollow = findViewById(R.id.project_follow_btn);
 
-        followDs.followCount(firebaseAuth.getCurrentUser().getEmail(), String.valueOf(mProject.getId()), new FollowDs.Callback() {
+        followDs.followCount(firebaseAuth.getCurrentUser().getEmail(), String.valueOf(mProject.getId()), new FollowServer.Callback() {
 
             @Override
             public void onSuccessCount(FollowCount followCount) {
@@ -154,7 +153,7 @@ public class ProjectActivity extends AppCompatActivity {
             public void like(boolean like) {
                 if (like) {
                     dialogHelper.blurDialogShow(instance,blurDialog,"Following");
-                    followDs.followCreate(firebaseAuth.getCurrentUser().getEmail(), String.valueOf(mProject.getId()), new FollowDs.Callback() {
+                    followDs.followCreate(firebaseAuth.getCurrentUser().getEmail(), String.valueOf(mProject.getId()), new FollowServer.Callback() {
 
                         @Override
                         public void onSuccessCreate(Follow createdFollow) {
@@ -178,7 +177,7 @@ public class ProjectActivity extends AppCompatActivity {
                     });
                 } else {
                     dialogHelper.blurDialogShow(instance,blurDialog,"Unfollowing");
-                    followDs.followDelete(firebaseAuth.getCurrentUser().getEmail(), String.valueOf(mProject.getId()), new FollowDs.Callback() {
+                    followDs.followDelete(firebaseAuth.getCurrentUser().getEmail(), String.valueOf(mProject.getId()), new FollowServer.Callback() {
                         @Override
                         public void onSuccess() {
                             Toast.makeText(ProjectActivity.this, "Project Unfollowed", Toast.LENGTH_LONG).show();

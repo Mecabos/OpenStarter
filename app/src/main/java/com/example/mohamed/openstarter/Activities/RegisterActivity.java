@@ -23,7 +23,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.example.mohamed.openstarter.Data.DataSuppliers.UserDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.UserServer;
 import com.example.mohamed.openstarter.Helpers.DialogHelper;
 import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.R;
@@ -223,15 +223,15 @@ public class RegisterActivity extends AppCompatActivity {
 
                                         if (task.isSuccessful()) {
 
-                                            final UserDs ds = new UserDs();
-                                            ds.getUserByEmail(username.getText().toString(), new UserDs.CallbackGet() {
+                                            final UserServer ds = new UserServer();
+                                            ds.getUserByEmail(username.getText().toString(), new UserServer.CallbackGet() {
                                                 @Override
                                                 public void onSuccess(User createdUser) {
 
                                                     if (createdUser.getEmail() == null) {
 
                                                         Log.d("userr", createdUser.toString());
-                                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserServer.CallbackUpdate() {
                                                             @Override
                                                             public void onSuccess() {
                                                                 Log.d("userr","token updated");
@@ -249,7 +249,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                     } else {
                                                         Toast.makeText(RegisterActivity.this, "login successful", Toast.LENGTH_SHORT).show();
 
-                                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserServer.CallbackUpdate() {
                                                             @Override
                                                             public void onSuccess() {
                                                                 Log.d("userr","token updated");
@@ -352,16 +352,16 @@ public class RegisterActivity extends AppCompatActivity {
                             //showToast(user.getEmail());
 
 
-                            final UserDs ds = new UserDs();
+                            final UserServer ds = new UserServer();
                             assert user != null;
-                            ds.getUserByEmail(user.getEmail(), new UserDs.CallbackGet() {
+                            ds.getUserByEmail(user.getEmail(), new UserServer.CallbackGet() {
                                 @Override
                                 public void onSuccess(User createdUser) {
 
                                     if (createdUser.getEmail() == null) {
 
                                         Log.d("userr", createdUser.toString());
-                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserServer.CallbackUpdate() {
                                             @Override
                                             public void onSuccess() {
                                                 Log.d("userr","token updated");
@@ -380,7 +380,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         Toast.makeText(RegisterActivity.this, "login successful", Toast.LENGTH_SHORT).show();
                                         //ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
 
-                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserServer.CallbackUpdate() {
                                             @Override
                                             public void onSuccess() {
                                                 Log.d("userr","token updated");
@@ -541,16 +541,16 @@ public class RegisterActivity extends AppCompatActivity {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
 
 
-                            final UserDs ds = new UserDs();
+                            final UserServer ds = new UserServer();
                             assert user != null;
-                            ds.getUserByEmail(user.getEmail(), new UserDs.CallbackGet() {
+                            ds.getUserByEmail(user.getEmail(), new UserServer.CallbackGet() {
                                 @Override
                                 public void onSuccess(User createdUser) {
 
                                     if (createdUser.getEmail() == null) {
 
                                         Log.d("userr", createdUser.toString());
-                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserServer.CallbackUpdate() {
                                             @Override
                                             public void onSuccess() {
                                                 Log.d("userr","token updated");
@@ -566,7 +566,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         startActivity(i2);
                                         finish();
                                     } else {
-                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserDs.CallbackUpdate() {
+                                        ds.updateToken(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseInstanceId.getInstance().getToken(), new UserServer.CallbackUpdate() {
                                             @Override
                                             public void onSuccess() {
                                                 Log.d("userr","token updated");

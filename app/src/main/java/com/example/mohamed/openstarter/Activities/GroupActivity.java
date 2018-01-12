@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mohamed.openstarter.Adapters.CollaborationGroupSpinnerAdapter;
-import com.example.mohamed.openstarter.Data.DataSuppliers.CollaborationGroupDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.CollaborationGroupServer;
 import com.example.mohamed.openstarter.Helpers.DialogHelper;
 import com.example.mohamed.openstarter.Models.CollaborationGroup;
 import com.example.mohamed.openstarter.R;
@@ -81,8 +81,8 @@ public class GroupActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialogHelper.blurDialogShow(instance,blurDialog,"Creating group");
-                        CollaborationGroupDs collaborationGroupDs = new CollaborationGroupDs();
-                        collaborationGroupDs.addGroup(groupName.getText().toString(), firebaseAuth.getCurrentUser().getEmail(), new CollaborationGroupDs.CallbackAdd() {
+                        CollaborationGroupServer collaborationGroupDs = new CollaborationGroupServer();
+                        collaborationGroupDs.addGroup(groupName.getText().toString(), firebaseAuth.getCurrentUser().getEmail(), new CollaborationGroupServer.CallbackAdd() {
                             @Override
                             public void onSuccess() {
                                 dialogHelper.blurDialogHide(instance,blurDialog);
@@ -162,8 +162,8 @@ public class GroupActivity extends AppCompatActivity {
         });
 
 
-        CollaborationGroupDs collaborationGroupDs = new CollaborationGroupDs();
-        collaborationGroupDs.collaborationGroupGetByUser(firebaseAuth.getCurrentUser().getEmail(), new CollaborationGroupDs.CallbackGetByUser() {
+        CollaborationGroupServer collaborationGroupDs = new CollaborationGroupServer();
+        collaborationGroupDs.collaborationGroupGetByUser(firebaseAuth.getCurrentUser().getEmail(), new CollaborationGroupServer.CallbackGetByUser() {
             @Override
             public void onSuccessGet(final List<CollaborationGroup> groupsList) {
 

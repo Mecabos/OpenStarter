@@ -7,14 +7,12 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
-import android.text.Layout;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -31,9 +29,9 @@ import android.widget.TimePicker;
 import com.example.mohamed.openstarter.Adapters.CategoriesSpinnerAdapter;
 import com.example.mohamed.openstarter.Adapters.CollaborationGroupSpinnerAdapter;
 import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
-import com.example.mohamed.openstarter.Data.DataSuppliers.CategoryDs;
-import com.example.mohamed.openstarter.Data.DataSuppliers.CollaborationGroupDs;
-import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.CategoryServer;
+import com.example.mohamed.openstarter.Data.DataSuppliers.CollaborationGroupServer;
+import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectServer;
 import com.example.mohamed.openstarter.Models.Category;
 import com.example.mohamed.openstarter.Models.CollaborationGroup;
 import com.example.mohamed.openstarter.Models.Project;
@@ -241,7 +239,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     private void executeDataSending() {
         //Toast.makeText(this, ,Toast.LENGTH_LONG).show();
-        ProjectDs projectDs = new ProjectDs();
+        ProjectServer projectDs = new ProjectServer();
         projectDs.projectCreate(nameEditText.getText().toString(),
                 startDateDayTextView.getText().toString() + " " + startDateTimeTextView.getText().toString() + ":00",
                 finishDateDayTextView.getText().toString() + " " + finishDateTimeTextView.getText().toString() + ":00",
@@ -250,7 +248,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                 budgetEditText.getText().toString(),
                 collaborationGroupSelectedId.toString(),
                 categorySelectedId.toString(),
-                new ProjectDs.Callback() {
+                new ProjectServer.Callback() {
                     @Override
                     public void onSuccessGet(List<Project> result) {}
                     @Override
@@ -337,8 +335,8 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     private View createProjectCategoryStep() {
         categorySpinner = new Spinner(this);
-        CategoryDs categoryDs = new CategoryDs();
-        categoryDs.getAll(new CategoryDs.Callback() {
+        CategoryServer categoryDs = new CategoryServer();
+        categoryDs.getAll(new CategoryServer.Callback() {
             @Override
             public void onSuccessGet(List<Category> categoriesList) {
 
@@ -770,8 +768,8 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
 
     private View createProjectCollaborationGroupStep() {
         collaborationGroupSpinner = new Spinner(this);
-        CollaborationGroupDs collaborationGroupDs = new CollaborationGroupDs();
-        collaborationGroupDs.collaborationGroupGetByAdminUser(firebaseAuth.getCurrentUser().getEmail(), new CollaborationGroupDs.Callback() {
+        CollaborationGroupServer collaborationGroupDs = new CollaborationGroupServer();
+        collaborationGroupDs.collaborationGroupGetByAdminUser(firebaseAuth.getCurrentUser().getEmail(), new CollaborationGroupServer.Callback() {
             @Override
             public void onSuccessGet(List<CollaborationGroup> groupsList) {
                 if (groupsList.size() > 0) {

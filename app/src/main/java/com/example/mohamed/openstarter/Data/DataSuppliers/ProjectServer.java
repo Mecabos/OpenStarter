@@ -8,6 +8,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
+import com.example.mohamed.openstarter.Helpers.Util.ServerConnection;
 import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.app.AppController;
@@ -28,7 +29,7 @@ import java.util.Map;
  * Created by Bacem on 11/20/2017.
  */
 
-public class ProjectDs extends ConnectionDs {
+public class ProjectServer extends ServerConnection {
 
 
     //**** URL STRINGS
@@ -46,7 +47,7 @@ public class ProjectDs extends ConnectionDs {
 
     private Gson mGson;
 
-    public ProjectDs() {
+    public ProjectServer() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setDateFormat("yyyy/MM/dd HH:mm:ss");
         mGson = gsonBuilder.create();
@@ -116,7 +117,7 @@ public class ProjectDs extends ConnectionDs {
                               final String budget,
                               final String group,
                               final String category,
-                              final ProjectDs.Callback callback) {
+                              final ProjectServer.Callback callback) {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("name", name);
@@ -150,7 +151,7 @@ public class ProjectDs extends ConnectionDs {
         AppController.getInstance().addToRequestQueue(jsonObjReq, REQUEST_TAG_CREATE_PROJECT);
     }
 
-    public void projectGetGroupMembersAll(final String projectId, final ProjectDs.CallbackGet callback) {
+    public void projectGetGroupMembersAll(final String projectId, final ProjectServer.CallbackGet callback) {
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.POST,
                 URL_GET_MEMBERS,
                 null,

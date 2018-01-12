@@ -19,11 +19,10 @@ import com.example.mohamed.openstarter.Activities.ProfilActivity;
 import com.example.mohamed.openstarter.Activities.ProjectActivity;
 import com.example.mohamed.openstarter.Adapters.CommentListAdapter;
 import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
-import com.example.mohamed.openstarter.Data.DataSuppliers.CommentDs;
-import com.example.mohamed.openstarter.Data.DataSuppliers.NotificationDs;
-import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.CommentServer;
+import com.example.mohamed.openstarter.Data.DataSuppliers.NotificationServer;
+import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectServer;
 import com.example.mohamed.openstarter.Models.Comment;
-import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.Models.User;
 import com.example.mohamed.openstarter.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,7 +39,7 @@ import java.util.List;
 public class TabProjectCommentsFragment extends Fragment implements View.OnTouchListener {
 
     ProjectWithFollowCount mProject = new ProjectWithFollowCount();
-    CommentDs commentDs = new CommentDs();
+    CommentServer commentDs = new CommentServer();
     CommentListAdapter adapter;
     ListView commentsListView;
     EditText etComment;
@@ -66,7 +65,7 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
         etComment.setOnTouchListener(this);
 
 
-        commentDs.commentGetByProject(String.valueOf(mProject.getId()), new CommentDs.Callback() {
+        commentDs.commentGetByProject(String.valueOf(mProject.getId()), new CommentServer.Callback() {
             @Override
             public void onSuccessGet(ArrayList<Comment> commentsList) {
                 adapter = new CommentListAdapter(getActivity(), R.layout.item_comment, commentsList);
@@ -111,7 +110,7 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
                 if (commentText.trim().length() == 0)
                     Toast.makeText(getActivity(), "Write a comment before sending", Toast.LENGTH_LONG).show();
                 else {
-                    commentDs.commentCreate(commentText, userEmail, projectId, new CommentDs.Callback() {
+                    commentDs.commentCreate(commentText, userEmail, projectId, new CommentServer.Callback() {
                         @Override
                         public void onSuccessGet(ArrayList<Comment> commentsList) {
                         }
@@ -134,9 +133,9 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
 
                             //Log.d("notiffy", "users "+String.valueOf(mProject.getId()));
 
-                            ProjectDs projectDs = new ProjectDs();
+                            ProjectServer projectDs = new ProjectServer();
 
-                            projectDs.projectGetGroupMembersAll(String.valueOf(mProject.getId()), new ProjectDs.CallbackGet() {
+                            projectDs.projectGetGroupMembersAll(String.valueOf(mProject.getId()), new ProjectServer.CallbackGet() {
                                 @Override
                                 public void onSuccessGet(List<User> result) {
 
@@ -146,9 +145,9 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
                                         jsonArray.put(user.getToken());
                                     }
 
-                                    NotificationDs notificationDs = new NotificationDs();
+                                    NotificationServer notificationDs = new NotificationServer();
 
-                                    notificationDs.addNotification(jsonArray, "new comment","new comment added", new NotificationDs.CallbackSend() {
+                                    notificationDs.addNotification(jsonArray, "new comment","new comment added", new NotificationServer.CallbackSend() {
                                         @Override
                                         public void onSuccess() {
                                             Log.d("notiff", " notification success");

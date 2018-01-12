@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.allattentionhere.fabulousfilter.AAH_FabulousFragment;
 import com.example.mohamed.openstarter.Adapters.ProjectListAdapter;
 import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
-import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectDs;
+import com.example.mohamed.openstarter.Data.DataSuppliers.ProjectServer;
 import com.example.mohamed.openstarter.Fragments.FilterFabProjectFragment;
 import com.example.mohamed.openstarter.Helpers.DialogHelper;
 import com.example.mohamed.openstarter.Models.Project;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity  implements AAH_FabulousFrag
 
     private DialogHelper dialogHelper;
     private BlurDialog blurDialog;
-    private ProjectDs projectDs = new ProjectDs();
+    private ProjectServer projectDs = new ProjectServer();
     private FloatingActionButton fab ;
     private FilterFabProjectFragment dialogFilterFrag;
     private ArrayMap<String, List<String>> applied_filters = new ArrayMap<>();
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity  implements AAH_FabulousFrag
 
         projectListView = findViewById(R.id.mainProjectListView);
 
-        projectDs.projectWithCountGetAll(new ProjectDs.Callback() {
+        projectDs.projectWithCountGetAll(new ProjectServer.Callback() {
 
             @Override
             public void onSuccessGetWithFollowCount(List<ProjectWithFollowCount> projectList) {

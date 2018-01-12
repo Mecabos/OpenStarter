@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.mohamed.openstarter.Helpers.Util.ServerConnection;
 import com.example.mohamed.openstarter.app.AppController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,7 +23,7 @@ import java.util.Map;
  * Created by Mohamed on 12/13/2017.
  */
 
-public class NotificationDs extends ConnectionDs{
+public class NotificationServer extends ServerConnection {
 
     final String TAG = "User";
     // Tag used to cancel the request
@@ -37,7 +38,7 @@ public class NotificationDs extends ConnectionDs{
 
     private Gson mGson;
 
-    public NotificationDs(){
+    public NotificationServer(){
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setDateFormat("yyyy/MM/dd HH:mm:ss");
         mGson = gsonBuilder.create();
