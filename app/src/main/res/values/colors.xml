@@ -12,9 +12,9 @@
     <color name="bgContentTop">#1C6E8C</color>
     <color name="bgContent">#ffffff</color>
     <color name="contentDividerLine">#e0e0e0</color>
-    <color name="contentBadgeTitle">#a9a9a9</color>
-    <color name="titleBadgeTitle">#adafb1</color>
-    <color name="titleBadgeText">#adafb1</color>
+    <color name="contentBadgeTitle">#19566c</color>
+    <color name="titleBadgeTitle">#19566c</color>
+    <color name="titleBadgeText">#090a0a</color>
     <color name="mainTextColor">#343d43</color>
     <color name="btnRequest">#016FB9</color>
 

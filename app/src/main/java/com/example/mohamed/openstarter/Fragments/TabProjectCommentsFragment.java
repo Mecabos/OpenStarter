@@ -2,6 +2,8 @@ package com.example.mohamed.openstarter.Fragments;
 
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -61,7 +63,11 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
         mProject = ((ProjectActivity) getActivity()).getProject();
         commentsListView = v.findViewById(R.id.lv_comments);
         etComment = v.findViewById(R.id.et_comment);
-
+        //Drawable sendCommentImage = etComment.getCompoundDrawables()[2];
+        /*sendCommentImage.setBounds(0, 0, (int) (sendCommentImage.getIntrinsicWidth() * 0.6),
+                (int) (sendCommentImage.getIntrinsicHeight() * 0.6));*/
+        //ScaleDrawable sd = new ScaleDrawable(sendCommentImage, 0, 40, 40);
+        //etComment.setCompoundDrawables(null, null, sd.getDrawable(), null);
         etComment.setOnTouchListener(this);
 
 
@@ -94,6 +100,7 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+
         mProject = ((ProjectActivity) getActivity()).getProject();
 
         final int DRAWABLE_LEFT = 0;
@@ -102,7 +109,7 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
         final int DRAWABLE_BOTTOM = 3;
 
         if (event.getAction() == MotionEvent.ACTION_UP) {
-            if (event.getRawX() >= (etComment.getRight() - etComment.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+            if (event.getRawX() >= (etComment.getRight() - (etComment.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width()*5))) {
                 EditText comment = (EditText) v;
                 String commentText = comment.getText().toString();
                 String userEmail = firebaseAuth.getCurrentUser().getEmail();
