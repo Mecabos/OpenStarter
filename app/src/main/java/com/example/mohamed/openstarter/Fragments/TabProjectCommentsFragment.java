@@ -74,18 +74,7 @@ public class TabProjectCommentsFragment extends Fragment implements View.OnTouch
             }
 
             @Override
-            public void onSuccessCreate(Comment createdComment) {
-            }
-
-        });
-
-        commentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-                Comment comment = (Comment)commentsListView.getAdapter().getItem(position);
-                comment.getRequestClickListener();
-            }
+            public void onSuccessCreate(Comment createdComment) {}
         });
     }
 
