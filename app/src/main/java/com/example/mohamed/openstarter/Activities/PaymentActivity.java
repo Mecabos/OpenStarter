@@ -111,7 +111,6 @@ public class PaymentActivity extends AppCompatActivity {
                                         public void onSuccessGet(List<User> result) {
 
                                             JSONArray jsonArray = new JSONArray();
-                                            //List<String> tokens = new ArrayList<>();
                                             for (User user:result) {
                                                 jsonArray.put(user.getToken());
                                             }
@@ -135,6 +134,8 @@ public class PaymentActivity extends AppCompatActivity {
                                         }
                                     });
                                 }
+                                Intent intent = new Intent(PaymentActivity.this,MainActivity.class);
+                                startActivity(intent);
                                 finish();
                             }
 
