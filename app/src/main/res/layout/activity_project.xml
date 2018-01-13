@@ -38,7 +38,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/diagonallayout_background" />
+            android:src="@drawable/bikes1"
+            android:id="@+id/project_header_image"
+            />
 
         <TextView
             android:id="@+id/project_name"

@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.ldoublem.thumbUplib.ThumbUpView;
 import com.vlstr.blurdialog.BlurDialog;
 
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +56,7 @@ public class ProjectActivity extends AppCompatActivity {
     private ThumbUpView btnFollow;
     private TextView tvFollowersCount;
     private BlurDialog blurDialog;
+    private ImageView projectHeaderImage ;
 
 
     @Override
@@ -92,6 +94,15 @@ public class ProjectActivity extends AppCompatActivity {
         tvProjectCategory = findViewById(R.id.project_category);
         tvProjectCategory.setText(mCategory.getLabel());
 
+        projectHeaderImage = findViewById(R.id.project_header_image);
+        if (mProject.getId() == 7)
+            projectHeaderImage.setImageResource(R.drawable.bikes1);
+        else if (mProject.getId() == 2)
+            projectHeaderImage.setImageResource(R.drawable.monivulation1);
+        else if (mProject.getId() == 1)
+            projectHeaderImage.setImageResource(R.drawable.perfume1);
+        else
+            projectHeaderImage.setImageResource(R.drawable.placeholderproject);
 
     }
 

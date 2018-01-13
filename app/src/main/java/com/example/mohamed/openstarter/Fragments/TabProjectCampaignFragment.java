@@ -19,6 +19,7 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.example.mohamed.openstarter.Activities.ProjectActivity;
 import com.example.mohamed.openstarter.Data.CustomClasses.ProjectWithFollowCount;
 import com.example.mohamed.openstarter.Helpers.TimeHelper;
+import com.example.mohamed.openstarter.Helpers.Util.ServerConnection;
 import com.example.mohamed.openstarter.Models.Project;
 import com.example.mohamed.openstarter.R;
 
@@ -61,6 +62,7 @@ public class TabProjectCampaignFragment extends Fragment implements BaseSliderVi
         SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy/MM/dd");
         tvDate.setText("Started : "+dayFormat.format(mProject.getStartDate())+ " Ends : "+ dayFormat.format(mProject.getFinishDate()));
 
+
         tvDescription = view.findViewById(R.id.tv_description);
         tvDescription.setText(mProject.getDescription());
 
@@ -74,9 +76,29 @@ public class TabProjectCampaignFragment extends Fragment implements BaseSliderVi
 
         HashMap<String,String> url_maps = new HashMap<String, String>();
 
-        url_maps.put("Model 1", "http://s3.amazonaws.com/digitaltrends-uploads-prod/2016/01/Origin-PC.jpg");
-        url_maps.put("Model 2", "https://media.ldlc.com/ld/products/00/03/97/88/LD0003978825_2.jpg");
-        url_maps.put("Model 3", "https://static.techspot.com/images2/news/bigimage/2017/06/2017-06-06-image-26.jpg");
+        ServerConnection sc = new ServerConnection();
+        if(mProject.getId() == 1){
+            url_maps.put("Fantasia", sc.SERVER_IP + "perfume2.jpg");
+            url_maps.put("Madness", sc.SERVER_IP + "perfume3.jpg");
+            url_maps.put("Dare", sc.SERVER_IP + "perfume4.jpg");
+        }else if (mProject.getId() == 7){
+            url_maps.put("Design 1", sc.SERVER_IP + "bikes2.jpg");
+            url_maps.put("Design 2", sc.SERVER_IP + "bikes3.jpg");
+            url_maps.put("Design 3", sc.SERVER_IP + "bikes4.jpg");
+        }else if (mProject.getId() == 2){
+            url_maps.put("Easy and Pleasant to use", sc.SERVER_IP + "monivulation2.jpg");
+            url_maps.put("Accessible anywhere", sc.SERVER_IP + "monivulation3.jpg");
+            url_maps.put("The doctors approve of it", sc.SERVER_IP + "monivulation4.jpg");
+        }else if (mProject.getId() == 2){
+            url_maps.put("Example01", sc.SERVER_IP + "project02.jpg");
+            url_maps.put("Example02", sc.SERVER_IP + "project03.jpg");
+            url_maps.put("Example03", sc.SERVER_IP + "project04.jpg");
+        }
+
+
+
+
+
 
         for(String name : url_maps.keySet()){
             TextSliderView textSliderView = new TextSliderView(getActivity());

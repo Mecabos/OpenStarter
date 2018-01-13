@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity  implements AAH_FabulousFrag
         resideMenu.setSwipeDirectionDisable( ResideMenu.DIRECTION_RIGHT);
 
         String titles[] = { "Profile", "Add new Project","Logout"};
-        int icon[] = {R.drawable.com_facebook_profile_picture_blank_square, R.drawable.plus, R.drawable.logout};
+        int icon[] = {R.drawable.profileicon, R.drawable.newprojecticon, R.drawable.logouticon};
 
 
         final ResideMenuItem item0 = new ResideMenuItem(this, icon[0], titles[0]);
