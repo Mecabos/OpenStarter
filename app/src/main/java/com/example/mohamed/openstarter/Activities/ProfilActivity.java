@@ -29,6 +29,7 @@ public class ProfilActivity extends AppCompatActivity {
     Toolbar toolbar;
     ImageView medal;
     TextView fullname, email, tv_bio,tv_birthDate, tv_projectsCount, tv_contributions;
+    private String TAG_USER_EMAIL = "userEmail";
     CircleImageView avatar;
     Button bt_editProfil, bt_groups;
     private long user_id;
@@ -122,7 +123,20 @@ public class ProfilActivity extends AppCompatActivity {
 
         dialogHelper.blurDialogShow(instance,blurDialog,"Loading profil");
         UserServer ds = new UserServer();
-        ds.getUserByEmailWithCount(firebaseAuth.getCurrentUser().getEmail(), new UserServer.CallbackGet() {
+        Intent mIntent = getIntent();
+        String intentEmail = mIntent.getStringExtra(TAG_USER_EMAIL);
+        String emailToLookFor = "";
+        if (intentEmail != null && !intentEmail.equals(""))
+        {
+            emailToLookFor = intentEmail ;
+            if (!firebaseAuth.getCurrentUser().getEmail().equals(intentEmail)){
+                bt_editProfil.setVisibility(View.GONE);
+                bt_groups.setVisibility(View.GONE);
+            }
+        }else{
+            emailToLookFor = firebaseAuth.getCurrentUser().getEmail() ;
+        }
+        ds.getUserByEmailWithCount(emailToLookFor, new UserServer.CallbackGet() {
             @Override
             public void onSuccess(User createdUser) {
                 dialogHelper.blurDialogHide(instance,blurDialog);

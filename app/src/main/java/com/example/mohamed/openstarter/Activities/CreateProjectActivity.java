@@ -259,10 +259,23 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
                     @Override
                     public void onSuccessCreate(Project createdProject) {
                         progressDialog.cancel();
+                        ProjectWithFollowCount createdProjectWithFollowCount = new ProjectWithFollowCount();
+                        createdProjectWithFollowCount.setBudget(createdProject.getBudget());
+                        createdProjectWithFollowCount.setCategory(createdProject.getCategory());
+                        createdProjectWithFollowCount.setCollaborationGroup(createdProject.getCollaborationGroup());
+                        createdProjectWithFollowCount.setCreationDate(createdProject.getCreationDate());
+                        createdProjectWithFollowCount.setCurrentBudget(createdProject.getCurrentBudget());
+                        createdProjectWithFollowCount.setDescription(createdProject.getDescription());
+                        createdProjectWithFollowCount.setFollowCount(0);
+                        createdProjectWithFollowCount.setId(createdProject.getId());
+                        createdProjectWithFollowCount.setName(createdProject.getName());
+                        createdProjectWithFollowCount.setFinishDate(createdProject.getFinishDate());
+                        createdProjectWithFollowCount.setStartDate(createdProject.getStartDate());
+                        createdProjectWithFollowCount.setShortDescription(createdProject.getShortDescription());
                         Intent myIntent = new Intent(getBaseContext(), ProjectActivity.class);
-                        myIntent.putExtra(PROJECT_TAG, createdProject);
-                        myIntent.putExtra(COLLABORATION_GROUP_TAG, createdProject.getCollaborationGroup());
-                        myIntent.putExtra(CATEGORY_TAG, createdProject.getCategory());
+                        myIntent.putExtra(PROJECT_TAG, createdProjectWithFollowCount);
+                        myIntent.putExtra(COLLABORATION_GROUP_TAG, createdProjectWithFollowCount.getCollaborationGroup());
+                        myIntent.putExtra(CATEGORY_TAG, createdProjectWithFollowCount.getCategory());
                         myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         getBaseContext().startActivity(myIntent);
                     }

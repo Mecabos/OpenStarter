@@ -3,6 +3,7 @@ package com.example.mohamed.openstarter.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import java.util.List;
 
 public class CommentListAdapter extends ArrayAdapter<Comment> {
 
+    private String TAG_USER_EMAIL = "userEmail";
     Context context;
     int layoutResourceId;
     List<Comment> commentsList = null;
@@ -62,10 +64,16 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getContext(), ProfilActivity.class);
+                Log.d("qsdqsdqd",comment.getUser().getEmail()) ;
+                myIntent.putExtra(TAG_USER_EMAIL, comment.getUser().getEmail());
                 myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 getContext().startActivity(myIntent);
             }
         });
+
+        if (comment.getRequestClickListener() != null) {
+            row.setOnClickListener(comment.getRequestClickListener());
+        }
 
         // Name and date
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");

@@ -97,7 +97,7 @@ public class MediaServer extends ServerConnection {
         params.put("media", media);
         params.put("id_project", projectId);
 
-        Log.e("eeeee",params.toString() );
+        //Log.e("eeeee",params.toString() );
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 URL_CREATE_PROJECT_MEDIA,
