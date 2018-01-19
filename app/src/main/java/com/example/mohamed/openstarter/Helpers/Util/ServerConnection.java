@@ -5,6 +5,6 @@ package com.example.mohamed.openstarter.Helpers.Util;
  */
 
 public class ServerConnection {
-    public final String URL_SERVER = "http://192.168.1.2/androidws/web/app_dev.php";
-    public final String SERVER_IP = "http://192.168.1.2/";
+    protected final String URL_SERVER = "http://172.16.247.198/androidws/web/app_dev.php";
+    public final String SERVER_IP = "http://172.16.247.198/";
 }

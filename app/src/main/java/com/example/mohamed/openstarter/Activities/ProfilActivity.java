@@ -135,7 +135,12 @@ public class ProfilActivity extends AppCompatActivity {
             }
         }else{
             emailToLookFor = firebaseAuth.getCurrentUser().getEmail() ;
+
+            if (firebaseAuth.getCurrentUser().getPhotoUrl() != null)
+                Picasso.with(this).load(firebaseAuth.getCurrentUser().getPhotoUrl()).into(avatar);
         }
+        email.setText(emailToLookFor);
+
         ds.getUserByEmailWithCount(emailToLookFor, new UserServer.CallbackGet() {
             @Override
             public void onSuccess(User createdUser) {
@@ -153,10 +158,10 @@ public class ProfilActivity extends AppCompatActivity {
                 String birthDate = df.format(createdUser.getBirthDate());
                 tv_birthDate.setText(birthDate);
 
-                if (Integer.parseInt(tv_contributions.getText().toString())>=2)
-                    medal.setImageResource(R.drawable.gold);
-                else if (Integer.parseInt(tv_contributions.getText().toString())==1)
+                if (Integer.parseInt(tv_contributions.getText().toString())>=20)
                     medal.setImageResource(R.drawable.silver);
+                else if (Integer.parseInt(tv_contributions.getText().toString())>=50)
+                    medal.setImageResource(R.drawable.gold);
             }
 
             @Override
@@ -167,9 +172,7 @@ public class ProfilActivity extends AppCompatActivity {
             }
         });
 
-        email.setText(firebaseAuth.getCurrentUser().getEmail());
-        if (firebaseAuth.getCurrentUser().getPhotoUrl() != null)
-            Picasso.with(this).load(firebaseAuth.getCurrentUser().getPhotoUrl()).into(avatar);
+
 
     }
     @Override

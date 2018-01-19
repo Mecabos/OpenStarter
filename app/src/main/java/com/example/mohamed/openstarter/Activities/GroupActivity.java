@@ -37,7 +37,7 @@ public class GroupActivity extends AppCompatActivity {
     private boolean isAdminForSelectedGroup=false;
 
     Button bt_members, bt_editGroup, bt_addGroup;
-    TextView tv_name, tv_creationDate, tv_projectCount;
+    TextView tv_name, tv_creationDate, tv_projectCount, tv_countMembers;
     private Spinner collaborationGroupSpinner;
     Long collaborationGroupSelectedId;
     public static GroupActivity instance = null;
@@ -62,6 +62,7 @@ public class GroupActivity extends AppCompatActivity {
         tv_name = findViewById(R.id.groupName);
         tv_projectCount = findViewById(R.id.projectsCount);
         tv_creationDate = findViewById(R.id.creationDate);
+        tv_countMembers = findViewById(R.id.countMembers);
 
         bt_addGroup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,6 +176,7 @@ public class GroupActivity extends AppCompatActivity {
                     CollaborationGroup firstGroup = groupsList.get(0);
                     tv_name.setText(firstGroup.getName());
                     tv_projectCount.setText(Integer.toString(firstGroup.getProjectsCount()));
+                    tv_countMembers.setText(Integer.toString(firstGroup.getCountMembers()));
                     DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                     String creationDate = df.format(firstGroup.getCreationDate());
                     tv_creationDate.setText(creationDate);
@@ -204,6 +206,7 @@ public class GroupActivity extends AppCompatActivity {
                             CollaborationGroup selectedGroup = groupsList.get(pos);
                             tv_name.setText(selectedGroup.getName());
                             tv_projectCount.setText(Integer.toString(selectedGroup.getProjectsCount()));
+                            tv_countMembers.setText(Integer.toString(selectedGroup.getCountMembers()));
                             DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                             String creationDate = df.format(selectedGroup.getCreationDate());
                             tv_creationDate.setText(creationDate);

@@ -3,13 +3,13 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white">
+    android:background="#313131">
 
     <View
         android:id="@+id/dividerTop"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="#E4E6E3" />
+        android:background="#313131" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar"
@@ -31,7 +31,7 @@
         android:layout_toLeftOf="@+id/text_date"
         android:layout_toStartOf="@+id/text_date"
         android:text="Carol Bell"
-        android:textColor="#827f93"
+        android:textColor="#ffffff"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -43,7 +43,7 @@
         android:layout_below="@+id/fullName"
         android:layout_marginBottom="10dp"
         android:text="email"
-        android:textColor="#827f93" />
+        android:textColor="#ffffff" />
 
 
     <View
@@ -53,7 +53,7 @@
         android:layout_below="@+id/text_question"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:background="#ebebeb" />
+        android:background="#313131" />
 
 
 </RelativeLayout>

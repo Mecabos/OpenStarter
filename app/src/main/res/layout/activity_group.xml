@@ -61,7 +61,7 @@
             android:layout_marginTop="105dp"
             android:orientation="horizontal">
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/creator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                 android:text="created by : some user"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold" />-->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -153,7 +153,13 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/avatar"
+        layout="@layout/group_content" />
+
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/diagonalLayout"
@@ -270,7 +276,7 @@
             android:layout_height="wrap_content"
             android:textColor="#ffffff" />
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 
     <android.support.v7.widget.Toolbar
@@ -279,7 +285,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-    <Button
+    <!--<Button
         android:id="@+id/bt_addGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -287,6 +293,6 @@
         android:background="@drawable/bt_shape"
         android:stateListAnimator="@drawable/state_list_animator_z"
         android:text="ADD GROUP"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff" />-->
 
 </RelativeLayout>

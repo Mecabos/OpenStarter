@@ -122,7 +122,7 @@ public class ManageMembersActivity extends AppCompatActivity {
                 email.setLayoutParams(lp);
                 alertDialog.setView(email);
                 alertDialog.setTitle("New Member");
-                alertDialog.setMessage("add a new member to the group");
+                alertDialog.setMessage("type user email to add a new member to the group");
                 alertDialog.setButton(Dialog.BUTTON_POSITIVE, "DONE", new DialogInterface.OnClickListener() {
 
                     @Override

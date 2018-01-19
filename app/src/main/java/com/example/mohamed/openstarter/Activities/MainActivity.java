@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity  implements AAH_FabulousFrag
         item1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "item2 clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "item2 clicked", Toast.LENGTH_SHORT).show();
                 Intent i2 = new Intent(MainActivity.this, CreateProjectActivity.class);
                 startActivity(i2);
                 finish();

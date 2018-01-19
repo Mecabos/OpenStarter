@@ -39,7 +39,8 @@ public class CollaborationGroupSpinnerAdapter extends ArrayAdapter<Collaboration
         if(item != null)
         {
             TextView collaborationGroupName = row.findViewById(R.id.tv_collaboration_group_name);
-            collaborationGroupName.setTextColor(Color.BLACK);
+            collaborationGroupName.setTextColor(Color.WHITE);
+            collaborationGroupName.setTextSize(20);
             collaborationGroupName.setText(item);
         }
 
@@ -61,6 +62,7 @@ public class CollaborationGroupSpinnerAdapter extends ArrayAdapter<Collaboration
             {
                 TextView collaborationGroupName = row.findViewById(R.id.tv_collaboration_group_name);
                 collaborationGroupName.setTextColor(Color.BLACK);
+                collaborationGroupName.setTextSize(24);
                 collaborationGroupName.setText(item);
             }
 

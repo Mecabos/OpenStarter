@@ -38,6 +38,8 @@ public class CollaborationGroup implements Parcelable {
     private User creator;
     @Property
     private boolean isUserAdmin;
+    @Property
+    private int countMembers;
 
 
     public CollaborationGroup() {
@@ -101,6 +103,14 @@ public class CollaborationGroup implements Parcelable {
         isUserAdmin = userAdmin;
     }
 
+    public int getCountMembers() {
+        return countMembers;
+    }
+
+    public void setCountMembers(int countMembers) {
+        this.countMembers = countMembers;
+    }
+
     //*************Parcel part
     @Keep
     public CollaborationGroup(Parcel in) throws ParseException {
@@ -113,13 +123,15 @@ public class CollaborationGroup implements Parcelable {
         this.creationDate = dateFormat.parse(data[2]);
     }
 
-    @Generated(hash = 617803930)
-    public CollaborationGroup(long id, String name, Date creationDate, int projectsCount, boolean isUserAdmin) {
+    @Generated(hash = 2061148269)
+    public CollaborationGroup(long id, String name, Date creationDate, int projectsCount, boolean isUserAdmin,
+            int countMembers) {
         this.id = id;
         this.name = name;
         this.creationDate = creationDate;
         this.projectsCount = projectsCount;
         this.isUserAdmin = isUserAdmin;
+        this.countMembers = countMembers;
     }
 
     @Override
