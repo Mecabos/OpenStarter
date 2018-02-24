@@ -227,6 +227,8 @@ public class MainActivity extends AppCompatActivity  implements AAH_FabulousFrag
         }
     }
 
+
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
