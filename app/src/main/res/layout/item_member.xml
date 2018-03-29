@@ -28,8 +28,6 @@
         android:layout_alignTop="@+id/avatar"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/avatar"
-        android:layout_toLeftOf="@+id/text_date"
-        android:layout_toStartOf="@+id/text_date"
         android:text="Carol Bell"
         android:textColor="#ffffff"
         android:textSize="18sp"
@@ -50,7 +48,6 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/text_question"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:background="#313131" />

@@ -50,7 +50,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/placeholderproject" />
 
-        <com.example.mohamed.openstarter.Helpers.Util.CoustomTextView
+        <com.esprit.pixelCells.openstarter.Helpers.Util.CoustomTextView
             android:id="@+id/content_contributors_count"
             style="@style/ContentImageBadgeText"
             android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
             android:paddingStart="20dp"
             android:text="@string/requests_count_mock" />
 
-        <com.example.mohamed.openstarter.Helpers.Util.CoustomTextView
+        <com.esprit.pixelCells.openstarter.Helpers.Util.CoustomTextView
             style="@style/ContentImageBadgeTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
             android:text="@string/follows_count_badge"
             />
 
-        <com.example.mohamed.openstarter.Helpers.Util.CoustomTextView
+        <com.esprit.pixelCells.openstarter.Helpers.Util.CoustomTextView
             android:id="@+id/content_pledges_sum"
             style="@style/ContentImageBadgeText"
             android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
             android:paddingBottom="10dp"
             android:text="@string/pledge_mock" />
 
-        <com.example.mohamed.openstarter.Helpers.Util.CoustomTextView
+        <com.esprit.pixelCells.openstarter.Helpers.Util.CoustomTextView
             style="@style/ContentImageBadgeTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
             android:layout_alignStart="@id/content_pledges_sum"
             android:text="@string/pledges_sum_badge" />
 
-        <com.example.mohamed.openstarter.Helpers.Util.CoustomTextView
+        <com.esprit.pixelCells.openstarter.Helpers.Util.CoustomTextView
             android:id="@+id/content_goal_value"
             style="@style/ContentImageBadgeText"
             android:layout_width="wrap_content"
@@ -100,7 +100,7 @@
             android:paddingEnd="20dp"
             android:text="@string/weight_mock" />
 
-        <com.example.mohamed.openstarter.Helpers.Util.CoustomTextView
+        <com.esprit.pixelCells.openstarter.Helpers.Util.CoustomTextView
             style="@style/ContentImageBadgeTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

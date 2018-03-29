@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#313131"
-    tools:context="com.example.mohamed.openstarter.Activities.ProfilActivity">
+    tools:context="com.esprit.pixelCells.openstarter.Activities.ProfilActivity">
 
     <com.vlstr.blurdialog.BlurDialog
         android:id="@+id/blurLoader"

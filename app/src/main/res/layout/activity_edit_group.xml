@@ -6,7 +6,7 @@
     android:windowSoftInputMode="adjustPan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.mohamed.openstarter.Activities.EditGroupActivity">
+    tools:context="com.esprit.pixelCells.openstarter.Activities.EditGroupActivity">
 
     <com.vlstr.blurdialog.BlurDialog
         android:id="@+id/blurLoader"

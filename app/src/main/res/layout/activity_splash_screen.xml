@@ -6,7 +6,7 @@
     android:id="@+id/bg_view"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.example.mohamed.openstarter.Activities.SplashScreenActivity">
+    tools:context="com.esprit.pixelCells.openstarter.Activities.SplashScreenActivity">
 
     <ImageView
         android:id="@+id/logo"

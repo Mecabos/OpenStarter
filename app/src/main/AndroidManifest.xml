@@ -1,31 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.1" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mohamed.openstarter">
+    package="com.esprit.pixelCells.openstarter">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".app.AppController"
+        android:name="com.esprit.pixelCells.openstarter.app.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name=".Helpers.MyFirebaseMessagingService">
+        <service android:name="com.esprit.pixelCells.openstarter.Helpers.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".Helpers.MyFirebaseInstanceIDService">
+        <service android:name="com.esprit.pixelCells.openstarter.Helpers.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
         <activity
-            android:name=".Activities.SplashScreenActivity"
+            android:name="com.esprit.pixelCells.openstarter.Activities.SplashScreenActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -35,11 +35,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.RegisterActivity"
+            android:name="com.esprit.pixelCells.openstarter.Activities.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Translucent" />
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name="com.esprit.pixelCells.openstarter.Activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
@@ -58,38 +58,38 @@
             android:name="com.facebook.CustomTabActivity"
             android:exported="true" />
         <activity
-            android:name=".Activities.ProfilActivity"
+            android:name="com.esprit.pixelCells.openstarter.Activities.ProfilActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".Activities.CompleteRegisterActivity"
+            android:name="com.esprit.pixelCells.openstarter.Activities.CompleteRegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name="com.esprit.pixelCells.openstarter.Activities.MainActivity"
             android:label="Projects"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.ProjectActivity"
+            android:name="com.esprit.pixelCells.openstarter.Activities.ProjectActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_project"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.IntroductionActivity"
+        <activity android:name="com.esprit.pixelCells.openstarter.Activities.IntroductionActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Activities.CreateProjectActivity"
+        <activity android:name="com.esprit.pixelCells.openstarter.Activities.CreateProjectActivity"
             android:label="New project"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".Activities.EditProfilActivity"
+            android:name="com.esprit.pixelCells.openstarter.Activities.EditProfilActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".Activities.GroupActivity"
+            android:name="com.esprit.pixelCells.openstarter.Activities.GroupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.EditGroupActivity"
+            android:name="com.esprit.pixelCells.openstarter.Activities.EditGroupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
@@ -98,15 +98,15 @@
         </activity>-->
 
         <activity
-            android:name=".Activities.ManageMembersActivity"
+            android:name="com.esprit.pixelCells.openstarter.Activities.ManageMembersActivity"
             android:screenOrientation="portrait"
             android:label="Group Members"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".Activities.PaymentActivity"
+        <activity android:name="com.esprit.pixelCells.openstarter.Activities.PaymentActivity"
             android:screenOrientation="portrait"
             android:label="Donation"/>
 
-        <activity android:name=".Activities.PaymentDetailsActivity"
+        <activity android:name="com.esprit.pixelCells.openstarter.Activities.PaymentDetailsActivity"
             android:screenOrientation="portrait"/>
     </application>
 

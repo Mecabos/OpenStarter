@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.mohamed.openstarter.Activities.RegisterActivity">
+    tools:context="com.esprit.pixelCells.openstarter.Activities.RegisterActivity">
 
     <com.vlstr.blurdialog.BlurDialog
         android:id="@+id/blurLoader"
@@ -175,14 +175,14 @@
                     android:stateListAnimator="@drawable/state_list_animator_z"
                     android:textColor="#ffffff" />
 
-                <com.facebook.login.widget.LoginButton
+                <!-- <com.facebook.login.widget.LoginButton
                     android:id="@+id/button_facebook_login"
                     android:layout_width="wrap_content"
                     android:layout_height="70dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="30dp"
                     android:layout_marginTop="30dp"
-                    android:background="@drawable/bt_shape" />
+                    android:background="@drawable/bt_shape" /> -->
 
             </LinearLayout>
 
