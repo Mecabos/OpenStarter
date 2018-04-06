@@ -839,11 +839,7 @@ public class CreateProjectActivity extends AppCompatActivity implements Vertical
         return collaborationGroupSpinner;
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent myIntent = new Intent(this, MainActivity.class);
-        startActivity(myIntent);
-    }
+
 
 }
 

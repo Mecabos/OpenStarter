@@ -53,11 +53,11 @@ public class MainActivity extends AppCompatActivity  implements AAH_FabulousFrag
     ListView projectListView;
     ResideMenu resideMenu;
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-    }
+    }*/
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity  implements AAH_FabulousFrag
             public void onClick(View v) {
                 Intent i2 = new Intent(MainActivity.this, ProfilActivity.class);
                 startActivity(i2);
-                finish();
+                //finish();
 
             }
         });
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity  implements AAH_FabulousFrag
                 //Toast.makeText(MainActivity.this, "item2 clicked", Toast.LENGTH_SHORT).show();
                 Intent i2 = new Intent(MainActivity.this, CreateProjectActivity.class);
                 startActivity(i2);
-                finish();
+                //finish();
 
             }
         });
@@ -152,9 +152,8 @@ public class MainActivity extends AppCompatActivity  implements AAH_FabulousFrag
 
             @Override
             public void onSuccessGetWithFollowCount(List<ProjectWithFollowCount> projectList) {
-                List <ProjectWithFollowCount> tempList = new ArrayList<>();
                 //the usage of the temp list is very important cause without it you'll get a reference of the original list and it will get changed every time
-                tempList.addAll(projectList);
+                List<ProjectWithFollowCount> tempList = new ArrayList<>(projectList);
                 getmOriginalProjectsList().addAll(tempList);
                 Log.d ("AAZZ","OriginalProjectsList size on load = "+ getmOriginalProjectsList().size() );
                 dialogHelper.blurDialogHide(instance,blurDialog);

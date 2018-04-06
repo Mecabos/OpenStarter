@@ -118,7 +118,7 @@ public class ProjectListAdapter extends ArrayAdapter<ProjectWithFollowCount> {
                 myIntent.putExtra(PROJECT_TAG,project);
                 myIntent.putExtra(COLLABORATION_GROUP_TAG,project.getCollaborationGroup());
                 myIntent.putExtra(CATEGORY_TAG,project.getCategory());
-                myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getContext().startActivity(myIntent);
             }
         });

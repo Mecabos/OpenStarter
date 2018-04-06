@@ -51,6 +51,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.vlstr.blurdialog.BlurDialog;
 
+import java.util.Objects;
+
 public class RegisterActivity extends AppCompatActivity {
 
 
@@ -159,11 +161,16 @@ public class RegisterActivity extends AppCompatActivity {
                     preferences.edit().putString("email", firebaseAuth.getCurrentUser().getEmail()).apply();
                     preferences.edit().putString("providerId", firebaseAuth.getCurrentUser().getProviderId()).apply();
                     preferences.edit().putString("nom", firebaseAuth.getCurrentUser().getDisplayName()).apply();
-                    preferences.edit().putString("photo", firebaseAuth.getCurrentUser().getPhotoUrl().toString()).apply();
+                    preferences.edit().putString("photo", Objects.requireNonNull(firebaseAuth.getCurrentUser().getPhotoUrl()).toString()).apply();
                     ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(RegisterActivity.this);
                     Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
+
+                    finishAffinity();
+
                     startActivity(i2, oc2.toBundle());
                     finish();
+
+
 
                 }
             }
@@ -240,6 +247,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                         });
                                                         dialogHelper.blurDialogHide(instance,blurDialog);
                                                         Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
+                                                        finishAffinity();
                                                         startActivity(i2);
                                                         finish();
                                                     } else {
@@ -260,12 +268,14 @@ public class RegisterActivity extends AppCompatActivity {
                                                         if (getIntroSharedPref().equals("done")){
                                                             dialogHelper.blurDialogHide(instance,blurDialog);
                                                             Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
+                                                            finishAffinity();
                                                             startActivity(i2);
                                                             finish();
                                                         }
                                                         else{
                                                             dialogHelper.blurDialogHide(instance,blurDialog);
                                                             Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
+                                                            finishAffinity();
                                                             startActivity(i2);
                                                             finish();
                                                         }
@@ -370,6 +380,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         });
                                         dialogHelper.blurDialogHide(instance,blurDialog);
                                         Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
+                                        finishAffinity();
                                         startActivity(i2);
                                         finish();
                                     } else {
@@ -390,12 +401,14 @@ public class RegisterActivity extends AppCompatActivity {
                                         if (getIntroSharedPref().equals("done")){
                                             dialogHelper.blurDialogHide(instance,blurDialog);
                                             Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
+                                            finishAffinity();
                                             startActivity(i2);
                                             finish();
                                         }
                                         else{
                                             dialogHelper.blurDialogHide(instance,blurDialog);
                                             Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
+                                            finishAffinity();
                                             startActivity(i2);
                                             finish();
                                         }
@@ -559,6 +572,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         });
                                         dialogHelper.blurDialogHide(instance,blurDialog);
                                         Intent i2 = new Intent(RegisterActivity.this, CompleteRegisterActivity.class);
+                                        finishAffinity();
                                         startActivity(i2);
                                         finish();
                                     } else {
@@ -578,12 +592,14 @@ public class RegisterActivity extends AppCompatActivity {
                                         if (getIntroSharedPref().equals("done")){
                                             dialogHelper.blurDialogHide(instance,blurDialog);
                                             Intent i2 = new Intent(RegisterActivity.this, MainActivity.class);
+                                            finishAffinity();
                                             startActivity(i2);
                                             finish();
                                         }
                                         else{
                                             dialogHelper.blurDialogHide(instance,blurDialog);
                                             Intent i2 = new Intent(RegisterActivity.this, IntroductionActivity.class);
+                                            finishAffinity();
                                             startActivity(i2);
                                             finish();
                                         }

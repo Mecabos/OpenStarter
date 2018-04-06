@@ -123,12 +123,6 @@ public class ProjectActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent myIntent = new Intent(this, MainActivity.class);
-        startActivity(myIntent);
-    }
-
     private void setFollow() {
 
         tvFollowersCount = findViewById(R.id.project_followers_count);
